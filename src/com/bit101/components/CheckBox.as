@@ -105,19 +105,19 @@ package com.bit101.components
 			super.draw();
 			_back.graphics.clear();
 			_back.graphics.beginFill(Style.BACKGROUND);
-			_back.graphics.drawRect(0, 0, 10, 10);
+			_back.graphics.drawRect(0, 0, Style.CHECKBOX_BG, Style.CHECKBOX_BG);
 			_back.graphics.endFill();
 			
 			_button.graphics.clear();
 			_button.graphics.beginFill(Style.BUTTON_FACE);
-			_button.graphics.drawRect(2, 2, 6, 6);
+			_button.graphics.drawRect(Style.CHECKBOX_RIM, Style.CHECKBOX_RIM, Style.CHECKBOX_FACE, Style.CHECKBOX_FACE);
 			
 			_label.text = _labelText;
 			_label.draw();
-			_label.x = 12;
-			_label.y = (10 - _label.height) / 2;
-			_width = _label.width + 12;
-			_height = 10;
+			_label.x = Style.CHECKBOX_LABEL_X;
+			_label.y = (Style.CHECKBOX_LABEL_H - _label.height) / 2;
+			_width = _label.width + Style.CHECKBOX_LABEL_X;
+			_height = Style.CHECKBOX_LABEL_H;
 		}
 		
 		

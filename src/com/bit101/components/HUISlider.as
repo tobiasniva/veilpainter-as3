@@ -53,7 +53,7 @@ package com.bit101.components
 		override protected function init():void
 		{
 			super.init();
-			setSize(200, 18);
+			setSize(Style.HUI_SLIDER_W, Style.HUI_SLIDER_H);
 		}
 		
 		/**
@@ -61,7 +61,7 @@ package com.bit101.components
 		 */
 		override protected function positionLabel():void
 		{
-			_valueLabel.x = _slider.x + _slider.width + 5;
+			_valueLabel.x = _slider.x + _slider.width + Style.HUI_SLIDER_LABEL_PAD;
 		}
 		
 		
@@ -77,11 +77,11 @@ package com.bit101.components
 		override public function draw():void
 		{
 			super.draw();
-			_slider.x = _label.width + 5;
+			_slider.x = _label.width + Style.HUI_SLIDER_LABEL_PAD;
 			_slider.y = height / 2 - _slider.height / 2;
-			_slider.width = width - _label.width - 50 - 10;
+			_slider.width = width - _label.width - Style.HUI_SLIDER_LABEL_W_FIX_A - Style.HUI_SLIDER_LABEL_W_FIX_B;
 			
-			_valueLabel.x = _slider.x + _slider.width + 5;
+			_valueLabel.x = _slider.x + _slider.width + Style.HUI_SLIDER_LABEL_PAD;
 		}
 		
 		///////////////////////////////////

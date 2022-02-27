@@ -7,10 +7,12 @@ package
 	import com.bit101.components.CheckBox;
 	import com.bit101.components.ColorChooser;
 	import com.bit101.components.ComboBox;
+	import com.bit101.components.HSlider;
 	import com.bit101.components.HUISlider;
 	import com.bit101.components.Label;
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
+	import com.bit101.components.UISlider;
 
 	import data.BlendModes;
 
@@ -27,8 +29,6 @@ package
 	import flash.filesystem.FileStream;
 	import flash.geom.Point;
 	import flash.globalization.DateTimeFormatter;
-	import flash.ui.Multitouch;
-	import flash.ui.MultitouchInputMode;
 	import flash.utils.ByteArray;
 
 	import utils.LoadAlphaImages;
@@ -293,6 +293,15 @@ package
 
 
 			var btnSaveImage:PushButton = new PushButton(this, _screenSize.x - 110, _screenSize.y - 30, "Save", onSaveImageToDesktop);
+		
+			_btnTmp = new PushButton(this, 400, 400, "default", test);
+		}
+
+		private var _btnTmp:PushButton;
+		
+		private function test(e:Event):void
+		{
+			trace("Btn: " + e.currentTarget);
 		}
 	}
 }

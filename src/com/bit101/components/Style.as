@@ -48,7 +48,28 @@ package com.bit101.components
 		
 		public static var embedFonts:Boolean = true;
 		public static var fontName:String = "PF Ronda Seven";
-		public static var fontSize:Number = 8;
+		public static var fontSize:Number = 8;                          //8
+
+		// TNA: Sizing gathered here...
+		public static var BUTTON_W:int = 100;                           //100
+		public static var BUTTON_H:int = 20;                            //20
+			
+		public static var LABEL_H:int = 18;                             //18
+			
+		public static var CHECKBOX_BG:int = 10;                         //10
+		public static var CHECKBOX_RIM:int = 2;                         //2
+		public static var CHECKBOX_FACE:int = 6;                        //6
+		public static var CHECKBOX_LABEL_X:int = 12;                    //12
+		public static var CHECKBOX_LABEL_H:int = 10;                    //10
+		
+		public static var HUI_SLIDER_W:int = 200;                       //200
+		public static var HUI_SLIDER_H:int = 18;                        //18
+		public static var HUI_SLIDER_LABEL_PAD:int = 5;                 //5
+		public static var HUI_SLIDER_LABEL_W_FIX_A:int = 50;            //50
+		public static var HUI_SLIDER_LABEL_W_FIX_B:int = 10;            //10
+		
+		
+		//----
 		
 		public static const DARK:String = "dark";
 		public static const LIGHT:String = "light";
