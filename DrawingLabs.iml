@@ -4,11 +4,6 @@
     <configurations>
       <configuration name="VeilPainter" target-platform="Mobile" pure-as="true" main-class="VeilPainter" output-file="VeilPainter.swf" output-folder="$MODULE_DIR$/bin">
         <dependencies>
-          <entries>
-            <entry library-name="MinimalComps_0_9_10" library-level="project">
-              <dependency linkage="Merged" />
-            </entry>
-          </entries>
           <sdk name="AIRSDK_Compiler_v31" />
         </dependencies>
         <compiler-options />
