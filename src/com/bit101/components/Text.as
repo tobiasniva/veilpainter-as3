@@ -56,7 +56,7 @@ package com.bit101.components
 		{
 			this.text = text;
 			super(parent, xpos, ypos);
-			setSize(200, 100);
+			setSize(Style.TEXT_W, Style.TEXT_H);
 		}
 		
 		/**
@@ -78,8 +78,8 @@ package com.bit101.components
 			_format = new TextFormat(Style.fontName, Style.fontSize, Style.LABEL_TEXT);
 			
 			_tf = new TextField();
-			_tf.x = 2;
-			_tf.y = 2;
+			_tf.x = Style.TEXT_FIELD_MARGIN;
+			_tf.y = Style.TEXT_FIELD_MARGIN;
 			_tf.height = _height;
 			_tf.embedFonts = Style.embedFonts;
 			_tf.multiline = true;
@@ -108,8 +108,8 @@ package com.bit101.components
 			_panel.setSize(_width, _height);
 			_panel.draw();
 			
-			_tf.width = _width - 4;
-			_tf.height = _height - 4;
+			_tf.width = _width - (Style.TEXT_FIELD_MARGIN * 2);
+			_tf.height = _height - (Style.TEXT_FIELD_MARGIN * 2);
 			if(_html)
 			{
 				_tf.htmlText = _text;

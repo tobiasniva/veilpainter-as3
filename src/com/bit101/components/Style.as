@@ -48,29 +48,65 @@ package com.bit101.components
 		
 		public static var embedFonts:Boolean = true;
 		public static var fontName:String = "PF Ronda Seven";
-		public static var fontSize:Number = 8;                          //8
+		public static var fontSize:Number                   = 16;   //8
 
-		// TNA: Sizing gathered here...
-		public static var BUTTON_W:int = 100;                           //100
-		public static var BUTTON_H:int = 20;                            //20
+		/**
+		 * TNA: Sizing section here...
+ 		 */
+		public static var BUTTON_W:int                      = 200;  //100
+		public static var BUTTON_H:int                      = 40;   //20
 			
-		public static var LABEL_H:int = 18;                             //18
 			
-		public static var CHECKBOX_BG:int = 10;                         //10
-		public static var CHECKBOX_RIM:int = 2;                         //2
-		public static var CHECKBOX_FACE:int = 6;                        //6
-		public static var CHECKBOX_LABEL_X:int = 12;                    //12
-		public static var CHECKBOX_LABEL_H:int = 10;                    //10
+		public static var CHECKBOX_BG:int                   = 20;   //10
+		public static var CHECKBOX_RIM:int                  = 4;    //2     
+		public static var CHECKBOX_FACE:int                 = 12;   //6
+		public static var CHECKBOX_LABEL_X:int              = 24;   //12
+		public static var CHECKBOX_LABEL_H:int              = 20;   //10
 		
-		public static var HUI_SLIDER_W:int = 200;                       //200
-		public static var HUI_SLIDER_H:int = 18;                        //18
-		public static var HUI_SLIDER_LABEL_PAD:int = 5;                 //5
-		public static var HUI_SLIDER_LABEL_W_FIX_A:int = 50;            //50
-		public static var HUI_SLIDER_LABEL_W_FIX_B:int = 10;            //10
+		public static var COLOR_CHOOSER_W:int               = 130;  //65
+		public static var COLOR_CHOOSER_H:int               = 30;   //15
+		public static var COLOR_CHOOSER_INPUT_W:int         = 90;   //45
+		public static var COLOR_CHOOSER_SWATCH_X:int        = 100;  //50
+		public static var COLOR_CHOOSER_BOX:int             = 36;   //16    -- SAME AS NUMERIC PICKER?
 		
+		public static var COMBOBOX_W:int                    = 200;  //100   -- SAME W/H BUTTON?
+		public static var COMBOBOX_H:int                    = 40;   //20
 		
-		//----
+		public static var HUI_SLIDER_W:int                  = 400;  //200
+		public static var HUI_SLIDER_H:int                  = 36;   //18    -- SAME H AS LABEL?
+		public static var HUI_SLIDER_LABEL_PAD:int          = 10;   //5
+		public static var HUI_SLIDER_LABEL_W_FIX:int        = 120;  //60
 		
+		public static var SLIDER_W_OR_H:int                 = 200;  //100   -- SAME W BUTTON?
+		public static var SLIDER_THICKNESS:int              = 20;   //10
+		
+		public static var INPUTTEXT_W:int                   = 200;  //100   -- SAME W BUTTON?
+		public static var INPUTTEXT_H:int                   = 36;   //18
+		
+		public static var LABEL_H:int                       = 36;   //18
+		
+		public static var LIST_SIZE:int                     = 200;  //100   -- SAME W/H BUTTON?
+		public static var LIST_ITEM_H:int                   = 40;   //20
+		
+		public static var LISTITEM_W:int                    = 200;  //100   -- SAME W/H BUTTON?
+		public static var LISTITEM_H:int                    = 40;   //20
+		public static var LISTITEM_LABEL_X:int              = 10;   //5
+		
+		public static var NUMERIC_STEPPER_W:int             = 160;  //80
+		public static var NUMERIC_STEPPER_H:int             = 36;   //16
+		
+		public static var PANEL_SIZE:int                    = 200;  //100   -- SAME W BUTTON?
+		public static var PANEL_GRID:int                    = 20;   //10    -- SAME CHKBOX BG?
+		
+		public static var TEXT_W:int                        = 400;  //200   -- SAME W HUI-SLIDER?
+		public static var TEXT_H:int                        = 200;  //100
+		public static var TEXT_FIELD_MARGIN:int             = 4;    //2     -- SAME CHK RIM?
+
+		/**
+		 * TNA: Sizing section ends...
+		 */
+
+				
 		public static const DARK:String = "dark";
 		public static const LIGHT:String = "light";
 		

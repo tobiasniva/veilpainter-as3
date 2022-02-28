@@ -64,7 +64,7 @@ package com.bit101.components
 		override protected function init():void
 		{
 			super.init();
-			setSize(100, 16);
+			setSize(Style.INPUTTEXT_W, Style.INPUTTEXT_H);
 		}
 		
 		/**

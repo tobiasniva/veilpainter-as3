@@ -76,11 +76,11 @@ package com.bit101.components
 
 			if(_orientation == HORIZONTAL)
 			{
-				setSize(100, 10);
+				setSize(Style.SLIDER_W_OR_H, Style.SLIDER_THICKNESS);
 			}
 			else
 			{
-				setSize(10, 100);
+				setSize(Style.SLIDER_THICKNESS, Style.SLIDER_W_OR_H);
 			}
 		}
 		

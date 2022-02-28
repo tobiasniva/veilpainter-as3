@@ -38,7 +38,7 @@ package com.bit101.components
 		protected var _background:Sprite;
 		protected var _color:int = -1;
 		protected var _shadow:Boolean = true;
-		protected var _gridSize:int = 10;
+		protected var _gridSize:int = Style.PANEL_GRID;
 		protected var _showGrid:Boolean = false;
 		protected var _gridColor:uint = 0xd0d0d0;
 		
@@ -67,7 +67,7 @@ package com.bit101.components
 		override protected function init():void
 		{
 			super.init();
-			setSize(100, 100);
+			setSize(Style.PANEL_SIZE, Style.PANEL_SIZE);
 		}
 		
 		/**

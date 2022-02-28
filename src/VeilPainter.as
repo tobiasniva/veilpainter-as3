@@ -12,6 +12,7 @@ package
 	import com.bit101.components.Label;
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
+	import com.bit101.components.Style;
 	import com.bit101.components.UISlider;
 
 	import data.BlendModes;
@@ -225,53 +226,48 @@ package
 		 */
 		private function initGUI():void
 		{
+			//TODO: Configure Style...
+			
 			_sldElasticity = new HUISlider(this, 10, 10, "Elasticity", onElasticityChanged);
-			_sldElasticity.width = 300;
 			_sldElasticity.setSliderParams(0.0, 1.0, 0.85);
 			_sldElasticity.labelPrecision = 2;
 			_sldElasticity.tick = 0.01
 
-			_sldStrength = new HUISlider(this, 10, 35, "Strength", onStrengthChanged);
-			_sldStrength.width = 300;
+			_sldStrength = new HUISlider(this, 10, 50, "Strength", onStrengthChanged);
 			_sldStrength.setSliderParams(0.0, 0.1, 0.028);
 			_sldStrength.labelPrecision = 3;
 			_sldStrength.tick = 0.001
 
-			_sldStrengthDegradation = new HUISlider(this, 10, 60, "Strength degr", onStrengthDegradationChanged);
-			_sldStrengthDegradation.width = 300;
+			_sldStrengthDegradation = new HUISlider(this, 10, 90, "Strength degr", onStrengthDegradationChanged);
 			_sldStrengthDegradation.setSliderParams(0.05, 10, 2.7);
 			_sldStrengthDegradation.labelPrecision = 2;
 			_sldStrengthDegradation.tick = 0.01;
 
 
 			var lblAlphaImage:Label = new Label(this, 316, 10, "Alpha img");
-			_cmbAlphaImage = new ComboBox(this, 369, 10, "");
-			_cmbAlphaImage.width = 96;
-//			_cmbAlphaImage.addEventListener(Event.SELECT, onAlphaImageChanged);
+			_cmbAlphaImage = new ComboBox(this, 440, 10, "");
+//			_cmbAlphaImage.addEventListener(Event.SELECT, onAlphaImageChanged); //TODO: Leave commented out...
 
-			_sldAlpha = new HUISlider(this, 469, 10, "", onAlphaChanged);
-			_sldAlpha.width = 130;
+			_sldAlpha = new HUISlider(this, 669, 10, "", onAlphaChanged);
 			_sldAlpha.setSliderParams(0, 1, 0.5);
 			_sldAlpha.labelPrecision = 1;
 			_sldAlpha.tick = 0.1;
 
-			var lblNumLinks:Label = new Label(this, 748, 11, "Num links");
-			_stpNumLinks = new NumericStepper(this, 692, 12, onNumLinksChanged);
-			_stpNumLinks.width = 52
+			var lblBlendModes:Label = new Label(this, 316, 69, "BlendMode");
+			var blendModesAll:Array = BlendModes.getAll();
+			_cmbBlendMode = new ComboBox(this, 440, 70, "", blendModesAll);
+			_cmbBlendMode.numVisibleItems = blendModesAll.length;
+			_cmbBlendMode.selectedIndex = 10;
+			_cmbBlendMode.addEventListener(Event.SELECT, onBlendModeChanged);
+
+			var lblNumLinks:Label = new Label(this, 748, 111, "Num links");
+			_stpNumLinks = new NumericStepper(this, 692, 112, onNumLinksChanged);
 			_stpNumLinks.step = 2;
 			_stpNumLinks.minimum = 2;
 			_stpNumLinks.value = 4;
 			_stpNumLinks.maximum = 16;
 
-			_chkDebug = new CheckBox(this, 733, 43, "Debug", onDebugChanged);
-
-			var lblBlendModes:Label = new Label(this, 316, 39, "BlendMode");
-			var blendModesAll:Array = BlendModes.getAll();
-			_cmbBlendMode = new ComboBox(this, 369, 38, "", blendModesAll);
-			_cmbBlendMode.width = 96;
-			_cmbBlendMode.numVisibleItems = blendModesAll.length;
-			_cmbBlendMode.selectedIndex = 10;
-			_cmbBlendMode.addEventListener(Event.SELECT, onBlendModeChanged);
+			_chkDebug = new CheckBox(this, 733, 143, "Debug", onDebugChanged);
 
 			//-- Color 'BRUSH'
 			_colorPicker = new ColorChooser(this, 478, 40, BRUSH_COLOR_DEFAULT, onColorChanged);
@@ -279,29 +275,30 @@ package
 
 
 			//-- STUFF @ right...
-			var btnClear:PushButton = new PushButton(this, _screenSize.x - 110, 10, "Clear", onResetCanvas);
+			var btnClear:PushButton = new PushButton(this, _screenSize.x - 220, 10, "Clear", onResetCanvas);
 
-			_stpSizeMultiplier = new NumericStepper(this, btnClear.x - 62, 12, onResetCanvas);
+			_stpSizeMultiplier = new NumericStepper(this, btnClear.x - 162, 12, onResetCanvas);
 			_stpSizeMultiplier.minimum = 1;
 			_stpSizeMultiplier.value = _sizeMultiplier;
 			_stpSizeMultiplier.maximum = 4;
-			_stpSizeMultiplier.width = 52;
 
 			//-- Color BG
-			_colorPickerBG = new ColorChooser(this, _stpSizeMultiplier.x - 80, 12, BG_COLOR_DEFAULT, onResetCanvas);
+			_colorPickerBG = new ColorChooser(this, _stpSizeMultiplier.x - 180, 12, BG_COLOR_DEFAULT, onResetCanvas);
 			_colorPickerBG.usePopup = true;
 
 
-			var btnSaveImage:PushButton = new PushButton(this, _screenSize.x - 110, _screenSize.y - 30, "Save", onSaveImageToDesktop);
-		
-			_btnTmp = new PushButton(this, 400, 400, "default", test);
+			var btnSaveImage:PushButton = new PushButton(this, _screenSize.x - 220, _screenSize.y - 30, "Save", onSaveImageToDesktop);
+			
+			btnTest = new PushButton(this, 200, 400, "Test", killAndRecreate);
 		}
 
-		private var _btnTmp:PushButton;
+		private var btnTest:PushButton;
 		
-		private function test(e:Event):void
+		private function killAndRecreate(e:Event):void
 		{
-			trace("Btn: " + e.currentTarget);
+			if(btnTest != null) removeChild(btnTest);
+			
+			btnTest = new PushButton(this, Math.random() * 100 + 100, Math.random() * 100 + 400, "New button", killAndRecreate);
 		}
 	}
 }

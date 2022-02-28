@@ -79,7 +79,7 @@ package com.bit101.components
 			super.draw();
 			_slider.x = _label.width + Style.HUI_SLIDER_LABEL_PAD;
 			_slider.y = height / 2 - _slider.height / 2;
-			_slider.width = width - _label.width - Style.HUI_SLIDER_LABEL_W_FIX_A - Style.HUI_SLIDER_LABEL_W_FIX_B;
+			_slider.width = width - _label.width - Style.HUI_SLIDER_LABEL_W_FIX;
 			
 			_valueLabel.x = _slider.x + _slider.width + Style.HUI_SLIDER_LABEL_PAD;
 		}

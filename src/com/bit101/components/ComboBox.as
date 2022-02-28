@@ -75,7 +75,7 @@ package com.bit101.components
 		protected override function init():void
 		{
 			super.init();
-			setSize(100, 20);
+			setSize(Style.COMBOBOX_W, Style.COMBOBOX_H);
 			setLabelButtonLabel();
 		}
 		

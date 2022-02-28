@@ -69,7 +69,7 @@ package com.bit101.components
 			super.init();
 			buttonMode = true;
 			useHandCursor = true;
-			setSize(Style.BUTTON_W, Style.BUTTON_H); //TODO: Skinned
+			setSize(Style.BUTTON_W, Style.BUTTON_H);
 		}
 		
 		/**

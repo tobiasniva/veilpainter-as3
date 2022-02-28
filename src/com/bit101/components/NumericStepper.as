@@ -77,7 +77,7 @@ package com.bit101.components
 		protected override function init():void
 		{
 			super.init();
-			setSize(80, 16);
+			setSize(Style.NUMERIC_STEPPER_W, Style.NUMERIC_STEPPER_H);
 			_delayTimer = new Timer(DELAY_TIME, 1);
 			_delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onDelayComplete);
 			_repeatTimer = new Timer(_repeatTime);
@@ -93,10 +93,10 @@ package com.bit101.components
 			_valueText.restrict = "-0123456789.";
 			_minusBtn = new PushButton(this, 0, 0, "-");
 			_minusBtn.addEventListener(MouseEvent.MOUSE_DOWN, onMinus);
-			_minusBtn.setSize(16, 16);
+			_minusBtn.setSize(Style.NUMERIC_STEPPER_H, Style.NUMERIC_STEPPER_H);
 			_plusBtn = new PushButton(this, 0, 0, "+");
 			_plusBtn.addEventListener(MouseEvent.MOUSE_DOWN, onPlus);
-			_plusBtn.setSize(16, 16);
+			_plusBtn.setSize(Style.NUMERIC_STEPPER_H, Style.NUMERIC_STEPPER_H);
 		}
 		
 		protected function increment():void
@@ -131,10 +131,10 @@ package com.bit101.components
 		 */
 		public override function draw():void
 		{
-			_plusBtn.x = _width - 16;
-			_minusBtn.x = _width - 32;
+			_plusBtn.x = _width - Style.NUMERIC_STEPPER_H;
+			_minusBtn.x = _width - (Style.NUMERIC_STEPPER_H * 2);
 			_valueText.text = (Math.round(_value * Math.pow(10, _labelPrecision)) / Math.pow(10, _labelPrecision)).toString();
-			_valueText.width = _width - 32;
+			_valueText.width = _width - (Style.NUMERIC_STEPPER_H * 2);
 			_valueText.draw();
 		}
 		

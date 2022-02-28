@@ -39,7 +39,7 @@ package com.bit101.components
 		protected var _items:Array;
 		protected var _itemHolder:Sprite;
 		protected var _panel:Panel;
-		protected var _listItemHeight:Number = 20;
+		protected var _listItemHeight:Number = Style.LIST_ITEM_H;
 		protected var _listItemClass:Class =ListItem;
 		protected var _scrollbar:VScrollBar;
 		protected var _selectedIndex:int = -1;
@@ -75,7 +75,7 @@ package com.bit101.components
 		protected override function init() : void
 		{
 			super.init();
-			setSize(100, 100);
+			setSize(Style.LIST_SIZE, Style.LIST_SIZE);
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
             addEventListener(Event.RESIZE, onResize);
             makeListItems();

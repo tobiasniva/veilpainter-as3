@@ -96,22 +96,22 @@ package com.bit101.components
 			
 			super.init();
 
-			_width = 65;
-			_height = 15;
+			_width = Style.COLOR_CHOOSER_W;
+			_height = Style.COLOR_CHOOSER_H;
 			value = _value;
 		}
 		
 		override protected function addChildren():void
 		{
 			_input = new InputText();
-			_input.width = 45;
+			_input.width = Style.COLOR_CHOOSER_INPUT_W;
 			_input.restrict = "0123456789ABCDEFabcdef";
 			_input.maxChars = 6;
 			addChild(_input);
 			_input.addEventListener(Event.CHANGE, onChange);
 			
 			_swatch = new Sprite();
-			_swatch.x = 50;
+			_swatch.x = Style.COLOR_CHOOSER_SWATCH_X;
 			_swatch.filters = [getShadow(2, true)];
 			addChild(_swatch);
 			
@@ -134,7 +134,7 @@ package com.bit101.components
 			super.draw();
 			_swatch.graphics.clear();
 			_swatch.graphics.beginFill(_value);
-			_swatch.graphics.drawRect(0, 0, 16, 16);
+			_swatch.graphics.drawRect(0, 0, Style.COLOR_CHOOSER_BOX, Style.COLOR_CHOOSER_BOX);
 			_swatch.graphics.endFill();
 		}
 		
