@@ -10,8 +10,8 @@
     <initialWindow>
         <content>SWF file name is set automatically at compile time</content>
         <visible>true</visible>
-        <!--<aspectRatio>portrait</aspectRatio>-->
-        <aspectRatio>landscape</aspectRatio>
+        <aspectRatio>portrait</aspectRatio>
+        <!--<aspectRatio>landscape</aspectRatio>-->
         <autoOrients>false</autoOrients>
         <fullScreen>true</fullScreen>
         <!-- The render mode for the app (either auto, cpu, gpu, or direct). Optional. Default auto -->

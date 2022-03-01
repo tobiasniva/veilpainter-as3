@@ -22,7 +22,7 @@ package data
 		public static const BRUSH_BLENDMODE_INDEX:int       = 10;         //-- Normal - see BlendModes
 		
 		public static const CHAIN_LINK_COLOR:uint           = 0x808080;
-		public static const CHAIN_LINK_SIZE:int             = 2;            //-- Size of dots...
+		public static const CHAIN_LINK_SIZE:int             = 4;            //-- Size of dots...
 		
 		public static const NUM_LINKS_DEFAULT:int           = 4;
 		public static const NUM_LINKS_MIN:int               = 2;

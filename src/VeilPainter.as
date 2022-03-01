@@ -26,6 +26,7 @@ package
 
 	import view.GuiBase;
 	import view.GuiDesktop;
+	import view.GuiPhone;
 	import view.GuiTablet;
 
 	/**
@@ -88,7 +89,8 @@ package
 			addChildAt(brush, getChildIndex(_bmp) + 1);
 			
 			//TODO: Select GUI...
-			_gui = new GuiTablet(this);
+//			_gui = new GuiTablet(this);
+			_gui = new GuiPhone(this);
 //			_gui = new GuiDesktop(this);
 			addChild(_gui);
 

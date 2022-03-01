@@ -11,7 +11,7 @@ package view
 	{
 		public function GuiTablet(parent:VeilPainter)
 		{
-			StyleChanger.Size_Double(); // needed before we start base class?
+			StyleChanger.Size_2x();
 			
 			super(parent);
 			
