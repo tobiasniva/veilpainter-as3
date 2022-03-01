@@ -52,6 +52,7 @@ package com.bit101.components
 
 		/**
 		 * TNA: Sizing section here...
+		 * TODO: Make w/h and x/y pairs to Ppoint instead...?
  		 */
 		public static var BUTTON_W:int                      = 100;
 		public static var BUTTON_H:int                      = 20;
@@ -75,13 +76,13 @@ package com.bit101.components
 		public static var HUI_SLIDER_W:int                  = 200; 
 		public static var HUI_SLIDER_H:int                  = 18;     // SAME H AS LABEL?
 		public static var HUI_SLIDER_LABEL_PAD:int          = 5;   
-		public static var HUI_SLIDER_LABEL_W_FIX:int        = 60;  
+		public static var HUI_SLIDER_LABEL_W_FIX:int        = 60;
 		
 		public static var SLIDER_W_OR_H:int                 = 100;    // SAME W BUTTON?
 		public static var SLIDER_THICKNESS:int              = 10;  
 		
 		public static var INPUTTEXT_W:int                   = 100;    // SAME W BUTTON?
-		public static var INPUTTEXT_H:int                   = 18;  
+		public static var INPUTTEXT_H:int                   = 16;
 		
 		public static var LABEL_H:int                       = 18;  
 		

@@ -32,7 +32,7 @@ package ui
 				SLIDER_W_OR_H           = 200;
 				SLIDER_THICKNESS        = 20;
 				INPUTTEXT_W             = 200;
-				INPUTTEXT_H             = 36;
+				INPUTTEXT_H             = 32;
 				LABEL_H                 = 36;
 				LIST_SIZE               = 200;
 				LIST_ITEM_H             = 40;
