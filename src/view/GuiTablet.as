@@ -1,104 +1,83 @@
 package view
 {
-	import behavior.ImageWithLabel;
-
-	import com.bit101.components.CheckBox;
-	import com.bit101.components.ColorChooser;
-	import com.bit101.components.ComboBox;
-	import com.bit101.components.HUISlider;
-	import com.bit101.components.Label;
-	import com.bit101.components.NumericStepper;
-	import com.bit101.components.PushButton;
-
-	import data.BlendModes;
-	import data.Constants;
-	import data.Strings;
-
-	import flash.events.Event;
+	import ui.StyleChanger;
 
 	/**
 	 *
 	 * @author: Tobi Wan Kenobi
-	 * The extended UI, where more stuff are available directly on screen...
+	 * The extended mobile UI, where more stuff are available directly on screen...like desktop...
 	 */
 	public class GuiTablet extends GuiBase
 	{
 		public function GuiTablet(parent:VeilPainter)
 		{
+			StyleChanger.Size_Double(); // needed before we start base class?
+			
 			super(parent);
 			
-			//-- Init and layout gui
-			_sldElasticity = new HUISlider(this, 10, 10, Strings.LBL_ELASTICITY, onElasticityChanged);
-			_sldElasticity.width = 300;
-			_sldElasticity.setSliderParams(Constants.ELASTICITY_MIN, Constants.ELASTICITY_MAX, Constants.ELASTICITY_DEFAULT);
-			_sldElasticity.labelPrecision = 2;
-			_sldElasticity.tick = 0.01
+			var sldx:int = 20;
+			var sldw:int = 520;
+			
+			//-- Layout gui
+			_sldElasticity.x = sldx;
+			_sldElasticity.y = 10;
+			_sldElasticity.width = sldw;
 
-			_sldStrength = new HUISlider(this, 10, 35, Strings.LBL_STRENGTH, onStrengthChanged);
-			_sldStrength.width = 300;
-			_sldStrength.setSliderParams(Constants.STRENGTH_MIN, Constants.STRENGTH_MAX, Constants.STRENGTH_DEFAULT);
-			_sldStrength.labelPrecision = 3;
-			_sldStrength.tick = 0.001
+			_sldStrength.x = sldx;
+			_sldStrength.y = 55;
+			_sldStrength.width = sldw;
 
-			_sldStrengthDegradation = new HUISlider(this, 10, 60, Strings.LBL_STRENGTH_DEGR, onStrengthDegradationChanged);
-			_sldStrengthDegradation.width = 300;
-			_sldStrengthDegradation.setSliderParams(Constants.DEGRADATION_MIN, Constants.DEGRADATION_MAX, Constants.DEGRADATION_DEFAULT);
-			_sldStrengthDegradation.labelPrecision = 2;
-			_sldStrengthDegradation.tick = 0.01;
+			_sldStrengthDegradation.x = sldx;
+			_sldStrengthDegradation.y = 100;
+			_sldStrengthDegradation.width = sldw;
 
-			var lblAlphaImage:Label = new Label(this, 316, 10, Strings.LBL_ALPHA_IMG);
-			_cmbAlphaImage = new ComboBox(this, 369, 10, "");
-			_cmbAlphaImage.width = 96;
-			for each(var img:ImageWithLabel in _loadAlphaImages.images)
-			{
-				_cmbAlphaImage.addItem(img.label);
-			}
-			_cmbAlphaImage.selectedIndex = 0;
-			_cmbAlphaImage.numVisibleItems = _loadAlphaImages.images.length;
-			_cmbAlphaImage.addEventListener(Event.SELECT, onAlphaImageChanged);
+			var lblx:int = 540;
+			var cmbx:int = 645;
+			var cmbw:int = 160;
+			_lblAlphaImage.x = lblx;
+			_lblAlphaImage.y = 10;
 
-			_sldAlpha = new HUISlider(this, 469, 10, "", onAlphaChanged);
-			_sldAlpha.width = 130;
-			_sldAlpha.setSliderParams(0, 1, Constants.BRUSH_ALPHA_DEFAULT);
-			_sldAlpha.labelPrecision = 1;
-			_sldAlpha.tick = 0.1;
+			_cmbAlphaImage.x = cmbx;
+			_cmbAlphaImage.y = 10;
+			_cmbAlphaImage.width = cmbw;
+			
+			_lblBlendModes.x = lblx;
+			_lblBlendModes.y = 70;
 
-			var lblNumLinks:Label = new Label(this, 748, 11, Strings.LBL_NUM_LINKS);
-			_stpNumLinks = new NumericStepper(this, 692, 12, onNumLinksChanged);
-			_stpNumLinks.width = 52
-			_stpNumLinks.step = Constants.NUM_LINKS_STEP;
-			_stpNumLinks.minimum = Constants.NUM_LINKS_MIN;
-			_stpNumLinks.value = Constants.NUM_LINKS_DEFAULT;
-			_stpNumLinks.maximum = Constants.NUM_LINKS_MAX;
+			_cmbBlendMode.x = cmbx;
+			_cmbBlendMode.y = 69;
+			_cmbBlendMode.width = cmbw;
+			
+			_sldAlpha.x = 816;
+			_sldAlpha.y = 11;
+			_sldAlpha.width = 258;
 
-			_chkDebug = new CheckBox(this, 733, 43, Strings.LBL_DEBUG, onDebugChanged);
+			_colorPicker.x = 830;
+			_colorPicker.y = 74;
+			
+			_chkDebug.x = 1308;
+			_chkDebug.y = 75;
 
-			var lblBlendModes:Label = new Label(this, 316, 39, Strings.LBL_BLENDMODE);
-			var blendModesAll:Array = BlendModes.getAll();
-			_cmbBlendMode = new ComboBox(this, 369, 38, "", blendModesAll);
-			_cmbBlendMode.width = 96;
-			_cmbBlendMode.numVisibleItems = blendModesAll.length;
-			_cmbBlendMode.selectedIndex = Constants.BRUSH_BLENDMODE_INDEX;
-			_cmbBlendMode.addEventListener(Event.SELECT, onBlendModeChanged);
-
-			//-- Color 'BRUSH'
-			_colorPicker = new ColorChooser(this, 478, 40, Constants.BRUSH_COLOR_DEFAULT, onColorChanged);
-			_colorPicker.usePopup = true;
+			_stpNumLinks.x = 1225;
+			_stpNumLinks.y = 12;
+			_stpNumLinks.width = 110;
+			_lblNumLinks.x = 1345;
+			_lblNumLinks.y = 11;
 
 			//-- STUFF @ right...
-			var btnClear:PushButton = new PushButton(this, _screenSize.x - 110, 10, Strings.LBL_CLEAR, onResetCanvas);
+			_btnClear.x = _screenSize.x - 220;
+			_btnClear.y = 10;
 
-			_stpSizeMultiplier = new NumericStepper(this, btnClear.x - 62, 12, onResetCanvas);
-			_stpSizeMultiplier.minimum = 1;
-			_stpSizeMultiplier.value = Constants.SIZE_MULTIPLIER_DEFAULT;
-			_stpSizeMultiplier.maximum = 4;
-			_stpSizeMultiplier.width = 52;
+			_stpSizeMultiplier.x = _btnClear.x - 140;
+			_stpSizeMultiplier.y = 12;
+			_stpSizeMultiplier.width = 110;
 
-			//-- Color BG
-			_colorPickerBG = new ColorChooser(this, _stpSizeMultiplier.x - 80, 12, Constants.BG_COLOR_DEFAULT, onResetCanvas);
-			_colorPickerBG.usePopup = true;
+			_colorPickerBG.x = _stpSizeMultiplier.x - 165;
+			_colorPickerBG.y = 12;
 
-			var btnSaveImage:PushButton = new PushButton(this, _screenSize.x - 110, _screenSize.y - 30, Strings.LBL_SAVE, onSaveImageToDesktop);
+			_btnSaveImage.x = _screenSize.x - 220;
+			_btnSaveImage.y = _screenSize.y - 70;
+			_btnSaveImage.enabled = false; //TODO: We disable this on mobile for now!
 		}
 	}
 }

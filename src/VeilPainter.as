@@ -25,6 +25,7 @@ package
 	import utils.ShapeFactory;
 
 	import view.GuiBase;
+	import view.GuiDesktop;
 	import view.GuiTablet;
 
 	/**
@@ -88,6 +89,7 @@ package
 			
 			//TODO: Select GUI...
 			_gui = new GuiTablet(this);
+//			_gui = new GuiDesktop(this);
 			addChild(_gui);
 
 			//-- Mouse
