@@ -1,6 +1,5 @@
 package view
 {
-	import behavior.Brush;
 	import behavior.ImageWithLabel;
 
 	import com.bit101.components.CheckBox;
@@ -15,51 +14,20 @@ package view
 	import data.Constants;
 	import data.Strings;
 
-	import flash.display.Bitmap;
-
-	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.geom.Point;
-
-	import utils.LoadAlphaImages;
 
 	/**
 	 *
 	 * @author: Tobi Wan Kenobi
 	 * The extended UI, where more stuff are available directly on screen...
 	 */
-	public class GuiTablet extends Sprite
+	public class GuiTablet extends GuiBase
 	{
-		//-- refs in parent class...
-		private var _parent:VeilPainter;
-		private var _screenSize:Point;
-		private var _brush:Brush;
-		private var _loadAlphaImages:LoadAlphaImages;
-		
-		private var _sldElasticity:HUISlider;
-		private var _sldStrength:HUISlider;
-		private var _sldStrengthDegradation:HUISlider;
-		private var _sldAlpha:HUISlider;
-		private var _stpNumLinks:NumericStepper;
-		private var _cmbAlphaImage:ComboBox;
-		private var _cmbBlendMode:ComboBox;
-		private var _colorPicker:ColorChooser;
-		private var _colorPickerBG:ColorChooser;
-		private var _stpSizeMultiplier:NumericStepper;
-		private var _chkDebug:CheckBox;
-		
-		
 		public function GuiTablet(parent:VeilPainter)
 		{
-			//TODO: Remove these ugly refs...solve with some event system...?
-			_parent = parent;
-			_screenSize = parent.screenSize;
-			_brush = parent.brush;
-			_loadAlphaImages = parent.loadAlphaImages;
-			//TODO: See above...
+			super(parent);
 			
-			
-			//-- init and layout gui
+			//-- Init and layout gui
 			_sldElasticity = new HUISlider(this, 10, 10, Strings.LBL_ELASTICITY, onElasticityChanged);
 			_sldElasticity.width = 300;
 			_sldElasticity.setSliderParams(Constants.ELASTICITY_MIN, Constants.ELASTICITY_MAX, Constants.ELASTICITY_DEFAULT);
@@ -97,11 +65,11 @@ package view
 
 			var lblNumLinks:Label = new Label(this, 748, 11, Strings.LBL_NUM_LINKS);
 			_stpNumLinks = new NumericStepper(this, 692, 12, onNumLinksChanged);
-			_stpNumLinks.width      = 52
-			_stpNumLinks.step       = Constants.NUM_LINKS_STEP;
-			_stpNumLinks.minimum    = Constants.NUM_LINKS_MIN;
-			_stpNumLinks.value      = Constants.NUM_LINKS_DEFAULT;
-			_stpNumLinks.maximum    = Constants.NUM_LINKS_MAX;
+			_stpNumLinks.width = 52
+			_stpNumLinks.step = Constants.NUM_LINKS_STEP;
+			_stpNumLinks.minimum = Constants.NUM_LINKS_MIN;
+			_stpNumLinks.value = Constants.NUM_LINKS_DEFAULT;
+			_stpNumLinks.maximum = Constants.NUM_LINKS_MAX;
 
 			_chkDebug = new CheckBox(this, 733, 43, Strings.LBL_DEBUG, onDebugChanged);
 
@@ -117,7 +85,6 @@ package view
 			_colorPicker = new ColorChooser(this, 478, 40, Constants.BRUSH_COLOR_DEFAULT, onColorChanged);
 			_colorPicker.usePopup = true;
 
-
 			//-- STUFF @ right...
 			var btnClear:PushButton = new PushButton(this, _screenSize.x - 110, 10, Strings.LBL_CLEAR, onResetCanvas);
 
@@ -132,64 +99,6 @@ package view
 			_colorPickerBG.usePopup = true;
 
 			var btnSaveImage:PushButton = new PushButton(this, _screenSize.x - 110, _screenSize.y - 30, Strings.LBL_SAVE, onSaveImageToDesktop);
-		}
-
-		private function onSaveImageToDesktop(e:Event):void
-		{
-			_parent.saveImageToDesktop();
-		}
-
-		private function onResetCanvas(e:Event):void
-		{
-			_parent.resetCanvas(_stpSizeMultiplier.value, _colorPickerBG.value);
-		}
-
-		private function onNumLinksChanged(e:Event):void
-		{
-			_brush.numLinks = _stpNumLinks.value;
-		}
-
-		private function onElasticityChanged(e:Event):void
-		{
-			_brush.elasticity = _sldElasticity.value;
-		}
-
-		private function onStrengthChanged(e:Event):void
-		{
-			_brush.strength = _sldStrength.value;
-		}
-
-		private function onStrengthDegradationChanged(e:Event):void
-		{
-			_brush.strengthDegradation = _sldStrengthDegradation.value;
-		}
-
-		private function onColorChanged(e:Event):void
-		{
-			_brush.brushColor = _colorPicker.value;
-		}
-
-		private function onAlphaChanged(e:Event):void
-		{
-			_brush.brushAlpha = _sldAlpha.value;
-		}
-
-		private function onBlendModeChanged(e:Event):void
-		{
-			_brush.brushBlendmode = String(_cmbBlendMode.selectedItem);
-		}
-
-		private function onAlphaImageChanged(e:Event):void
-		{
-			var index:int = _cmbAlphaImage.selectedIndex;
-			var img:Bitmap = _loadAlphaImages.images[index].bitmap;
-			_brush.alphaImage = img;
-		}
-
-		private function onDebugChanged(e:Event):void
-		{
-//			trace(_debugDots.selected);
-			_brush.debug = _chkDebug.selected;
 		}
 	}
 }

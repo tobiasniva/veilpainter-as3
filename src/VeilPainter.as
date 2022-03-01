@@ -1,18 +1,9 @@
 package
 {
 	import behavior.Brush;
-	import behavior.ImageWithLabel;
 
 	import com.adobe.images.PNGEncoder;
-	import com.bit101.components.CheckBox;
-	import com.bit101.components.ColorChooser;
-	import com.bit101.components.ComboBox;
-	import com.bit101.components.HUISlider;
-	import com.bit101.components.Label;
-	import com.bit101.components.NumericStepper;
-	import com.bit101.components.PushButton;
 
-	import data.BlendModes;
 	import data.Constants;
 
 	import flash.display.Bitmap;
@@ -33,6 +24,7 @@ package
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
 
+	import view.GuiBase;
 	import view.GuiTablet;
 
 	/**
@@ -52,7 +44,7 @@ package
 
 		private var _bmp:Bitmap;
 		private var _bmpData:BitmapData;
-		private var _gui:Sprite;
+		private var _gui:GuiBase;
 
 
 		public function VeilPainter()
@@ -117,10 +109,12 @@ package
 			if (e.type == MouseEvent.MOUSE_DOWN && e.target == stage)
 			{
 				brush.isDrawing = true;
+				_gui.hide();
 			}
 			else
 			{
 				brush.isDrawing = false;
+				_gui.show();
 			}
 		}
 
