@@ -1,4 +1,4 @@
-package
+package labs
 {
 	import com.bit101.components.Label;
 	import com.bit101.components.PushButton;

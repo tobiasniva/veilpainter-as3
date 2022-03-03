@@ -134,5 +134,48 @@ package ui
 				TEXT_FIELD_MARGIN       = 4;
 			}
 		}
+
+		public static function Size_1x()
+		{
+			with(Style)
+			{
+				fontSize                = 8;
+				BUTTON_W                = 100;
+				BUTTON_H                = 20;
+				CHECKBOX_BG             = 10; 
+				CHECKBOX_RIM            = 2;  
+				CHECKBOX_FACE           = 6;  
+				CHECKBOX_LABEL_X        = 12; 
+				CHECKBOX_LABEL_H        = 10; 
+				COLOR_CHOOSER_W         = 65; 
+				COLOR_CHOOSER_H         = 15; 
+				COLOR_CHOOSER_INPUT_W   = 45; 
+				COLOR_CHOOSER_SWATCH_X  = 50; 
+				COLOR_CHOOSER_BOX       = 16; 
+				COMBOBOX_W              = 100;
+				COMBOBOX_H              = 20; 
+				HUI_SLIDER_W            = 200;
+				HUI_SLIDER_H            = 18; 
+				HUI_SLIDER_LABEL_PAD    = 5;  
+				HUI_SLIDER_LABEL_W_FIX  = 60;
+				SLIDER_W_OR_H           = 100;
+				SLIDER_THICKNESS        = 10; 
+				INPUTTEXT_W             = 100;
+				INPUTTEXT_H             = 16;
+				LABEL_H                 = 18; 
+				LIST_SIZE               = 100;
+				LIST_ITEM_H             = 20; 
+				LISTITEM_W              = 100;
+				LISTITEM_H              = 20; 
+				LISTITEM_LABEL_X        = 5;  
+				NUMERIC_STEPPER_W       = 80; 
+				NUMERIC_STEPPER_H       = 16; 
+				PANEL_SIZE              = 100;
+				PANEL_GRID              = 10; 
+				TEXT_W                  = 200;
+				TEXT_H                  = 100;
+				TEXT_FIELD_MARGIN       = 2;  
+			}
+		}
 	}
 }
