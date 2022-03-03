@@ -62,6 +62,8 @@ package com.bit101.components
 		override protected function positionLabel():void
 		{
 			_valueLabel.x = _slider.x + _slider.width + Style.HUI_SLIDER_LABEL_PAD;
+			_valueLabel.y = Style.HUI_SLIDER_LABEL_Y_FIX;
+			_label.y = Style.HUI_SLIDER_LABEL_Y_FIX;
 		}
 		
 		
@@ -82,6 +84,8 @@ package com.bit101.components
 			_slider.width = width - _label.width - Style.HUI_SLIDER_LABEL_W_FIX;
 			
 			_valueLabel.x = _slider.x + _slider.width + Style.HUI_SLIDER_LABEL_PAD;
+			_valueLabel.y = Style.HUI_SLIDER_LABEL_Y_FIX;
+			_label.y = Style.HUI_SLIDER_LABEL_Y_FIX;
 		}
 		
 		///////////////////////////////////

@@ -78,13 +78,13 @@ package com.bit101.components
 		override protected function addChildren():void
 		{
 			_back = new Sprite();
-			_back.filters = [getShadow(2, true)];
+			_back.filters = [getShadow(Style.SHADOW_2, true)];
 			_back.mouseEnabled = false;
 			addChild(_back);
 			
 			_face = new Sprite();
 			_face.mouseEnabled = false;
-			_face.filters = [getShadow(1)];
+			_face.filters = [getShadow(Style.SHADOW_1)];
 			_face.x = 1;
 			_face.y = 1;
 			addChild(_face);
