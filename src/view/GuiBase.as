@@ -145,12 +145,12 @@ package view
 			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);
 		}
 		
-		public function show()
+		public function show():void
 		{
 			this.visible = true;
 		}
 
-		public function hide()
+		public function hide():void
 		{
 			this.visible = false;
 		}

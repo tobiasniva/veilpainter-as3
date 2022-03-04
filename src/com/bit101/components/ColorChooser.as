@@ -97,7 +97,7 @@ package com.bit101.components
 			super.init();
 
 			_width = Style.COLOR_CHOOSER_W;
-			_height = Style.COLOR_CHOOSER_H;
+			_height = Style.COMMON_20;
 			value = _value;
 		}
 		
@@ -134,7 +134,7 @@ package com.bit101.components
 			super.draw();
 			_swatch.graphics.clear();
 			_swatch.graphics.beginFill(_value);
-			_swatch.graphics.drawRect(0, 0, Style.COLOR_CHOOSER_BOX, Style.COLOR_CHOOSER_BOX);
+			_swatch.graphics.drawRect(0, 0, Style.COMMON_20, Style.COMMON_20);
 			_swatch.graphics.endFill();
 		}
 		
@@ -294,15 +294,16 @@ package com.bit101.components
 			{
 				case TOP : 
 					_colorsContainer.x = point.x;
-					_colorsContainer.y = point.y - _colorsContainer.height - 4;
+//					_colorsContainer.y = point.y - _colorsContainer.height - 4;
+					_colorsContainer.y = point.y - _colorsContainer.height;
 				break;
 				case BOTTOM : 
 					_colorsContainer.x = point.x;
-					_colorsContainer.y = point.y + 22;
+					_colorsContainer.y = point.y + Style.COMMON_20; //22
 				break;
 				default: 
 					_colorsContainer.x = point.x;
-					_colorsContainer.y = point.y + 22;
+					_colorsContainer.y = point.y + Style.COMMON_20; //22
 				break;
 			}
 		}
@@ -312,8 +313,8 @@ package com.bit101.components
 		 */
 
 		protected function getDefaultModel():Sprite {	
-			var w:Number = 100;
-			var h:Number = 100;
+			var w:Number = Style.COLOR_CHOOSER_PAD_SIZE; //100
+			var h:Number = Style.COLOR_CHOOSER_PAD_SIZE; //100
 			var bmd:BitmapData = new BitmapData(w, h);
 			
 			var g1:Sprite = getGradientSprite(w, h, _defaultModelColors);

@@ -11,6 +11,7 @@ package
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageDisplayState;
+	import flash.display.StageOrientation;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -20,6 +21,8 @@ package
 	import flash.geom.Point;
 	import flash.globalization.DateTimeFormatter;
 	import flash.utils.ByteArray;
+
+	import ui.StyleSizer;
 
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
@@ -66,7 +69,7 @@ package
 			//TODO: Consider loading PlayerPrefs here, to initialize everything with what's in there...
 		}
 		
-		private function onAlphaImagesLoaded(e:Event)
+		private function onAlphaImagesLoaded(e:Event):void
 		{
 			loadAlphaImages.removeEventListener(Event.COMPLETE, onAlphaImagesLoaded);
 			
@@ -88,7 +91,9 @@ package
 			brush.shape = ShapeFactory.getCircle(Constants.CHAIN_LINK_SIZE, Constants.CHAIN_LINK_COLOR);
 			addChildAt(brush, getChildIndex(_bmp) + 1);
 			
-			//TODO: Select GUI...
+			//TODO: Select GUI and scale...
+//			stage.setOrientation(StageOrientation.ROTATED_RIGHT);
+			StyleSizer.Size(4);
 //			_gui = new GuiTablet(this);
 			_gui = new GuiPhone(this);
 //			_gui = new GuiDesktop(this);

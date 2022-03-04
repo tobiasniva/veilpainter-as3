@@ -10,12 +10,9 @@ package labs
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
 	import com.bit101.components.RadioButton;
-	import com.bit101.components.Style;
-	import com.bit101.components.Text;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.PixelSnapping;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageDisplayState;
@@ -59,7 +56,8 @@ package labs
 		{
 			stage.scaleMode 	= StageScaleMode.NO_SCALE;
 			stage.align 		= StageAlign.TOP_LEFT;
-//			stage.displayState 	= StageDisplayState.FULL_SCREEN;
+			stage.displayState 	= StageDisplayState.FULL_SCREEN;
+			stage.displayState 	= StageDisplayState.FULL_SCREEN_INTERACTIVE; //ColorChooser needs it!
 			
 			_bmpData = new BitmapData(stage.fullScreenWidth, stage.fullScreenHeight, false, BGCOL);
 			_grid = new Bitmap(_bmpData);
@@ -99,6 +97,8 @@ package labs
 			_numStep = new NumericStepper(this, x2, pad + (130 * _scaler));
 			_inputText = new InputText(this, x2, pad + (170 * _scaler), "Input");
 			_colChooser = new ColorChooser(this, x2, pad + (210 * _scaler), 0xccaa66);
+			_colChooser.usePopup = true;
+			_colChooser.popupAlign = ColorChooser.TOP;
 			
 		}
 

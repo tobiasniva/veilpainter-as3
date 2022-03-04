@@ -70,10 +70,9 @@ package com.bit101.components
 		public static var SHADOW_1:Number                   = 1;
 		
 		public static var COLOR_CHOOSER_W:int               = 65;  
-		public static var COLOR_CHOOSER_H:int               = 15;  
 		public static var COLOR_CHOOSER_INPUT_W:int         = 45;  
-		public static var COLOR_CHOOSER_SWATCH_X:int        = 50;  
-		public static var COLOR_CHOOSER_BOX:int             = 20;
+		public static var COLOR_CHOOSER_SWATCH_X:int        = 50;
+		public static var COLOR_CHOOSER_PAD_SIZE:int        = 150;
 		
 		public static var HUI_SLIDER_LABEL_PAD:int          = 5;
 		public static var HUI_SLIDER_LABEL_W_FIX:int        = 60;

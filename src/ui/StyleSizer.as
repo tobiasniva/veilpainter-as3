@@ -5,7 +5,7 @@ package ui
 	public class StyleSizer
 	{
 
-		public static function Size(factor:Number = 1.0)
+		public static function Size(factor:Number = 1.0):void
 		{
 			with(Style)
 			{
@@ -26,10 +26,9 @@ package ui
 				SHADOW_1                = factor *      1;
 				
 				COLOR_CHOOSER_W         = factor *      65;
-				COLOR_CHOOSER_H         = factor *      15;
 				COLOR_CHOOSER_INPUT_W   = factor *      45;
 				COLOR_CHOOSER_SWATCH_X  = factor *      50;
-				COLOR_CHOOSER_BOX       = factor *      16;
+				COLOR_CHOOSER_PAD_SIZE  = factor *      150;
 				
 				HUI_SLIDER_LABEL_PAD    = factor *      5;
 				HUI_SLIDER_LABEL_W_FIX  = factor *      60;
