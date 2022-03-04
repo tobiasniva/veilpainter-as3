@@ -11,15 +11,16 @@ package
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageDisplayState;
-	import flash.display.StageOrientation;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.PermissionEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.geom.Point;
 	import flash.globalization.DateTimeFormatter;
+	import flash.permissions.PermissionStatus;
 	import flash.utils.ByteArray;
 
 	import ui.StyleSizer;
@@ -28,9 +29,7 @@ package
 	import utils.ShapeFactory;
 
 	import view.GuiBase;
-	import view.GuiDesktop;
 	import view.GuiPhone;
-	import view.GuiTablet;
 
 	/**
 	 *
@@ -50,6 +49,7 @@ package
 		private var _bmp:Bitmap;
 		private var _bmpData:BitmapData;
 		private var _gui:GuiBase;
+		private var _reqFile:File;
 
 
 		public function VeilPainter()
@@ -63,10 +63,36 @@ package
 			screenSize = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
 			_bmpSize 	= new Point(screenSize.x * _sizeMultiplier, screenSize.y * _sizeMultiplier);
 			
+			checkAndRequestPermission();
+		}
+
+		private function checkAndRequestPermission():void
+		{
+			if(File.permissionStatus != PermissionStatus.GRANTED)
+			{
+				_reqFile = File.documentsDirectory.resolvePath("dummy.png");
+				_reqFile.addEventListener(PermissionEvent.PERMISSION_STATUS, onPermission);
+				_reqFile.requestPermission();
+			}
+			else
+			{
+				weHavePermission();
+			}
+		}
+
+		private function onPermission(e:PermissionEvent = null):void
+		{
+//			trace("onPermission - status? " + File.permissionStatus);
+			_reqFile.removeEventListener(PermissionEvent.PERMISSION_STATUS, onPermission);
+			weHavePermission();
+		}
+		
+		private function weHavePermission():void
+		{
+			//TODO: Consider loading PlayerPrefs here, to initialize everything with what's in there...
+			
 			loadAlphaImages = new LoadAlphaImages();
 			loadAlphaImages.addEventListener(Event.COMPLETE, onAlphaImagesLoaded);
-			
-			//TODO: Consider loading PlayerPrefs here, to initialize everything with what's in there...
 		}
 		
 		private function onAlphaImagesLoaded(e:Event):void
@@ -92,8 +118,12 @@ package
 			addChildAt(brush, getChildIndex(_bmp) + 1);
 			
 			//TODO: Select GUI and scale...
-//			stage.setOrientation(StageOrientation.ROTATED_RIGHT);
-			StyleSizer.Size(4);
+			if(screenSize.x < 1080) {
+				StyleSizer.Size(3);
+			} else {
+				StyleSizer.Size(4);
+			}
+			
 //			_gui = new GuiTablet(this);
 			_gui = new GuiPhone(this);
 //			_gui = new GuiDesktop(this);
@@ -144,20 +174,22 @@ package
 			brush.canvasSizeMultiplier = _sizeMultiplier;
 		}
 
-		public function saveImageToDesktop():void
+		public function saveImage():void
 		{
 			var byteArray:ByteArray = PNGEncoder.encode(_bmpData);
 
 			var d:Date = new Date();
 			var dtf:DateTimeFormatter = new DateTimeFormatter("en-US");
 			dtf.setDateTimePattern("yyyyMMdd_hhmmss");
+			
+			var imgName:String = "VeilPainter_" + dtf.format(d) + ".png";
 
-			var file:File = File.desktopDirectory.resolvePath("niva3d_" + dtf.format(d) + ".png");
+			var file:File = File.documentsDirectory.resolvePath(imgName);
+
 			var fileStream:FileStream = new FileStream();
 			fileStream.open(file, FileMode.WRITE);
 			fileStream.writeBytes(byteArray);
 			fileStream.close();
 		}
-
 	}
 }

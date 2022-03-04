@@ -49,8 +49,10 @@ package com.bit101.components
 	[Event(name="change", type="flash.events.Event")]
 	public class ColorChooser extends Component
 	{
-		public static const TOP:String = "top";
-		public static const BOTTOM:String = "bottom";
+		public static const TOP_LEFT:String     = "topLeft";
+		public static const TOP_RIGHT:String    = "topRight";
+		public static const BOTTOM_LEFT:String  = "bottomLeft";
+		public static const BOTTOM_RIGHT:String = "bottomRight";
 		
 		protected var _colors:BitmapData;
 		protected var _colorsContainer:Sprite;
@@ -58,7 +60,7 @@ package com.bit101.components
 		protected var _input:InputText;
 		protected var _model:DisplayObject;
 		protected var _oldColorChoice:uint = _value;
-		protected var _popupAlign:String = BOTTOM;
+		protected var _popupAlign:String = BOTTOM_LEFT;
 		protected var _stage:Stage;
 		protected var _swatch:Sprite;
 		protected var _tmpColorChoice:uint = _value;
@@ -93,7 +95,6 @@ package com.bit101.components
 		 */
 		override protected function init():void
 		{
-			
 			super.init();
 
 			_width = Style.COLOR_CHOOSER_W;
@@ -290,21 +291,33 @@ package com.bit101.components
 		protected function placeColors():void{
 			var point:Point = new Point(x, y);
 			if(parent) point = parent.localToGlobal(point);
+			
 			switch (_popupAlign)
 			{
-				case TOP : 
+				case TOP_LEFT : 
 					_colorsContainer.x = point.x;
-//					_colorsContainer.y = point.y - _colorsContainer.height - 4;
 					_colorsContainer.y = point.y - _colorsContainer.height;
-				break;
-				case BOTTOM : 
+					break;
+				
+				case BOTTOM_LEFT : 
 					_colorsContainer.x = point.x;
 					_colorsContainer.y = point.y + Style.COMMON_20; //22
-				break;
+					break;
+
+				case TOP_RIGHT :
+					_colorsContainer.x = point.x - _colorsContainer.width + Style.COLOR_CHOOSER_W + 15;
+					_colorsContainer.y = point.y - _colorsContainer.height;
+					break;
+				
+				case BOTTOM_RIGHT :
+					_colorsContainer.x = point.x - _colorsContainer.width + Style.COLOR_CHOOSER_W + 15;
+					_colorsContainer.y = point.y + Style.COMMON_20; //22
+					break;
+				
 				default: 
 					_colorsContainer.x = point.x;
 					_colorsContainer.y = point.y + Style.COMMON_20; //22
-				break;
+					break;
 			}
 		}
 		

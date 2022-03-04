@@ -98,7 +98,7 @@ package labs
 			_inputText = new InputText(this, x2, pad + (170 * _scaler), "Input");
 			_colChooser = new ColorChooser(this, x2, pad + (210 * _scaler), 0xccaa66);
 			_colChooser.usePopup = true;
-			_colChooser.popupAlign = ColorChooser.TOP;
+			_colChooser.popupAlign = ColorChooser.TOP_LEFT;
 			
 		}
 

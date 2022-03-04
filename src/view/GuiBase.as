@@ -157,7 +157,7 @@ package view
 
 		protected function onSaveImageToDesktop(e:Event):void
 		{
-			_parent.saveImageToDesktop();
+			_parent.saveImage();
 		}
 
 		protected function onResetCanvas(e:Event):void

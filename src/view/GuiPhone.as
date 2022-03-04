@@ -66,10 +66,11 @@ package view
 
 			_colorPicker.x = PADDING;
 			_colorPicker.y = 1000;
+			_colorPicker.popupAlign = ColorChooser.TOP_LEFT;
 
 			_colorPickerBG.x = X_MID;
 			_colorPickerBG.y = 1000;
-//			_colorPickerBG.popupAlign = ColorChooser.TOP;
+			_colorPickerBG.popupAlign = ColorChooser.TOP_RIGHT;
 
 			_btnClear.x = PADDING;
 			_btnClear.y = Y_BOTTOM;
@@ -78,7 +79,7 @@ package view
 			_btnSaveImage.x = X_MID;
 			_btnSaveImage.y = Y_BOTTOM;
 			_btnSaveImage.width = WIDTH_HALF;
-			_btnSaveImage.enabled = false; //TODO: We disable this on mobile for now!
+//			_btnSaveImage.enabled = false;
 		}
 	}
 }
