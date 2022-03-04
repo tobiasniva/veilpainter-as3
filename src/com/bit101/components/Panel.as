@@ -67,7 +67,7 @@ package com.bit101.components
 		override protected function init():void
 		{
 			super.init();
-			setSize(Style.PANEL_SIZE, Style.PANEL_SIZE);
+			setSize(Style.COMMON_100, Style.COMMON_100);
 		}
 		
 		/**
@@ -86,7 +86,7 @@ package com.bit101.components
 			super.addChild(content);
 			content.mask = _mask;
 			
-			filters = [getShadow(2, true)];
+			filters = [getShadow(Style.SHADOW_2, true)];
 		}
 		
 		
@@ -176,7 +176,7 @@ package com.bit101.components
 			_shadow = b;
 			if(_shadow)
 			{
-				filters = [getShadow(2, true)];
+				filters = [getShadow(Style.SHADOW_2, true)];
 			}
 			else
 			{

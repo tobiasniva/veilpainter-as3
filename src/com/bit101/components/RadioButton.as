@@ -114,11 +114,11 @@ package com.bit101.components
 		override protected function addChildren():void
 		{
 			_back = new Sprite();
-			_back.filters = [getShadow(2, true)];
+			_back.filters = [getShadow(Style.SHADOW_2, true)];
 			addChild(_back);
 			
 			_button = new Sprite();
-			_button.filters = [getShadow(1)];
+			_button.filters = [getShadow(Style.SHADOW_1)];
 			_button.visible = false;
 			addChild(_button);
 			

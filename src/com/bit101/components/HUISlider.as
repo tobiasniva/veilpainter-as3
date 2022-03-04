@@ -53,7 +53,7 @@ package com.bit101.components
 		override protected function init():void
 		{
 			super.init();
-			setSize(Style.HUI_SLIDER_W, Style.HUI_SLIDER_H);
+			setSize(Style.COMMON_200, Style.COMMON_20);
 		}
 		
 		/**

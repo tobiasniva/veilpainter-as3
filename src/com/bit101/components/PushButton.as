@@ -69,7 +69,7 @@ package com.bit101.components
 			super.init();
 			buttonMode = true;
 			useHandCursor = true;
-			setSize(Style.BUTTON_W, Style.BUTTON_H);
+			setSize(Style.COMMON_100, Style.COMMON_20);
 		}
 		
 		/**
@@ -175,7 +175,7 @@ package com.bit101.components
 			_over = false;
 			if(!_down)
 			{
-				_face.filters = [getShadow(1)];
+				_face.filters = [getShadow(Style.SHADOW_1)];
 			}
 			removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
 		}
@@ -188,7 +188,7 @@ package com.bit101.components
 		{
 			_down = true;
 			drawFace();
-			_face.filters = [getShadow(1, true)];
+			_face.filters = [getShadow(Style.SHADOW_1, true)];
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseGoUp);
 		}
 		
@@ -204,7 +204,7 @@ package com.bit101.components
 			}
 			_down = _selected;
 			drawFace();
-			_face.filters = [getShadow(1, _selected)];
+			_face.filters = [getShadow(Style.SHADOW_1, _selected)];
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseGoUp);
 		}
 		
@@ -237,7 +237,7 @@ package com.bit101.components
 			
 			_selected = value;
 			_down = _selected;
-			_face.filters = [getShadow(1, _selected)];
+			_face.filters = [getShadow(Style.SHADOW_1, _selected)];
 			drawFace();
 		}
 		public function get selected():Boolean

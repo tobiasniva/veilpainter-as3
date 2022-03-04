@@ -62,7 +62,7 @@ package com.bit101.components
 		{
 			super.init();
 			addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			setSize(Style.LISTITEM_W, Style.LISTITEM_H);
+			setSize(Style.COMMON_100, Style.COMMON_20);
 		}
 		
 		/**
@@ -71,7 +71,7 @@ package com.bit101.components
 		protected override function addChildren() : void
 		{
 			super.addChildren();
-			_label = new Label(this, Style.LISTITEM_LABEL_X, 0);
+			_label = new Label(this, Style.LISTITEM_LABEL_X, Style.LISTITEM_LABEL_Y);
             _label.draw();
 		}
 		

@@ -64,7 +64,7 @@ package com.bit101.components
 		override protected function init():void
 		{
 			super.init();
-			setSize(Style.INPUTTEXT_W, Style.INPUTTEXT_H);
+			setSize(Style.COMMON_100, Style.COMMON_20);
 		}
 		
 		/**
@@ -73,7 +73,7 @@ package com.bit101.components
 		override protected function addChildren():void
 		{
 			_back = new Sprite();
-			_back.filters = [getShadow(2, true)];
+			_back.filters = [getShadow(Style.SHADOW_2, true)];
 			addChild(_back);
 			
 			_tf = new TextField();
