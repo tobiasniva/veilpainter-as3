@@ -3,6 +3,7 @@ package
 	import behavior.Brush;
 
 	import com.adobe.images.PNGEncoder;
+	import com.bit101.components.Style;
 
 	import data.Constants;
 
@@ -19,6 +20,7 @@ package
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.geom.Point;
+	import flash.globalization.DateTimeFormatter;
 	import flash.permissions.PermissionStatus;
 	import flash.utils.ByteArray;
 
@@ -126,6 +128,7 @@ package
 			} else {
 				StyleSizer.ComponentScale(4);
 			}
+			Style.setStyle(Style.DARK);
 			
 //			_gui = new GuiTablet(this);
 			_gui = new GuiPhone(this);
@@ -185,27 +188,19 @@ package
 			
 			var byteArray:ByteArray = PNGEncoder.encode(_bmpData);
 
-//			var d:Date = new Date();
-//			var dtf:DateTimeFormatter = new DateTimeFormatter("en-US");
-//			dtf.setDateTimePattern("yyyyMMdd_hhmmss");
+			var d:Date = new Date();
+			var dtf:DateTimeFormatter = new DateTimeFormatter("en-US");
+			dtf.setDateTimePattern("yyyyMMdd_hhmmss");
 			
-//			var imgName:String = "VeilPainter_" + dtf.format(d) + ".png";
-			var imgName:String = ("dummy.png");
+			var imgName:String = "VeilPainter_" + dtf.format(d) + ".png";
 
 			var file:File = File.documentsDirectory.resolvePath("VeilPainter/" + imgName);
-			trace("should save to: " + file.nativePath);
-			file.requestPermission();
-			file.addEventListener(PermissionEvent.PERMISSION_STATUS, onSavePerm);
+			trace("Should save to: " + file.nativePath);
 
 			var fileStream:FileStream = new FileStream();
 			fileStream.open(file, FileMode.WRITE);
 			fileStream.writeBytes(byteArray);
 			fileStream.close();
-		}
-
-		private function onSavePerm(e:PermissionEvent):void
-		{
-			trace("onSavePerm: " + e.status);
 		}
 	}
 }
