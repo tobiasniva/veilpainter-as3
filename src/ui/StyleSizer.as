@@ -4,9 +4,12 @@ package ui
 
 	public class StyleSizer
 	{
-
-		public static function Size(factor:Number = 1.0):void
+		public static var SCALE_FACTOR:Number = 1.0;
+		
+		public static function ComponentScale(factor:Number = 1.0):void
 		{
+			SCALE_FACTOR = factor;
+			
 			with(Style)
 			{
 				fontSize                = factor *      8;

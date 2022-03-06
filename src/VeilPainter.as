@@ -81,7 +81,11 @@ package
 
 		private function onPermission(e:PermissionEvent = null):void
 		{
-			trace("e.status: " + e.status);
+			var trg:File = e.currentTarget as File;
+			
+			trace("file? " + trg);
+			
+//			trace("e.status: " + e.status);
 			_reqFile.removeEventListener(PermissionEvent.PERMISSION_STATUS, onPermission);
 			weHavePermission();
 		}
@@ -118,9 +122,9 @@ package
 			
 			//TODO: Select GUI and scale...
 			if(screenSize.x < 1080) {
-				StyleSizer.Size(3);
+				StyleSizer.ComponentScale(3);
 			} else {
-				StyleSizer.Size(4);
+				StyleSizer.ComponentScale(4);
 			}
 			
 //			_gui = new GuiTablet(this);

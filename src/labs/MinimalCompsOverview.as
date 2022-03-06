@@ -111,7 +111,7 @@ package labs
 
 		private function scaleStyle(scale:Number = 1):void
 		{
-			StyleSizer.Size(scale);
+			StyleSizer.ComponentScale(scale);
 		}
 
 		private function drawGrid():void
