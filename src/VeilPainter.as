@@ -19,7 +19,6 @@ package
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.geom.Point;
-	import flash.globalization.DateTimeFormatter;
 	import flash.permissions.PermissionStatus;
 	import flash.utils.ByteArray;
 
@@ -82,7 +81,7 @@ package
 
 		private function onPermission(e:PermissionEvent = null):void
 		{
-//			trace("onPermission - status? " + File.permissionStatus);
+			trace("e.status: " + e.status);
 			_reqFile.removeEventListener(PermissionEvent.PERMISSION_STATUS, onPermission);
 			weHavePermission();
 		}
@@ -149,11 +148,13 @@ package
 			{
 				brush.isDrawing = true;
 				_gui.hide();
+//				trace("isDrawing = true");
 			}
 			else
 			{
 				brush.isDrawing = false;
 				_gui.show();
+//				trace("isDrawing = false");
 			}
 		}
 
@@ -176,20 +177,31 @@ package
 
 		public function saveImage():void
 		{
+			trace("perm status: " + File.permissionStatus);
+			
 			var byteArray:ByteArray = PNGEncoder.encode(_bmpData);
 
-			var d:Date = new Date();
-			var dtf:DateTimeFormatter = new DateTimeFormatter("en-US");
-			dtf.setDateTimePattern("yyyyMMdd_hhmmss");
+//			var d:Date = new Date();
+//			var dtf:DateTimeFormatter = new DateTimeFormatter("en-US");
+//			dtf.setDateTimePattern("yyyyMMdd_hhmmss");
 			
-			var imgName:String = "VeilPainter_" + dtf.format(d) + ".png";
+//			var imgName:String = "VeilPainter_" + dtf.format(d) + ".png";
+			var imgName:String = ("dummy.png");
 
-			var file:File = File.documentsDirectory.resolvePath(imgName);
+			var file:File = File.documentsDirectory.resolvePath("VeilPainter/" + imgName);
+			trace("should save to: " + file.nativePath);
+			file.requestPermission();
+			file.addEventListener(PermissionEvent.PERMISSION_STATUS, onSavePerm);
 
 			var fileStream:FileStream = new FileStream();
 			fileStream.open(file, FileMode.WRITE);
 			fileStream.writeBytes(byteArray);
 			fileStream.close();
+		}
+
+		private function onSavePerm(e:PermissionEvent):void
+		{
+			trace("onSavePerm: " + e.status);
 		}
 	}
 }
