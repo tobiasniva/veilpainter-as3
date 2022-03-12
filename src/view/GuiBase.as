@@ -14,11 +14,11 @@ package view
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
 
-	import data.BlendModes;
+	import consts.BlendModes;
 
-	import data.Constants;
+	import consts.Constants;
 
-	import data.Strings;
+	import consts.Strings;
 
 	import flash.display.Bitmap;
 

@@ -11,7 +11,7 @@ package labs
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
 
-	import data.BlendModes;
+	import consts.BlendModes;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

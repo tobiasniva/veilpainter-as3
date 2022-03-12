@@ -4,6 +4,14 @@
     <configurations>
       <configuration name="VeilPainter-Android" target-platform="Mobile" pure-as="true" main-class="VeilPainter" output-file="VeilPainter.swf" output-folder="$MODULE_DIR$/bin">
         <dependencies>
+          <entries>
+            <entry library-name="robotlegs-framework-v1.5.2" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="thirdparty" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
           <sdk name="AIRSDK_Harman_33_1_1_743" />
         </dependencies>
         <compiler-options>
@@ -14,7 +22,6 @@
         <packaging-air-desktop />
         <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/VeilPainter-android.xml" package-file-name="VeilPainter">
           <files-to-package>
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/alphas" path-in-package="alphas" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/icons" path-in-package="icons" />
           </files-to-package>
           <AirSigningOptions keystore-path="$MODULE_DIR$/../../_common/cert_220306" use-temp-certificate="false" />
@@ -49,6 +56,9 @@
     <orderEntry type="library" exported="" name="MinimalMobileTheme" level="project" />
     <orderEntry type="library" exported="" name="PNGEncoder2" level="project" />
     <orderEntry type="library" exported="" name="PNGEncoder" level="project" />
+    <orderEntry type="library" exported="" name="robotlegs-framework-v1.5.2" level="application" />
+    <orderEntry type="library" exported="" name="robotlegs-framework-v1.5.2" level="project" />
+    <orderEntry type="library" exported="" name="se" level="project" />
     <orderEntry type="library" exported="" name="thirdparty" level="project" />
   </component>
 </module>

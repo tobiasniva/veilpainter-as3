@@ -1,11 +1,11 @@
-package data
+package consts
 {
 	import flash.display.BlendMode;
 
 	/**
 	 *
 	 * @author: Tobi Wan Kenobi
-	 * Somewhat a model for now...holding various values, both initial and variable...
+	 * Somewhat a _model for now...holding various values, both initial and variable...
 	 * - Consider making PlayerPrefs-stuff later...
 	 */
 	public class Constants
