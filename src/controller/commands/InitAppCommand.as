@@ -28,22 +28,21 @@ package controller.commands
 //			NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 //			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, onDeactivate);
 
-			//TODO: Load/embed all images (alphas etc)
+			//TODO: Load/embed all images (alphas etc) - move to own task...
 			var a1:Bitmap = new ImageConst.Alpha_1();
 			var a2:Bitmap = new ImageConst.Alpha_2();
 			var a3:Bitmap = new ImageConst.Alpha_3();
 			a1.smoothing = true;
 			a2.smoothing = true;
 			a3.smoothing = true;
-			_model.addBrushAlpha(a1);
-			_model.addBrushAlpha(a2);
-			_model.addBrushAlpha(a3);
+			_model.alphas.push(a1);
+			_model.alphas.push(a2);
+			_model.alphas.push(a3);
 			
 			//TODO: Init _model - load prefs or set defaults...
 			
 			//TODO: Add/init all views...
 			contextView.addChild(new CanvasView());
-			dispatch(new ColorEvent(ColorEvent.BG_COLOR_CHANGED, 0x330000));
 			
 //			contextView.addChild(new HolderView());
 //			addSequentialTask(new InitUserSettingsTask());

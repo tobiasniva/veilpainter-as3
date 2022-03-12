@@ -2,6 +2,8 @@ package view
 {
 	import event.ColorEvent;
 
+	import flash.display.Bitmap;
+
 	import model.TempModel;
 
 	import org.robotlegs.mvcs.Mediator;
@@ -17,16 +19,15 @@ package view
 
 		override public function onRegister():void
 		{
-			addContextListener(ColorEvent.BG_COLOR_CHANGED, onBgColorChanged);
-			
 			_view.Init(_model.canvasMulitplier, _model.canvasColor);
+			addContextListener(ColorEvent.BG_COLOR_CHANGED, onBgColorChanged);
 		}
 
 		private function onBgColorChanged(e:ColorEvent):void
 		{
-			var res:int = _model.canvasMulitplier;
+			var mp:int = _model.canvasMulitplier;
 			var col:uint = e.color;
-			_view.Init(res, col);
+			_view.Init(mp, col);
 		}
 	}
 }
