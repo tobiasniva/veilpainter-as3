@@ -59,7 +59,7 @@ package view
 		private function toggleDrawing(e:MouseEvent):void
 		{
 //			if (e.type == MouseEvent.MOUSE_DOWN && e.target == stage)
-			if (e.type == MouseEvent.MOUSE_DOWN)
+			if (e.type == MouseEvent.MOUSE_DOWN && e.target == this)
 			{
 				brush.isDrawing = true;
 //				_gui.hide();
