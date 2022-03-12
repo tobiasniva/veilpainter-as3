@@ -19,6 +19,9 @@ package view
 	import flash.events.Event;
 	import flash.geom.Point;
 
+	import model.BrushModel;
+	import model.CanvasModel;
+
 	import utils.LoadAlphaImages;
 
 	/**
@@ -49,7 +52,7 @@ package view
 		protected var _btnClear:PushButton;
 		protected var _btnSaveImage:PushButton;
 
-		public function Init(alphasWithLabel:Vector.<ImageWithLabel>)
+		public function Init(brushModel:BrushModel, canvasModel:CanvasModel)
 		{
 			this.mouseEnabled = false; //TODO: Good to not pick up mouse...but safe for everything within this?
 
@@ -59,37 +62,37 @@ package view
 			_sldElasticity = new HUISlider(this);
 			_sldElasticity.label = Strings.LBL_ELASTICITY;
 			_sldElasticity.addEventListener(Event.CHANGE, onElasticityChanged);
-			_sldElasticity.setSliderParams(Constants.ELASTICITY_MIN, Constants.ELASTICITY_MAX, Constants.ELASTICITY_DEFAULT);
+			_sldElasticity.setSliderParams(Constants.ELASTICITY_MIN, Constants.ELASTICITY_MAX, brushModel.ealsticity);
 			_sldElasticity.labelPrecision = 2;
 			_sldElasticity.tick = 0.01
 
 			_sldStrength = new HUISlider(this);
 			_sldStrength.label = Strings.LBL_STRENGTH;
 			_sldStrength.addEventListener(Event.CHANGE, onStrengthChanged);
-			_sldStrength.setSliderParams(Constants.STRENGTH_MIN, Constants.STRENGTH_MAX, Constants.STRENGTH_DEFAULT);
+			_sldStrength.setSliderParams(Constants.STRENGTH_MIN, Constants.STRENGTH_MAX, brushModel.strength);
 			_sldStrength.labelPrecision = 3;
 			_sldStrength.tick = 0.001
 
 			_sldStrengthDegradation = new HUISlider(this);
 			_sldStrengthDegradation.label = Strings.LBL_STRENGTH_DEGR;
 			_sldStrengthDegradation.addEventListener(Event.CHANGE, onStrengthDegradationChanged);
-			_sldStrengthDegradation.setSliderParams(Constants.DEGRADATION_MIN, Constants.DEGRADATION_MAX, Constants.DEGRADATION_DEFAULT);
+			_sldStrengthDegradation.setSliderParams(Constants.DEGRADATION_MIN, Constants.DEGRADATION_MAX, brushModel.degradation);
 			_sldStrengthDegradation.labelPrecision = 2;
 			_sldStrengthDegradation.tick = 0.01;
 
 			_lblAlphaImage = new Label(this, 0, 0, Strings.LBL_ALPHA_IMG);
 
 			_cmbAlphaImage = new ComboBox(this);
-			for each(var img:ImageWithLabel in alphasWithLabel)  {
+			for each(var img:ImageWithLabel in brushModel.alphasWithLabel)  {
 				_cmbAlphaImage.addItem(img.label);
 			}
 			_cmbAlphaImage.selectedIndex = 0;
-			_cmbAlphaImage.numVisibleItems = alphasWithLabel.length;
+			_cmbAlphaImage.numVisibleItems = brushModel.alphasWithLabel.length;
 			_cmbAlphaImage.addEventListener(Event.SELECT, onAlphaImageChanged);
 
 			_sldAlpha = new HUISlider(this);
 			_sldAlpha.addEventListener(Event.CHANGE, onAlphaChanged);
-			_sldAlpha.setSliderParams(0, 1, Constants.BRUSH_ALPHA_DEFAULT);
+			_sldAlpha.setSliderParams(0, 1, brushModel.alpha);
 			_sldAlpha.labelPrecision = 1;
 			_sldAlpha.tick = 0.1;
 
@@ -99,7 +102,7 @@ package view
 			_stpNumLinks.addEventListener(Event.CHANGE, onNumLinksChanged);
 			_stpNumLinks.step = Constants.NUM_LINKS_STEP;
 			_stpNumLinks.minimum = Constants.NUM_LINKS_MIN;
-			_stpNumLinks.value = Constants.NUM_LINKS_DEFAULT;
+			_stpNumLinks.value = brushModel.numLinks;
 			_stpNumLinks.maximum = Constants.NUM_LINKS_MAX;
 
 			_chkDebug = new CheckBox(this, 0, 0, Strings.LBL_DEBUG, onDebugChanged);
@@ -108,10 +111,10 @@ package view
 			var blendModesAll:Array = BlendModes.getAll();
 			_cmbBlendMode = new ComboBox(this, 0, 0, "", blendModesAll);
 			_cmbBlendMode.numVisibleItems = blendModesAll.length;
-			_cmbBlendMode.selectedIndex = Constants.BRUSH_BLENDMODE_INDEX;
+			_cmbBlendMode.selectedIndex = brushModel.blendmodeIndex;
 			_cmbBlendMode.addEventListener(Event.SELECT, onBlendModeChanged);
 
-			_colorPicker = new ColorChooser(this, 0, 0, Constants.BRUSH_COLOR_DEFAULT, onColorChanged);
+			_colorPicker = new ColorChooser(this, 0, 0, brushModel.color, onColorChanged);
 			_colorPicker.usePopup = true;
 
 			//-- STUFF @ right...
@@ -119,11 +122,11 @@ package view
 
 			_stpSizeMultiplier = new NumericStepper(this, 0, 0, onResetCanvas);
 			_stpSizeMultiplier.minimum = 1;
-			_stpSizeMultiplier.value = Constants.SIZE_MULTIPLIER_DEFAULT;
+			_stpSizeMultiplier.value = canvasModel.sizeMultiplier;
 			_stpSizeMultiplier.maximum = 4;
 			_stpSizeMultiplier.width = 52;
 
-			_colorPickerBG = new ColorChooser(this, 0, 0, Constants.BG_COLOR_DEFAULT, onResetCanvas);
+			_colorPickerBG = new ColorChooser(this, 0, 0, canvasModel.color, onResetCanvas);
 			_colorPickerBG.usePopup = true;
 
 			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);

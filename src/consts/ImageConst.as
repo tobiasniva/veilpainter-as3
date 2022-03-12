@@ -6,7 +6,7 @@ package consts
 	 */
 	public class ImageConst
 	{
-//		[Embed(source="../../assets/gg_logo_m_text.png")] public static var GG_logo:Class;
+		//-- These are then put into various models where suited...
 		
 		//-- Alphas
 		[Embed(source="../../assets/alphas/alpha_1.png")] public static var Alpha_1:Class;

@@ -1,6 +1,7 @@
 package view
 {
-	import model.TempModel;
+	import model.BrushModel;
+	import model.CanvasModel;
 
 	import org.robotlegs.mvcs.Mediator;
 
@@ -11,13 +12,14 @@ package view
 	public class GuiMediator extends Mediator
 	{
 		[Inject] public var _view:GuiBaseView;
-		[Inject] public var _model:TempModel;
+		[Inject] public var _brushModel:BrushModel;
+		[Inject] public var _canvasModel:CanvasModel;
 
 		override public function onRegister():void
 		{
 			//TODO: Init with stuff from model...
 			
-			_view.Init(_model.alphasWithLabel);
+			_view.Init(_brushModel, _canvasModel);
 		}
 	}
 }

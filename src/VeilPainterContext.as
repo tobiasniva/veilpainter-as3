@@ -7,7 +7,9 @@ package
 
 	import flash.display.DisplayObjectContainer;
 
-	import model.TempModel;
+	import model.BrushModel;
+	import model.CanvasModel;
+	import model.UiModel;
 
 	import org.robotlegs.mvcs.Context;
 
@@ -33,7 +35,9 @@ package
 		override public function startup():void
 		{
 			// Models and helpers
-			injector.mapSingleton(TempModel);
+			injector.mapSingleton(CanvasModel);
+			injector.mapSingleton(BrushModel);
+			injector.mapSingleton(UiModel);
 			
 			// Views
 			mediatorMap.mapView(CanvasView,         CanvasMediator);

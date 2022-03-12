@@ -6,7 +6,7 @@ package controller.tasks
 
 	import flash.display.Bitmap;
 
-	import model.TempModel;
+	import model.BrushModel;
 
 	import se.salomonsson.sequence.SequentialTask;
 
@@ -14,9 +14,9 @@ package controller.tasks
 	 *
 	 * @author: Tobi Wan Kenobi
 	 */
-	public class PopulateModelWithImages extends SequentialTask
+	public class PopulateModelWithImagesTask extends SequentialTask
 	{
-		[Inject] public var _model:TempModel;
+		[Inject] public var _model:BrushModel;
 		
 		override protected function exeStart():void
 		{

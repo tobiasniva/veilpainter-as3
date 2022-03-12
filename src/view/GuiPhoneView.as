@@ -5,6 +5,10 @@ package view
 	import com.bit101.components.ColorChooser;
 	import com.bit101.components.Style;
 
+	import model.BrushModel;
+
+	import model.CanvasModel;
+
 	/**
 	 *
 	 * @author: Tobi Wan Kenobi
@@ -12,9 +16,9 @@ package view
 	 */
 	public class GuiPhoneView extends GuiBaseView
 	{
-		public override function Init(alphasWithLabel:Vector.<ImageWithLabel>)
+		public override function Init(brushModel:BrushModel, canvasModel:CanvasModel)
 		{
-			super.Init(alphasWithLabel);
+			super.Init(brushModel, canvasModel);
 			
 			var PADDING:int     = 50;
 			var WIDTH_FULL:int  = _screenSize.x - (PADDING * 2);

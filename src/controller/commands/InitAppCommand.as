@@ -1,9 +1,9 @@
 package controller.commands
 {
 	import controller.tasks.AddViewToContextTask;
-	import controller.tasks.PopulateModelWithImages;
-
-	import model.TempModel;
+	import controller.tasks.InitAllModelsTask;
+	import controller.tasks.InitStylesTaskTemp;
+	import controller.tasks.PopulateModelWithImagesTask;
 
 	import se.salomonsson.sequence.robotlegs.SequenceCommand;
 
@@ -17,8 +17,6 @@ package controller.commands
 	 */
 	public class InitAppCommand extends SequenceCommand
 	{
-		[Inject] public var _model:TempModel;
-
 		override public function execute():void
 		{
 			trace("InitAppCommand");
@@ -27,9 +25,9 @@ package controller.commands
 //			NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 //			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, onDeactivate);
 
-			addSequentialTask(new PopulateModelWithImages());
-			
-			//TODO: Load prefs or set defaults...
+			addSequentialTask(new PopulateModelWithImagesTask());
+			addSequentialTask(new InitAllModelsTask());	
+			addSequentialTask(new InitStylesTaskTemp());
 			
 			//TODO: Add views...
 			addSequentialTask(new AddViewToContextTask(contextView, new CanvasView()));

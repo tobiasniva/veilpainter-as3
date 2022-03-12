@@ -1,7 +1,5 @@
 package model
 {
-	import behavior.ImageWithLabel;
-
 	import event.MiscEvent;
 
 	import flash.display.BitmapData;
@@ -11,15 +9,12 @@ package model
 	/**
 	 *
 	 * @author: Tobi Wan Kenobi
-	 * A place for stuff used in various places in app...split up in mulitple models later...
+	 * Canvas related...
 	 */
-	public class TempModel extends Actor
+	public class CanvasModel extends Actor
 	{
-		// -- state?
-		
-		// CANVAS STUFF
-		public var canvasMulitplier:int = 1;
-		public var canvasColor:uint     = 0x662222;
+		public var sizeMultiplier:int;
+		public var color:uint;
 		
 		private var _canvasBmpData:BitmapData;
 		
@@ -33,8 +28,5 @@ package model
 		{
 			return _canvasBmpData;
 		}
-		
-		// BRUSH STUFF
-		public var alphasWithLabel:Vector.<ImageWithLabel> = new <ImageWithLabel>[];
 	}
 }
