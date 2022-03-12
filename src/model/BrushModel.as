@@ -11,7 +11,8 @@ package model
 	public class BrushModel extends Actor
 	{
 		// BRUSH STUFF
-		public var alphasWithLabel:Vector.<ImageWithLabel> = new <ImageWithLabel>[];
+		public var alphaImagesWithLabel:Vector.<ImageWithLabel> = new <ImageWithLabel>[];
+		public var alphaImageSelectedIndex:int;
 		public var color:uint;
 		public var alpha:Number;
 		public var blendmode:String;
@@ -19,7 +20,7 @@ package model
 		public var numLinks:int;
 		public var chainLinkColor:uint;
 		public var chainLinkSize:int;
-		public var ealsticity:Number;
+		public var elasticity:Number;
 		public var strength:Number;
 		public var degradation:Number;
 	}

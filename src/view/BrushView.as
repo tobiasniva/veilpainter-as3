@@ -3,14 +3,14 @@ package view
 	import behavior.Brush;
 
 	import consts.Constants;
-	import consts.ImageConst;
-
-	import flash.display.BitmapData;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+
+	import model.BrushModel;
+	import model.CanvasModel;
 
 	import utils.ShapeFactory;
 
@@ -20,18 +20,18 @@ package view
 	 */
 	public class BrushView extends Sprite
 	{
-		private var brush:Brush;
+		public var brush:Brush;
 		
-		public function Init(bmpData:BitmapData, sizeMultiplier:int):void
+		public function Init(canvasModel:CanvasModel, brushModel:BrushModel):void
 		{
 			removeListeners(); //-- if we init with other brushes later on...
 			
 			//TODO: Kill brush if already exists...
 			
-			brush = new Brush(bmpData, sizeMultiplier, Constants.NUM_LINKS_DEFAULT);
-			brush.alphaImage            = new ImageConst.Alpha_1(); //TODO: from model...
-			brush.elasticity            = Constants.ELASTICITY_DEFAULT;
-			brush.strength              = Constants.STRENGTH_DEFAULT;
+			brush = new Brush(canvasModel.canvasBmpData, canvasModel.sizeMultiplier, brushModel.numLinks);
+			brush.alphaImage            = brushModel.alphaImagesWithLabel[0].bitmap; //TODO: BrushModel should have active one...
+			brush.elasticity            = brushModel.elasticity;
+			brush.strength              = brushModel.strength;
 			brush.strengthDegradation   = Constants.DEGRADATION_DEFAULT;
 //			brush.fade = true;
 			brush.brushColor            = Constants.BRUSH_COLOR_DEFAULT;

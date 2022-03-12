@@ -16,7 +16,7 @@ package controller.tasks
 	 */
 	public class PopulateModelWithImagesTask extends SequentialTask
 	{
-		[Inject] public var _model:BrushModel;
+		[Inject] public var _brushModel:BrushModel;
 		
 		override protected function exeStart():void
 		{
@@ -30,9 +30,9 @@ package controller.tasks
 			var imgLbl_2:ImageWithLabel = new ImageWithLabel("alpha_2", a2);
 			var imgLbl_3:ImageWithLabel = new ImageWithLabel("alpha_3", a3);
 			
-			_model.alphasWithLabel.push(imgLbl_1);
-			_model.alphasWithLabel.push(imgLbl_2);
-			_model.alphasWithLabel.push(imgLbl_3);
+			_brushModel.alphaImagesWithLabel.push(imgLbl_1);
+			_brushModel.alphaImagesWithLabel.push(imgLbl_2);
+			_brushModel.alphaImagesWithLabel.push(imgLbl_3);
 			
 			onCompleted();
 		}

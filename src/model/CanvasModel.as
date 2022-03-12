@@ -14,7 +14,7 @@ package model
 	public class CanvasModel extends Actor
 	{
 		public var sizeMultiplier:int;
-		public var color:uint;
+		public var colorDefault:uint;
 		
 		private var _canvasBmpData:BitmapData;
 		

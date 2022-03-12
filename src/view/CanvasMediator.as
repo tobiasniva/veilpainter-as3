@@ -15,24 +15,25 @@ package view
 	public class CanvasMediator extends Mediator
 	{
 		[Inject] public var _view:CanvasView;
-		[Inject] public var _model:CanvasModel;
+		[Inject] public var _canvasModel:CanvasModel;
 
 		override public function onRegister():void
 		{
 			addViewListener(CanvasView.CANVAS_CREATED, onCanvasCreated);
-			addContextListener(ColorEvent.BG_COLOR_CHANGED, onBgColorChanged);
+			addContextListener(ColorEvent.CANVAS_COLOR_CHANGED, onCanvasColorChanged);
 
-			_view.Init(_model.sizeMultiplier, _model.color);
+			_view.Init(_canvasModel.sizeMultiplier, _canvasModel.colorDefault);
 		}
 
 		private function onCanvasCreated(e:Event):void
 		{
-			_model.canvasBmpData = _view.bmpData;
+			_canvasModel.canvasBmpData = _view.bmpData;
 		}
 
-		private function onBgColorChanged(e:ColorEvent):void
+		private function onCanvasColorChanged(e:ColorEvent):void
 		{
-			var mp:int = _model.sizeMultiplier;
+			trace("CanvasMediator::onCanvasColorChanged()");
+			var mp:int = _canvasModel.sizeMultiplier;
 			var col:uint = e.color;
 			_view.Init(mp, col);
 		}

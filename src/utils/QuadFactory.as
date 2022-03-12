@@ -20,7 +20,7 @@ package utils
 
 			var rectSource:Rectangle = new Rectangle(num * w, 0, w, h);
 
-			//-- Just puts the overall alpha value in an uint for the color...
+			//-- Just puts the overall alpha value in an uint for the colorDefault...
 			var rgb:uint = col;
 			var a:uint = (uint)(alpha * 255);
 			var argb:uint = a << 24 | rgb;
@@ -31,7 +31,7 @@ package utils
 
 			var mergeBmp:BitmapData = new BitmapData(w, h, true, 0);
 			var rect:Rectangle = new Rectangle(0, 0, w, h);
-			mergeBmp.copyPixels(img, rect, new Point(0, 0), mask, new Point(0, 0), true); //-- Merge alphasWithLabel
+			mergeBmp.copyPixels(img, rect, new Point(0, 0), mask, new Point(0, 0), true); //-- Merge alphaImagesWithLabel
 
 			return mergeBmp;
 		}

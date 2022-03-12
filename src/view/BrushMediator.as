@@ -1,7 +1,9 @@
 package view
 {
+	import event.ColorEvent;
 	import event.MiscEvent;
 
+	import model.BrushModel;
 	import model.CanvasModel;
 
 	import org.robotlegs.mvcs.Mediator;
@@ -13,17 +15,25 @@ package view
 	public class BrushMediator extends Mediator
 	{
 		[Inject] public var _view:BrushView;
-		[Inject] public var _model:CanvasModel;
+		[Inject] public var _canvasModel:CanvasModel;
+		[Inject] public var _brushModel:BrushModel;
 
 		override public function onRegister():void
 		{
-			addContextListener(MiscEvent.CANVAS_BMPDATA_CHANGED, onCanvasChanged);
-			_view.Init(_model.canvasBmpData, _model.sizeMultiplier);
+			addContextListener(MiscEvent.CANVAS_BMPDATA_CHANGED, onCanvasBmpDataChanged);
+			addContextListener(ColorEvent.BRUSH_COLOR_CHANGED, onBrushColorChanged);
+			_view.Init(_canvasModel, _brushModel);
 		}
 
-		private function onCanvasChanged(e:MiscEvent):void
+		private function onBrushColorChanged(e:ColorEvent):void
 		{
-			_view.Init(_model.canvasBmpData, _model.sizeMultiplier);
+			_view.brush.brushColor = e.color;
+		}
+
+		private function onCanvasBmpDataChanged(e:MiscEvent):void
+		{
+			trace("BrushMediator::onCanvasBmpDataChanged");
+			_view.Init(_canvasModel, _brushModel);
 		}
 	}
 }

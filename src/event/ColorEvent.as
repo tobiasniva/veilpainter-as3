@@ -8,7 +8,7 @@ package event
 	 */
 	public class ColorEvent extends Event
 	{
-		public static const BG_COLOR_CHANGED:String     = "ColorEvent.BG_COLOR_CHANGED";
+		public static const CANVAS_COLOR_CHANGED:String = "ColorEvent.CANVAS_COLOR_CHANGED";
 		public static const BRUSH_COLOR_CHANGED:String  = "ColorEvent.BRUSH_COLOR_CHANGED";
 
 		private var _color:uint;

@@ -1,5 +1,7 @@
 package view
 {
+	import event.ColorEvent;
+
 	import model.BrushModel;
 	import model.CanvasModel;
 
@@ -17,9 +19,23 @@ package view
 
 		override public function onRegister():void
 		{
-			//TODO: Init with stuff from model...
+			addViewListener(ColorEvent.CANVAS_COLOR_CHANGED, onCanvasColorChanged);
+			addViewListener(ColorEvent.BRUSH_COLOR_CHANGED, onBrushColorChanged);
 			
 			_view.Init(_brushModel, _canvasModel);
+		}
+
+		private function onBrushColorChanged(e:ColorEvent):void
+		{
+			trace("GuiMediator::onBrushColorChanged");
+			dispatch(new ColorEvent(ColorEvent.BRUSH_COLOR_CHANGED, e.color))
+			
+		}
+
+		private function onCanvasColorChanged(e:ColorEvent):void
+		{
+			trace("GuiMediator::onCanvasColorChanged");
+			dispatch(new ColorEvent(ColorEvent.CANVAS_COLOR_CHANGED, e.color));
 		}
 	}
 }

@@ -21,7 +21,7 @@ package utils
 			var numVert:int = Math.floor(stageW / gridSize);
 			var numHor:int  = Math.floor(stageH / gridSize);
 
-			//-- Set color for grid lines
+			//-- Set colorDefault for grid lines
 			gr.lineStyle(0, colGrid);
 
 			//-- vertical lines
@@ -51,7 +51,7 @@ package utils
 			}
 
 
-			//-- Set color for axis lines
+			//-- Set colorDefault for axis lines
 			gr.lineStyle(0, colAxis);
 
 			//-- X-axis

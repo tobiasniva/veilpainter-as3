@@ -14,6 +14,8 @@ package view
 	import consts.Constants;
 	import consts.Strings;
 
+	import event.ColorEvent;
+
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -62,7 +64,7 @@ package view
 			_sldElasticity = new HUISlider(this);
 			_sldElasticity.label = Strings.LBL_ELASTICITY;
 			_sldElasticity.addEventListener(Event.CHANGE, onElasticityChanged);
-			_sldElasticity.setSliderParams(Constants.ELASTICITY_MIN, Constants.ELASTICITY_MAX, brushModel.ealsticity);
+			_sldElasticity.setSliderParams(Constants.ELASTICITY_MIN, Constants.ELASTICITY_MAX, brushModel.elasticity);
 			_sldElasticity.labelPrecision = 2;
 			_sldElasticity.tick = 0.01
 
@@ -83,11 +85,11 @@ package view
 			_lblAlphaImage = new Label(this, 0, 0, Strings.LBL_ALPHA_IMG);
 
 			_cmbAlphaImage = new ComboBox(this);
-			for each(var img:ImageWithLabel in brushModel.alphasWithLabel)  {
+			for each(var img:ImageWithLabel in brushModel.alphaImagesWithLabel)  {
 				_cmbAlphaImage.addItem(img.label);
 			}
 			_cmbAlphaImage.selectedIndex = 0;
-			_cmbAlphaImage.numVisibleItems = brushModel.alphasWithLabel.length;
+			_cmbAlphaImage.numVisibleItems = brushModel.alphaImagesWithLabel.length;
 			_cmbAlphaImage.addEventListener(Event.SELECT, onAlphaImageChanged);
 
 			_sldAlpha = new HUISlider(this);
@@ -126,10 +128,10 @@ package view
 			_stpSizeMultiplier.maximum = 4;
 			_stpSizeMultiplier.width = 52;
 
-			_colorPickerBG = new ColorChooser(this, 0, 0, canvasModel.color, onResetCanvas);
+			_colorPickerBG = new ColorChooser(this, 0, 0, canvasModel.colorDefault, onResetCanvas);
 			_colorPickerBG.usePopup = true;
 
-			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);
+			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImage);
 		}
 		
 		public function show():void
@@ -142,14 +144,14 @@ package view
 			this.visible = false;
 		}
 
-		protected function onSaveImageToDesktop(e:Event):void
+		protected function onSaveImage(e:Event):void
 		{
 //			_parent.saveImage();
 		}
 
 		protected function onResetCanvas(e:Event):void
 		{
-//			_parent.resetCanvas(_stpSizeMultiplier.value, _colorPickerBG.value);
+			dispatchEvent(new ColorEvent(ColorEvent.CANVAS_COLOR_CHANGED, _colorPickerBG.value));
 		}
 
 		protected function onNumLinksChanged(e:Event):void
@@ -174,7 +176,7 @@ package view
 
 		protected function onColorChanged(e:Event):void
 		{
-//			_brush.brushColor = _colorPicker.value;
+			dispatchEvent(new ColorEvent(ColorEvent.BRUSH_COLOR_CHANGED, _colorPicker.value));
 		}
 
 		protected function onAlphaChanged(e:Event):void
