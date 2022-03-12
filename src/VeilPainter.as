@@ -15,14 +15,14 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.events.PermissionEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.geom.Point;
 	import flash.globalization.DateTimeFormatter;
-	import flash.permissions.PermissionStatus;
 	import flash.utils.ByteArray;
+
+	import helpers.CheckPermission;
 
 	import ui.StyleSizer;
 
@@ -50,7 +50,7 @@ package
 		private var _bmp:Bitmap;
 		private var _bmpData:BitmapData;
 		private var _gui:GuiBase;
-		private var _reqFile:File;
+		private var _chkPerm:CheckPermission;
 
 
 		public function VeilPainter()
@@ -64,38 +64,13 @@ package
 			screenSize = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
 			_bmpSize 	= new Point(screenSize.x * _sizeMultiplier, screenSize.y * _sizeMultiplier);
 			
-			checkAndRequestPermission();
-		}
-
-		private function checkAndRequestPermission():void
-		{
-			if(File.permissionStatus != PermissionStatus.GRANTED)
-			{
-				_reqFile = File.documentsDirectory.resolvePath("dummy.png");
-				_reqFile.addEventListener(PermissionEvent.PERMISSION_STATUS, onPermission);
-				_reqFile.requestPermission();
-			}
-			else
-			{
-				weHavePermission();
-			}
-		}
-
-		private function onPermission(e:PermissionEvent = null):void
-		{
-			var trg:File = e.currentTarget as File;
-			
-			trace("file? " + trg);
-			
-//			trace("e.status: " + e.status);
-			_reqFile.removeEventListener(PermissionEvent.PERMISSION_STATUS, onPermission);
-			weHavePermission();
+			_chkPerm = new CheckPermission();
+			_chkPerm.addEventListener(Event.COMPLETE, onPermissionGranted);
+			_chkPerm.StartCheck();
 		}
 		
-		private function weHavePermission():void
+		private function onPermissionGranted(e:Event):void
 		{
-			//TODO: Consider loading PlayerPrefs here, to initialize everything with what's in there...
-			
 			loadAlphaImages = new LoadAlphaImages();
 			loadAlphaImages.addEventListener(Event.COMPLETE, onAlphaImagesLoaded);
 		}
