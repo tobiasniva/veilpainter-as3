@@ -56,7 +56,7 @@ package com.bit101.components
 		{
 			this.text = text;
 			super(parent, xpos, ypos);
-			setSize(Style.TEXT_W, Style.TEXT_H);
+			setSize(Style.TEXT_W, Style.COMMON_100);
 		}
 		
 		/**

@@ -1,6 +1,6 @@
 package view
 {
-	import ui.StyleChanger;
+	import ui.StyleSizer;
 
 	/**
 	 *
@@ -11,8 +11,6 @@ package view
 	{
 		public function GuiTablet(parent:VeilPainter)
 		{
-			StyleChanger.Size_2x();
-			
 			super(parent);
 			
 			var sldx:int = 20;

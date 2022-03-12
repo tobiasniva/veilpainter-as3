@@ -69,7 +69,7 @@ package com.bit101.components
 		 */
 		override protected function addChildren():void
 		{
-			_height = Style.LABEL_H; //TODO: Skinned
+			_height = Style.LABEL_H;
 			_tf = new TextField();
 			_tf.height = _height;
 			_tf.embedFonts = Style.embedFonts;

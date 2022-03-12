@@ -69,7 +69,7 @@ package com.bit101.components
 			super.init();
 			buttonMode = true;
 			useHandCursor = true;
-			setSize(Style.BUTTON_W, Style.BUTTON_H);
+			setSize(Style.COMMON_100, Style.COMMON_20);
 		}
 		
 		/**
@@ -78,13 +78,13 @@ package com.bit101.components
 		override protected function addChildren():void
 		{
 			_back = new Sprite();
-			_back.filters = [getShadow(2, true)];
+			_back.filters = [getShadow(Style.SHADOW_2, true)];
 			_back.mouseEnabled = false;
 			addChild(_back);
 			
 			_face = new Sprite();
 			_face.mouseEnabled = false;
-			_face.filters = [getShadow(1)];
+			_face.filters = [getShadow(Style.SHADOW_1)];
 			_face.x = 1;
 			_face.y = 1;
 			addChild(_face);
@@ -175,7 +175,7 @@ package com.bit101.components
 			_over = false;
 			if(!_down)
 			{
-				_face.filters = [getShadow(1)];
+				_face.filters = [getShadow(Style.SHADOW_1)];
 			}
 			removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
 		}
@@ -188,7 +188,7 @@ package com.bit101.components
 		{
 			_down = true;
 			drawFace();
-			_face.filters = [getShadow(1, true)];
+			_face.filters = [getShadow(Style.SHADOW_1, true)];
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseGoUp);
 		}
 		
@@ -204,7 +204,7 @@ package com.bit101.components
 			}
 			_down = _selected;
 			drawFace();
-			_face.filters = [getShadow(1, _selected)];
+			_face.filters = [getShadow(Style.SHADOW_1, _selected)];
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseGoUp);
 		}
 		
@@ -237,7 +237,7 @@ package com.bit101.components
 			
 			_selected = value;
 			_down = _selected;
-			_face.filters = [getShadow(1, _selected)];
+			_face.filters = [getShadow(Style.SHADOW_1, _selected)];
 			drawFace();
 		}
 		public function get selected():Boolean

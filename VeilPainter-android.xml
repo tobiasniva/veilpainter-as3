@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--<application xmlns="http://ns.adobe.com/air/application/31.0">-->
+<application xmlns="http://ns.adobe.com/air/application/33.1">
+
+    <id>com.gimbalgames.veilpainter</id>
+    <filename>VeilPainter</filename>
+    <name>VeilPainter</name>
+    <versionNumber>0.0.1</versionNumber>
+
+    <initialWindow>
+        <content>SWF file name is set automatically at compile time</content>
+        <visible>true</visible>
+        <aspectRatio>portrait</aspectRatio>
+        <!--<aspectRatio>landscape</aspectRatio>-->
+        <autoOrients>false</autoOrients>
+        <fullScreen>true</fullScreen>
+        <!-- The render mode for the app (either auto, cpu, gpu, or direct). Optional. Default auto -->
+        <!--<renderMode></renderMode>-->
+        <!-- Whether the default direct mode rendering context allocates storage for depth and stencil buffers.  Optional.  Default false. -->
+        <!--<depthAndStencil></depthAndStencil>-->
+    </initialWindow>
+    
+    <!--<icon>
+        <image16x16></image16x16>
+    </icon>-->
+
+    <!-- Android specific tags that get passed to AndroidManifest.xml file. -->
+    <android>
+        <manifestAdditions>
+            <![CDATA[
+            <manifest android:installLocation="auto">
+                
+                <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="30" />
+                
+                <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />-->
+                
+                <!-- TODO: Funkar med Harman-sdk, på allt utom android 11? -->
+                android:requestLegacyExternalStorage="true"
+                <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+                <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+                <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+                
+                <!--<uses-permission android:name="android.permission.INTERNET"/>-->
+                <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
+                <!--<uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>-->
+                <!--<uses-permission android:name="android.permission.WAKE_LOCK"/>-->
+
+                <!--<uses-feature android:required="true" android:name="android.hardware.touchscreen.multitouch"/>-->
+                <!--<application android:enabled="true">
+                    <activity android:excludeFromRecents="false">
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN"/>
+                            <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+                    </activity>
+                </application>-->
+            </manifest>
+            ]]>
+            </manifestAdditions>
+    </android>
+
+</application>

@@ -3,6 +3,7 @@ package
 	import behavior.Brush;
 
 	import com.adobe.images.PNGEncoder;
+	import com.bit101.components.Style;
 
 	import data.Constants;
 
@@ -21,13 +22,15 @@ package
 	import flash.globalization.DateTimeFormatter;
 	import flash.utils.ByteArray;
 
+	import helpers.CheckPermission;
+
+	import ui.StyleSizer;
+
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
 
 	import view.GuiBase;
-	import view.GuiDesktop;
 	import view.GuiPhone;
-	import view.GuiTablet;
 
 	/**
 	 *
@@ -47,6 +50,7 @@ package
 		private var _bmp:Bitmap;
 		private var _bmpData:BitmapData;
 		private var _gui:GuiBase;
+		private var _chkPerm:CheckPermission;
 
 
 		public function VeilPainter()
@@ -60,13 +64,18 @@ package
 			screenSize = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
 			_bmpSize 	= new Point(screenSize.x * _sizeMultiplier, screenSize.y * _sizeMultiplier);
 			
-			loadAlphaImages = new LoadAlphaImages();
-			loadAlphaImages.addEventListener(Event.COMPLETE, onAlphaImagesLoaded);
-			
-			//TODO: Consider loading PlayerPrefs here, to initialize everything with what's in there...
+			_chkPerm = new CheckPermission();
+			_chkPerm.addEventListener(Event.COMPLETE, onPermissionGranted);
+			_chkPerm.StartCheck();
 		}
 		
-		private function onAlphaImagesLoaded(e:Event)
+		private function onPermissionGranted(e:Event):void
+		{
+			loadAlphaImages = new LoadAlphaImages();
+			loadAlphaImages.addEventListener(Event.COMPLETE, onAlphaImagesLoaded);
+		}
+		
+		private function onAlphaImagesLoaded(e:Event):void
 		{
 			loadAlphaImages.removeEventListener(Event.COMPLETE, onAlphaImagesLoaded);
 			
@@ -88,7 +97,14 @@ package
 			brush.shape = ShapeFactory.getCircle(Constants.CHAIN_LINK_SIZE, Constants.CHAIN_LINK_COLOR);
 			addChildAt(brush, getChildIndex(_bmp) + 1);
 			
-			//TODO: Select GUI...
+			//TODO: Select GUI and scale...
+			if(screenSize.x < 1080) {
+				StyleSizer.ComponentScale(3);
+			} else {
+				StyleSizer.ComponentScale(4);
+			}
+			Style.setStyle(Style.DARK);
+			
 //			_gui = new GuiTablet(this);
 			_gui = new GuiPhone(this);
 //			_gui = new GuiDesktop(this);
@@ -114,11 +130,13 @@ package
 			{
 				brush.isDrawing = true;
 				_gui.hide();
+//				trace("isDrawing = true");
 			}
 			else
 			{
 				brush.isDrawing = false;
 				_gui.show();
+//				trace("isDrawing = false");
 			}
 		}
 
@@ -139,20 +157,25 @@ package
 			brush.canvasSizeMultiplier = _sizeMultiplier;
 		}
 
-		public function saveImageToDesktop():void
+		public function saveImage():void
 		{
+			trace("perm status: " + File.permissionStatus);
+			
 			var byteArray:ByteArray = PNGEncoder.encode(_bmpData);
 
 			var d:Date = new Date();
 			var dtf:DateTimeFormatter = new DateTimeFormatter("en-US");
 			dtf.setDateTimePattern("yyyyMMdd_hhmmss");
+			
+			var imgName:String = "VeilPainter_" + dtf.format(d) + ".png";
 
-			var file:File = File.desktopDirectory.resolvePath("niva3d_" + dtf.format(d) + ".png");
+			var file:File = File.documentsDirectory.resolvePath("VeilPainter/" + imgName);
+			trace("Should save to: " + file.nativePath);
+
 			var fileStream:FileStream = new FileStream();
 			fileStream.open(file, FileMode.WRITE);
 			fileStream.writeBytes(byteArray);
 			fileStream.close();
 		}
-
 	}
 }

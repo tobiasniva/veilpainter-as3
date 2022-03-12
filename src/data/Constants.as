@@ -13,13 +13,13 @@ package data
 		
 		public static const SIZE_MULTIPLIER_DEFAULT:int     = 1;
 		
-		public static const BG_COLOR_DEFAULT:uint           = 0xeeeeee;
+		public static const BG_COLOR_DEFAULT:uint           = 0x222222;
 		
-		public static const BRUSH_COLOR_DEFAULT:uint        = 0x3399cc;
+		public static const BRUSH_COLOR_DEFAULT:uint        = 0x99aacc;
 		public static const BRUSH_ALPHA_DEFAULT:Number      = 0.5;
 		
 		public static const BRUSH_BLENDMODE_DEFAULT:String  = BlendMode.NORMAL;
-		public static const BRUSH_BLENDMODE_INDEX:int       = 10;         //-- Normal - see BlendModes
+		public static const BRUSH_BLENDMODE_INDEX:int       = 0;         //-- Normal - see BlendModes
 		
 		public static const CHAIN_LINK_COLOR:uint           = 0x808080;
 		public static const CHAIN_LINK_SIZE:int             = 4;            //-- Size of dots...

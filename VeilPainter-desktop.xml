@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <application xmlns="http://ns.adobe.com/air/application/31.0">
+<!--<application xmlns="http://ns.adobe.com/air/application/33.1">-->
 
     <id>VeilPainter</id>
     <filename>VeilPainter</filename>
@@ -10,8 +11,8 @@
     <initialWindow>
         <content>SWF file name is set automatically at compile time</content>
         <visible>true</visible>
-        <!--<aspectRatio>portrait</aspectRatio>-->
-        <aspectRatio>landscape</aspectRatio>
+        <aspectRatio>portrait</aspectRatio>
+        <!--<aspectRatio>landscape</aspectRatio>-->
         <autoOrients>false</autoOrients>
         <fullScreen>true</fullScreen>
         <!-- The render mode for the app (either auto, cpu, gpu, or direct). Optional. Default auto -->
@@ -105,7 +106,7 @@
             <![CDATA[
             <manifest android:installLocation="auto">
                 <!--<uses-permission android:name="android.permission.INTERNET"/>-->
-                <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
+                <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
                 <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
                 <!--<uses-permission android:name="android.permission.VIBRATE"/>-->
                 <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->

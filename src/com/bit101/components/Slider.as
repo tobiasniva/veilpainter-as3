@@ -76,11 +76,11 @@ package com.bit101.components
 
 			if(_orientation == HORIZONTAL)
 			{
-				setSize(Style.SLIDER_W_OR_H, Style.SLIDER_THICKNESS);
+				setSize(Style.COMMON_100, Style.SLIDER_THICKNESS);
 			}
 			else
 			{
-				setSize(Style.SLIDER_THICKNESS, Style.SLIDER_W_OR_H);
+				setSize(Style.SLIDER_THICKNESS, Style.COMMON_100);
 			}
 		}
 		
@@ -90,11 +90,11 @@ package com.bit101.components
 		override protected function addChildren():void
 		{
 			_back = new Sprite();
-			_back.filters = [getShadow(2, true)];
+			_back.filters = [getShadow(Style.SHADOW_2, true)];
 			addChild(_back);
 			
 			_handle = new Sprite();
-			_handle.filters = [getShadow(1)];
+			_handle.filters = [getShadow(Style.SHADOW_1)];
 			_handle.addEventListener(MouseEvent.MOUSE_DOWN, onDrag);
 			_handle.buttonMode = true;
 			_handle.useHandCursor = true;

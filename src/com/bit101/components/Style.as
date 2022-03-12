@@ -48,60 +48,43 @@ package com.bit101.components
 		
 		public static var embedFonts:Boolean = true;
 		public static var fontName:String = "PF Ronda Seven";
-		public static var fontSize:Number                   = 8;
 
 		/**
 		 * TNA: Sizing section here...
 		 * TODO: Make w/h and x/y pairs to Ppoint instead...?
  		 */
-		public static var BUTTON_W:int                      = 100;
-		public static var BUTTON_H:int                      = 20;
-			
+		public static var fontSize:Number                   = 8;
+				
+		public static var COMMON_200:int                    = 200;
+		public static var COMMON_100:int                    = 100;
+		public static var COMMON_20:int                     = 20;
 			
 		public static var CHECKBOX_BG:int                   = 10;  
-		public static var CHECKBOX_RIM:int                  = 2;      
+		public static var CHECKBOX_RIM:int                  = 2;   
 		public static var CHECKBOX_FACE:int                 = 6;   
-		public static var CHECKBOX_LABEL_X:int              = 12;  
-		public static var CHECKBOX_LABEL_H:int              = 10;  
+		public static var CHECKBOX_LABEL_X:int              = 13;   //12
+		public static var CHECKBOX_LABEL_H:int              = 11;   //10
+		
+		public static var SHADOW_4:Number                   = 4;
+		public static var SHADOW_2:Number                   = 2;
+		public static var SHADOW_1:Number                   = 1;
 		
 		public static var COLOR_CHOOSER_W:int               = 65;  
-		public static var COLOR_CHOOSER_H:int               = 15;  
 		public static var COLOR_CHOOSER_INPUT_W:int         = 45;  
-		public static var COLOR_CHOOSER_SWATCH_X:int        = 50;  
-		public static var COLOR_CHOOSER_BOX:int             = 16;     // SAME AS NUMERIC PICKER?
+		public static var COLOR_CHOOSER_SWATCH_X:int        = 50;
+		public static var COLOR_CHOOSER_PAD_SIZE:int        = 150;
 		
-		public static var COMBOBOX_W:int                    = 100;    // SAME W/H BUTTON?
-		public static var COMBOBOX_H:int                    = 20;  
-		
-		public static var HUI_SLIDER_W:int                  = 200; 
-		public static var HUI_SLIDER_H:int                  = 18;     // SAME H AS LABEL?
-		public static var HUI_SLIDER_LABEL_PAD:int          = 5;   
+		public static var HUI_SLIDER_LABEL_PAD:int          = 5;
 		public static var HUI_SLIDER_LABEL_W_FIX:int        = 60;
+		public static var HUI_SLIDER_LABEL_Y_FIX:int        = 2;     //new
+		public static var SLIDER_THICKNESS:int              = 10;
 		
-		public static var SLIDER_W_OR_H:int                 = 100;    // SAME W BUTTON?
-		public static var SLIDER_THICKNESS:int              = 10;  
-		
-		public static var INPUTTEXT_W:int                   = 100;    // SAME W BUTTON?
-		public static var INPUTTEXT_H:int                   = 16;
-		
-		public static var LABEL_H:int                       = 18;  
-		
-		public static var LIST_SIZE:int                     = 100;    // SAME W/H BUTTON?
-		public static var LIST_ITEM_H:int                   = 20;  
-		
-		public static var LISTITEM_W:int                    = 100;    // SAME W/H BUTTON?
-		public static var LISTITEM_H:int                    = 20;  
-		public static var LISTITEM_LABEL_X:int              = 5;   
-		
-		public static var NUMERIC_STEPPER_W:int             = 80;  
-		public static var NUMERIC_STEPPER_H:int             = 16;  
-		
-		public static var PANEL_SIZE:int                    = 100;    // SAME W BUTTON?
-		public static var PANEL_GRID:int                    = 10;     // SAME CHKBOX BG?
-		
-		public static var TEXT_W:int                        = 200;    // SAME W HUI-SLIDER?
-		public static var TEXT_H:int                        = 100; 
-		public static var TEXT_FIELD_MARGIN:int             = 2;      // SAME CHK RIM?
+		public static var LABEL_H:int                       = 18;    //18
+		public static var LISTITEM_LABEL_X:int              = 5;
+		public static var LISTITEM_LABEL_Y:int              = 3;     //new
+		public static var NUMERIC_STEPPER_W:int             = 80;
+		public static var PANEL_GRID:int                    = 10;
+		public static var TEXT_FIELD_MARGIN:int             = 2;
 
 		/**
 		 * TNA: Sizing section ends...
