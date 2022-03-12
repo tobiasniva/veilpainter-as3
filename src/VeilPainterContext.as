@@ -11,9 +11,13 @@ package
 
 	import org.robotlegs.mvcs.Context;
 
+	import view.BrushMediator;
+	import view.BrushView;
 	import view.CanvasMediator;
-
 	import view.CanvasView;
+	import view.GuiBaseView;
+	import view.GuiMediator;
+	import view.GuiPhoneView;
 
 	/**
 	 *
@@ -33,6 +37,8 @@ package
 			
 			// Views
 			mediatorMap.mapView(CanvasView,         CanvasMediator);
+			mediatorMap.mapView(BrushView,          BrushMediator);
+			mediatorMap.mapView(GuiPhoneView,       GuiMediator,        GuiBaseView);
 			
 			// Commands
 			commandMap.mapEvent(AppEvent.STARTUP,   InitAppCommand);

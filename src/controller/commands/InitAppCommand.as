@@ -1,16 +1,15 @@
 package controller.commands
 {
-	import consts.ImageConst;
-
-	import event.ColorEvent;
-
-	import flash.display.Bitmap;
+	import controller.tasks.AddViewToContextTask;
+	import controller.tasks.PopulateModelWithImages;
 
 	import model.TempModel;
 
 	import se.salomonsson.sequence.robotlegs.SequenceCommand;
 
+	import view.BrushView;
 	import view.CanvasView;
+	import view.GuiPhoneView;
 
 	/**
 	 *
@@ -28,24 +27,14 @@ package controller.commands
 //			NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 //			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, onDeactivate);
 
-			//TODO: Load/embed all images (alphas etc) - move to own task...
-			var a1:Bitmap = new ImageConst.Alpha_1();
-			var a2:Bitmap = new ImageConst.Alpha_2();
-			var a3:Bitmap = new ImageConst.Alpha_3();
-			a1.smoothing = true;
-			a2.smoothing = true;
-			a3.smoothing = true;
-			_model.alphas.push(a1);
-			_model.alphas.push(a2);
-			_model.alphas.push(a3);
+			addSequentialTask(new PopulateModelWithImages());
 			
-			//TODO: Init _model - load prefs or set defaults...
+			//TODO: Load prefs or set defaults...
 			
-			//TODO: Add/init all views...
-			contextView.addChild(new CanvasView());
-			
-//			contextView.addChild(new HolderView());
-//			addSequentialTask(new InitUserSettingsTask());
+			//TODO: Add views...
+			addSequentialTask(new AddViewToContextTask(contextView, new CanvasView()));
+			addSequentialTask(new AddViewToContextTask(contextView, new BrushView()));
+			addSequentialTask(new AddViewToContextTask(contextView, new GuiPhoneView()));
 			
 			start();
 		}

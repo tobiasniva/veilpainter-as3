@@ -24,7 +24,7 @@ package utils
 		{
 			_images = new <ImageWithLabel>[];
 
-			var folder:File = File.applicationDirectory.resolvePath("alphas");
+			var folder:File = File.applicationDirectory.resolvePath("alphasWithLabel");
 			var files:Array = folder.getDirectoryListing();
 
 			_totalImages = files.length;

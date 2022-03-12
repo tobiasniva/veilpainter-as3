@@ -1,27 +1,20 @@
 package view
 {
-	import behavior.Brush;
 	import behavior.ImageWithLabel;
 
 	import com.bit101.components.CheckBox;
-
 	import com.bit101.components.ColorChooser;
-
 	import com.bit101.components.ComboBox;
-
 	import com.bit101.components.HUISlider;
 	import com.bit101.components.Label;
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
 
 	import consts.BlendModes;
-
 	import consts.Constants;
-
 	import consts.Strings;
 
 	import flash.display.Bitmap;
-
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -34,12 +27,8 @@ package view
 	 * Figure out what we actually want gui to support. Interface?
 	 * Difference between tablet/phone gui? (for sure...)
 	 */
-	public class GuiBase extends Sprite
+	public class GuiBaseView extends Sprite
 	{
-		//-- refs in parent class...
-		private var _parent:VeilPainter;
-		private var _brush:Brush;
-
 		protected var _screenSize:Point;
 		protected var _loadAlphaImages:LoadAlphaImages;
 		protected var _sldElasticity:HUISlider;
@@ -60,16 +49,11 @@ package view
 		protected var _btnClear:PushButton;
 		protected var _btnSaveImage:PushButton;
 
-		
-		public function GuiBase(parent:VeilPainter)
+		public function Init(alphasWithLabel:Vector.<ImageWithLabel>)
 		{
 			this.mouseEnabled = false; //TODO: Good to not pick up mouse...but safe for everything within this?
 
-			//TODO: Remove these ugly refs...solve with some event system...?
-			_parent = parent;
-			_screenSize = parent.screenSize;
-			_brush = parent.brush;
-			_loadAlphaImages = parent.loadAlphaImages;
+			_screenSize = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
 			
 			//-- Create components TODO: Consider putting them in container, to be able to separate behaviour phone/tablet?
 			_sldElasticity = new HUISlider(this);
@@ -96,11 +80,11 @@ package view
 			_lblAlphaImage = new Label(this, 0, 0, Strings.LBL_ALPHA_IMG);
 
 			_cmbAlphaImage = new ComboBox(this);
-			for each(var img:ImageWithLabel in _loadAlphaImages.images)  {
+			for each(var img:ImageWithLabel in alphasWithLabel)  {
 				_cmbAlphaImage.addItem(img.label);
 			}
 			_cmbAlphaImage.selectedIndex = 0;
-			_cmbAlphaImage.numVisibleItems = _loadAlphaImages.images.length;
+			_cmbAlphaImage.numVisibleItems = alphasWithLabel.length;
 			_cmbAlphaImage.addEventListener(Event.SELECT, onAlphaImageChanged);
 
 			_sldAlpha = new HUISlider(this);
@@ -157,59 +141,59 @@ package view
 
 		protected function onSaveImageToDesktop(e:Event):void
 		{
-			_parent.saveImage();
+//			_parent.saveImage();
 		}
 
 		protected function onResetCanvas(e:Event):void
 		{
-			_parent.resetCanvas(_stpSizeMultiplier.value, _colorPickerBG.value);
+//			_parent.resetCanvas(_stpSizeMultiplier.value, _colorPickerBG.value);
 		}
 
 		protected function onNumLinksChanged(e:Event):void
 		{
-			_brush.numLinks = _stpNumLinks.value;
+//			_brush.numLinks = _stpNumLinks.value;
 		}
 
 		protected function onElasticityChanged(e:Event):void
 		{
-			_brush.elasticity = _sldElasticity.value;
+//			_brush.elasticity = _sldElasticity.value;
 		}
 
 		protected function onStrengthChanged(e:Event):void
 		{
-			_brush.strength = _sldStrength.value;
+//			_brush.strength = _sldStrength.value;
 		}
 
 		protected function onStrengthDegradationChanged(e:Event):void
 		{
-			_brush.strengthDegradation = _sldStrengthDegradation.value;
+//			_brush.strengthDegradation = _sldStrengthDegradation.value;
 		}
 
 		protected function onColorChanged(e:Event):void
 		{
-			_brush.brushColor = _colorPicker.value;
+//			_brush.brushColor = _colorPicker.value;
 		}
 
 		protected function onAlphaChanged(e:Event):void
 		{
-			_brush.brushAlpha = _sldAlpha.value;
+//			_brush.brushAlpha = _sldAlpha.value;
 		}
 
 		protected function onBlendModeChanged(e:Event):void
 		{
-			_brush.brushBlendmode = String(_cmbBlendMode.selectedItem);
+//			_brush.brushBlendmode = String(_cmbBlendMode.selectedItem);
 		}
 
 		protected function onAlphaImageChanged(e:Event):void
 		{
 			var index:int = _cmbAlphaImage.selectedIndex;
 			var img:Bitmap = _loadAlphaImages.images[index].bitmap;
-			_brush.alphaImage = img;
+//			_brush.alphaImage = img;
 		}
 
 		protected function onDebugChanged(e:Event):void
 		{
-			_brush.debug = _chkDebug.selected;
+//			_brush.debug = _chkDebug.selected;
 		}
 	}
 }

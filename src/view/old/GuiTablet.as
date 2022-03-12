@@ -1,5 +1,6 @@
-package view
+package view.old
 {
+	import view.*;
 	import ui.StyleSizer;
 
 	/**
@@ -7,7 +8,7 @@ package view
 	 * @author: Tobi Wan Kenobi
 	 * The extended mobile UI, where more stuff are available directly on screen...like desktop...
 	 */
-	public class GuiTablet extends GuiBase
+	public class GuiTablet extends GuiBaseView
 	{
 		public function GuiTablet(parent:VeilPainter)
 		{

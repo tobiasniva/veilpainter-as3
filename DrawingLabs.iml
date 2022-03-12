@@ -12,7 +12,7 @@
               <dependency linkage="Merged" />
             </entry>
           </entries>
-          <sdk name="AIRSDK_Harman_33_1_1_743" />
+          <sdk name="AIRSDK_Compiler_v31" />
         </dependencies>
         <compiler-options>
           <map>
@@ -51,7 +51,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="AIRSDK_Harman_33_1_1_743" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="AIRSDK_Harman_33_1_1_743&#9;AIRSDK_Compiler_v31" jdkType="__CompositeFlexSdk__" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="MinimalMobileTheme" level="project" />
     <orderEntry type="library" exported="" name="PNGEncoder2" level="project" />

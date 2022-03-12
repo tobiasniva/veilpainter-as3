@@ -27,7 +27,6 @@ package behavior
 		private var _quads:Vector.<Vector.<Point>>;
 		private var _quadImages:Vector.<BitmapData>;
 		private var _isDrawing:Boolean;
-
 		private var _isInitialized:Boolean;
 
 		public function Brush(canvas:BitmapData, canvasSizeMultiplier:int = 1, numLinks:int = 10, elasticity:Number = 0.85, strength:Number = 0.028, strengthDegr:Number = 0.27, fade:Boolean = false)

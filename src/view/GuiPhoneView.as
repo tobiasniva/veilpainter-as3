@@ -1,20 +1,20 @@
 package view
 {
+	import behavior.ImageWithLabel;
+
 	import com.bit101.components.ColorChooser;
 	import com.bit101.components.Style;
-
-	import ui.StyleSizer;
 
 	/**
 	 *
 	 * @author: Tobi Wan Kenobi
 	 * The extended mobile UI, where more stuff are available directly on screen...like desktop...
 	 */
-	public class GuiPhone extends GuiBase
+	public class GuiPhoneView extends GuiBaseView
 	{
-		public function GuiPhone(parent:VeilPainter)
+		public override function Init(alphasWithLabel:Vector.<ImageWithLabel>)
 		{
-			super(parent);
+			super.Init(alphasWithLabel);
 			
 			var PADDING:int     = 50;
 			var WIDTH_FULL:int  = _screenSize.x - (PADDING * 2);

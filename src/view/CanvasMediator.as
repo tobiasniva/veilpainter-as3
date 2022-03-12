@@ -2,7 +2,7 @@ package view
 {
 	import event.ColorEvent;
 
-	import flash.display.Bitmap;
+	import flash.events.Event;
 
 	import model.TempModel;
 
@@ -19,8 +19,15 @@ package view
 
 		override public function onRegister():void
 		{
-			_view.Init(_model.canvasMulitplier, _model.canvasColor);
+			addViewListener(CanvasView.CANVAS_CREATED, onCanvasCreated);
 			addContextListener(ColorEvent.BG_COLOR_CHANGED, onBgColorChanged);
+
+			_view.Init(_model.canvasMulitplier, _model.canvasColor);
+		}
+
+		private function onCanvasCreated(e:Event):void
+		{
+			_model.canvasBmpData = _view.bmpData;
 		}
 
 		private function onBgColorChanged(e:ColorEvent):void

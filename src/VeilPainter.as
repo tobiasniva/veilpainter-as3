@@ -6,6 +6,8 @@ package
 	import flash.display.StageQuality;
 	import flash.display.StageScaleMode;
 
+	import se.salomonsson.sequence.SequenceHandler;
+
 	[SWF(backgroundColor="#000000", frameRate="60", width="1024", height="768")]
 	public class VeilPainter extends Sprite
 	{

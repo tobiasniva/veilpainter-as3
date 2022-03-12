@@ -1,6 +1,10 @@
 package model
 {
-	import flash.display.Bitmap;
+	import behavior.ImageWithLabel;
+
+	import event.MiscEvent;
+
+	import flash.display.BitmapData;
 
 	import org.robotlegs.mvcs.Actor;
 
@@ -15,9 +19,22 @@ package model
 		
 		// CANVAS STUFF
 		public var canvasMulitplier:int = 1;
-		public var canvasColor:uint     = 0x222222;
+		public var canvasColor:uint     = 0x662222;
+		
+		private var _canvasBmpData:BitmapData;
+		
+		public function set canvasBmpData(bmpData:BitmapData):void
+		{
+			_canvasBmpData = bmpData;
+			dispatch(new MiscEvent(MiscEvent.CANVAS_BMPDATA_CHANGED));
+		}
+		
+		public function get canvasBmpData():BitmapData
+		{
+			return _canvasBmpData;
+		}
 		
 		// BRUSH STUFF
-		public var alphas:Vector.<Bitmap> = new <Bitmap>[];
+		public var alphasWithLabel:Vector.<ImageWithLabel> = new <ImageWithLabel>[];
 	}
 }

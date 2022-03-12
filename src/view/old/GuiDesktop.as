@@ -1,11 +1,12 @@
-package view
+package view.old
 {
+	import view.*;
 	/**
 	 *
 	 * @author: Tobi Wan Kenobi
 	 * The original desktop UI...
 	 */
-	public class GuiDesktop extends GuiBase
+	public class GuiDesktop extends GuiBaseView
 	{
 		public function GuiDesktop(parent:VeilPainter)
 		{

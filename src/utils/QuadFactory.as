@@ -31,7 +31,7 @@ package utils
 
 			var mergeBmp:BitmapData = new BitmapData(w, h, true, 0);
 			var rect:Rectangle = new Rectangle(0, 0, w, h);
-			mergeBmp.copyPixels(img, rect, new Point(0, 0), mask, new Point(0, 0), true); //-- Merge alphas
+			mergeBmp.copyPixels(img, rect, new Point(0, 0), mask, new Point(0, 0), true); //-- Merge alphasWithLabel
 
 			return mergeBmp;
 		}

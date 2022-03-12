@@ -29,8 +29,8 @@ package
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
 
-	import view.GuiBase;
-	import view.GuiPhone;
+	import view.GuiBaseView;
+	import view.GuiPhoneView;
 
 	/**
 	 *
@@ -49,7 +49,7 @@ package
 
 		private var _bmp:Bitmap;
 		private var _bmpData:BitmapData;
-		private var _gui:GuiBase;
+		private var _gui:GuiBaseView;
 		private var _chkPerm:CheckPermission;
 
 
@@ -106,7 +106,7 @@ package
 			Style.setStyle(Style.DARK);
 			
 //			_gui = new GuiTablet(this);
-//			_gui = new GuiPhone(this);
+//			_gui = new GuiPhoneView(this);
 //			_gui = new GuiDesktop(this);
 			addChild(_gui);
 
