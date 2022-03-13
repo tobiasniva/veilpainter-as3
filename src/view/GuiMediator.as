@@ -2,6 +2,7 @@ package view
 {
 	import event.ColorEvent;
 	import event.IntEvent;
+	import event.MiscEvent;
 	import event.NumberEvent;
 	import event.StringEvent;
 
@@ -31,8 +32,14 @@ package view
 			addViewListener(NumberEvent.BRUSH_ALPHA_CHANGED, onBrushAlphaChanged);
 			addViewListener(StringEvent.BRUSH_BLENDMODE_CHANGED, onBrushBlendmodeChanged);
 			addViewListener(IntEvent.BRUSH_ALPHA_IMG_CHANGED, onAlphaImgChanged);
+			addViewListener(MiscEvent.SAVE_IMAGE, onSaveImage);
 			
 			_view.Init(_brushModel, _canvasModel);
+		}
+
+		private function onSaveImage(e:MiscEvent):void
+		{
+			dispatch(new MiscEvent(MiscEvent.SAVE_IMAGE));
 		}
 
 		private function onAlphaImgChanged(e:IntEvent):void

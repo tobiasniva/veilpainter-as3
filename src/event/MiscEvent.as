@@ -4,7 +4,7 @@ package event
 
 	public class MiscEvent extends Event
 	{
-		public static const DUMMY_EVENT:String   = "MiscEvent.DUMMY_EVENT";
+		public static const SAVE_IMAGE:String = "MiscEvent.SAVE_IMAGE";
 
 		public function MiscEvent(type:String):void
 		{

@@ -14,8 +14,11 @@ package view
 	import consts.Constants;
 	import consts.Strings;
 
+	import event.BmpDataEvent;
+
 	import event.ColorEvent;
 	import event.IntEvent;
+	import event.MiscEvent;
 	import event.NumberEvent;
 	import event.StringEvent;
 
@@ -149,7 +152,7 @@ package view
 
 		protected function onSaveImage(e:Event):void
 		{
-//			_parent.saveImage();
+			dispatchEvent(new MiscEvent(MiscEvent.SAVE_IMAGE));
 		}
 
 		protected function onResetCanvas(e:Event):void

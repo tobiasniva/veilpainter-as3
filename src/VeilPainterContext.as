@@ -3,9 +3,11 @@ package
 	import controller.commands.CanvasUpdatedCommand;
 	import controller.commands.InitAppCommand;
 	import controller.commands.QuitAppCommand;
+	import controller.commands.SaveImageCommand;
 
 	import event.AppEvent;
 	import event.BmpDataEvent;
+	import event.MiscEvent;
 
 	import flash.display.DisplayObjectContainer;
 
@@ -50,7 +52,8 @@ package
 			commandMap.mapEvent(AppEvent.STARTUP,   InitAppCommand);
 			commandMap.mapEvent(AppEvent.QUIT,      QuitAppCommand);
 			//
-			commandMap.mapEvent(BmpDataEvent.CANVAS_BMPDATA_CHANGED, CanvasUpdatedCommand);
+			commandMap.mapEvent(BmpDataEvent.CANVAS_BMPDATA_CHANGED,    CanvasUpdatedCommand);
+			commandMap.mapEvent(MiscEvent.SAVE_IMAGE,                   SaveImageCommand);
 
 			
 			// Kickstart whole operation...
