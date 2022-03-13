@@ -15,6 +15,7 @@ package view
 	import consts.Strings;
 
 	import event.ColorEvent;
+	import event.NumberEvent;
 
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
@@ -56,7 +57,7 @@ package view
 
 		public function Init(brushModel:BrushModel, canvasModel:CanvasModel)
 		{
-			this.mouseEnabled = false; //TODO: Good to not pick up mouse...but safe for everything within this?
+			this.mouseEnabled = false;
 
 			_screenSize = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
 			
@@ -128,7 +129,7 @@ package view
 			_stpSizeMultiplier.maximum = 4;
 			_stpSizeMultiplier.width = 52;
 
-			_colorPickerBG = new ColorChooser(this, 0, 0, canvasModel.colorDefault, onResetCanvas);
+			_colorPickerBG = new ColorChooser(this, 0, 0, canvasModel.color, onResetCanvas);
 			_colorPickerBG.usePopup = true;
 
 			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImage);
@@ -161,7 +162,7 @@ package view
 
 		protected function onElasticityChanged(e:Event):void
 		{
-//			_brush.elasticity = _sldElasticity.value;
+			dispatchEvent(new NumberEvent(NumberEvent.BRUSH_ELASTICITY_CHANGED, _sldElasticity.value));
 		}
 
 		protected function onStrengthChanged(e:Event):void

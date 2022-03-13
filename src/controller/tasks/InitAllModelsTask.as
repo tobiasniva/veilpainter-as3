@@ -23,7 +23,7 @@ package controller.tasks
 			//TODO: Consider this a composite task, where we check prefs/sharedObject first...
 			
 			_canvasModel.sizeMultiplier     = Constants.CANVAS_SIZE_MULTI_DEFAULT;
-			_canvasModel.colorDefault       = Constants.CANVAS_COLOR_DEFAULT;
+			_canvasModel.color       = Constants.CANVAS_COLOR_DEFAULT;
 
 			_brushModel.alphaImageSelectedIndex = Constants.BRUSH_ALPHA_IMG_INDEX;
 			//-- actual images set in previous task (PopulateModelWith Images...) consider putting them in own model...

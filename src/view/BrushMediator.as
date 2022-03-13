@@ -1,7 +1,7 @@
 package view
 {
 	import event.ColorEvent;
-	import event.MiscEvent;
+	import event.NumberEvent;
 
 	import model.BrushModel;
 	import model.CanvasModel;
@@ -20,20 +20,21 @@ package view
 
 		override public function onRegister():void
 		{
-			addContextListener(MiscEvent.CANVAS_BMPDATA_CHANGED, onCanvasBmpDataChanged);
 			addContextListener(ColorEvent.BRUSH_COLOR_CHANGED, onBrushColorChanged);
+			addContextListener(NumberEvent.BRUSH_ELASTICITY_CHANGED, onBrushElasticityChanged);
 			_view.Init(_canvasModel, _brushModel);
+		}
+
+		private function onBrushElasticityChanged(e:NumberEvent):void
+		{
+			trace("BrushMediator::onBrushElasticityChanged() - " + e.value);
+			_view.brush.elasticity = e.value;
 		}
 
 		private function onBrushColorChanged(e:ColorEvent):void
 		{
+			trace("BrushMediator::onBrushColorChanged() - " + e.color);
 			_view.brush.brushColor = e.color;
-		}
-
-		private function onCanvasBmpDataChanged(e:MiscEvent):void
-		{
-			trace("BrushMediator::onCanvasBmpDataChanged");
-			_view.Init(_canvasModel, _brushModel);
 		}
 	}
 }

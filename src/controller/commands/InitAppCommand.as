@@ -26,7 +26,7 @@ package controller.commands
 //			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, onDeactivate);
 
 			addSequentialTask(new PopulateModelWithImagesTask());
-			addSequentialTask(new InitAllModelsTask());	
+			addSequentialTask(new InitAllModelsTask());
 			addSequentialTask(new InitStylesTaskTemp());
 			
 			//TODO: Add views...

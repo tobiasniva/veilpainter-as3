@@ -10,7 +10,6 @@ package model
 	 */
 	public class BrushModel extends Actor
 	{
-		// BRUSH STUFF
 		public var alphaImagesWithLabel:Vector.<ImageWithLabel> = new <ImageWithLabel>[];
 		public var alphaImageSelectedIndex:int;
 		public var color:uint;

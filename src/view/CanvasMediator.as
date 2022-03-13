@@ -22,7 +22,7 @@ package view
 			addViewListener(CanvasView.CANVAS_CREATED, onCanvasCreated);
 			addContextListener(ColorEvent.CANVAS_COLOR_CHANGED, onCanvasColorChanged);
 
-			_view.Init(_canvasModel.sizeMultiplier, _canvasModel.colorDefault);
+			_view.Init(_canvasModel.sizeMultiplier, _canvasModel.color);
 		}
 
 		private function onCanvasCreated(e:Event):void

@@ -32,12 +32,12 @@ package view
 			brush.alphaImage            = brushModel.alphaImagesWithLabel[0].bitmap; //TODO: BrushModel should have active one...
 			brush.elasticity            = brushModel.elasticity;
 			brush.strength              = brushModel.strength;
-			brush.strengthDegradation   = Constants.DEGRADATION_DEFAULT;
+			brush.strengthDegradation   = brushModel.degradation;
 //			brush.fade = true;
-			brush.brushColor            = Constants.BRUSH_COLOR_DEFAULT;
-			brush.brushAlpha            = Constants.BRUSH_ALPHA_DEFAULT;
-			brush.brushBlendmode        = Constants.BRUSH_BLENDMODE_DEFAULT;
-			brush.shape                 = ShapeFactory.getCircle(Constants.CHAIN_LINK_SIZE, Constants.CHAIN_LINK_COLOR);
+			brush.brushColor            = brushModel.color;
+			brush.brushAlpha            = brushModel.alpha;
+			brush.brushBlendmode        = brushModel.blendmode;
+			brush.shape                 = ShapeFactory.getCircle(brushModel.chainLinkSize, brushModel.chainLinkColor);
 			addChild(brush);
 
 			addListeners();
@@ -65,11 +65,12 @@ package view
 
 		private function toggleDrawing(e:MouseEvent):void
 		{
-			if (e.type == MouseEvent.MOUSE_DOWN && e.target == stage)
+			//TODO: We seem to hit the stage everytime a circle/chainlink is under the pointer...?
+			if (e.type == MouseEvent.MOUSE_DOWN && (e.target == this || e.target == stage))
 			{
 				brush.isDrawing = true;
 //				_gui.hide();
-				trace("isDrawing = true");
+				trace("isDrawing = true, target: " + e.target);
 			}
 			else
 			{
