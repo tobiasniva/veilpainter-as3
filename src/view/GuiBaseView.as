@@ -15,7 +15,9 @@ package view
 	import consts.Strings;
 
 	import event.ColorEvent;
+	import event.IntEvent;
 	import event.NumberEvent;
+	import event.StringEvent;
 
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
@@ -89,7 +91,7 @@ package view
 			for each(var img:ImageWithLabel in brushModel.alphaImagesWithLabel)  {
 				_cmbAlphaImage.addItem(img.label);
 			}
-			_cmbAlphaImage.selectedIndex = 0;
+			_cmbAlphaImage.selectedIndex = brushModel.alphaImageSelectedIndex;
 			_cmbAlphaImage.numVisibleItems = brushModel.alphaImagesWithLabel.length;
 			_cmbAlphaImage.addEventListener(Event.SELECT, onAlphaImageChanged);
 
@@ -114,7 +116,7 @@ package view
 			var blendModesAll:Array = BlendModes.getAll();
 			_cmbBlendMode = new ComboBox(this, 0, 0, "", blendModesAll);
 			_cmbBlendMode.numVisibleItems = blendModesAll.length;
-			_cmbBlendMode.selectedIndex = brushModel.blendmodeIndex;
+			_cmbBlendMode.selectedIndex = BlendModes.getIndex(brushModel.blendmode);
 			_cmbBlendMode.addEventListener(Event.SELECT, onBlendModeChanged);
 
 			_colorPicker = new ColorChooser(this, 0, 0, brushModel.color, onColorChanged);
@@ -157,7 +159,7 @@ package view
 
 		protected function onNumLinksChanged(e:Event):void
 		{
-//			_brush.numLinks = _stpNumLinks.value;
+			dispatchEvent(new IntEvent(IntEvent.BRUSH_NUMLINKS_CHANGED, _stpNumLinks.value));
 		}
 
 		protected function onElasticityChanged(e:Event):void
@@ -167,12 +169,12 @@ package view
 
 		protected function onStrengthChanged(e:Event):void
 		{
-//			_brush.strength = _sldStrength.value;
+			dispatchEvent(new NumberEvent(NumberEvent.BRUSH_STRENGTH_CHANGED, _sldStrength.value));
 		}
 
 		protected function onStrengthDegradationChanged(e:Event):void
 		{
-//			_brush.strengthDegradation = _sldStrengthDegradation.value;
+			dispatchEvent(new NumberEvent(NumberEvent.BRUSH_DEGRADATION_CHANGED, _sldStrengthDegradation.value));
 		}
 
 		protected function onColorChanged(e:Event):void
@@ -182,19 +184,18 @@ package view
 
 		protected function onAlphaChanged(e:Event):void
 		{
-//			_brush.brushAlpha = _sldAlpha.value;
+			dispatchEvent(new NumberEvent(NumberEvent.BRUSH_ALPHA_CHANGED, _sldAlpha.value));
 		}
 
 		protected function onBlendModeChanged(e:Event):void
 		{
-//			_brush.brushBlendmode = String(_cmbBlendMode.selectedItem);
+			dispatchEvent(new StringEvent(StringEvent.BRUSH_BLENDMODE_CHANGED, String(_cmbBlendMode.selectedItem)));
 		}
 
 		protected function onAlphaImageChanged(e:Event):void
 		{
 			var index:int = _cmbAlphaImage.selectedIndex;
-			var img:Bitmap = _loadAlphaImages.images[index].bitmap;
-//			_brush.alphaImage = img;
+			dispatchEvent(new IntEvent(IntEvent.BRUSH_ALPHA_IMG_CHANGED, index));
 		}
 
 		protected function onDebugChanged(e:Event):void

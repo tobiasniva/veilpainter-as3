@@ -2,8 +2,6 @@ package view
 {
 	import behavior.Brush;
 
-	import consts.Constants;
-
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -29,7 +27,7 @@ package view
 			//TODO: Kill brush if already exists...
 			
 			brush = new Brush(canvasModel.canvasBmpData, canvasModel.sizeMultiplier, brushModel.numLinks);
-			brush.alphaImage            = brushModel.alphaImagesWithLabel[0].bitmap; //TODO: BrushModel should have active one...
+			brush.alphaImage            = brushModel.alphaImagesWithLabel[brushModel.alphaImageSelectedIndex].bitmap;
 			brush.elasticity            = brushModel.elasticity;
 			brush.strength              = brushModel.strength;
 			brush.strengthDegradation   = brushModel.degradation;

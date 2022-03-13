@@ -1,5 +1,6 @@
 package view
 {
+	import event.BmpDataEvent;
 	import event.ColorEvent;
 
 	import flash.events.Event;
@@ -25,17 +26,18 @@ package view
 			_view.Init(_canvasModel.sizeMultiplier, _canvasModel.color);
 		}
 
-		private function onCanvasCreated(e:Event):void
-		{
-			_canvasModel.canvasBmpData = _view.bmpData;
-		}
-
 		private function onCanvasColorChanged(e:ColorEvent):void
 		{
 			trace("CanvasMediator::onCanvasColorChanged()");
 			var mp:int = _canvasModel.sizeMultiplier;
 			var col:uint = e.color;
 			_view.Init(mp, col);
+		}
+
+		private function onCanvasCreated(e:Event):void
+		{
+			trace("CanvasMediator::onCanvasCreated");
+			dispatch(new BmpDataEvent(BmpDataEvent.CANVAS_BMPDATA_CHANGED, _view.bmpData));
 		}
 	}
 }

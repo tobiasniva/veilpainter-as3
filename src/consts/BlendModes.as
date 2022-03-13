@@ -32,5 +32,10 @@ package consts
 			
 			return arr;
 		}
+		
+		public static function getIndex(blendmode:String):int
+		{
+			return getAll().indexOf(blendmode, 0);
+		}
 	}
 }

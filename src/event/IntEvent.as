@@ -8,6 +8,9 @@ package event
 	 */
 	public class IntEvent extends Event
 	{
+		public static const BRUSH_NUMLINKS_CHANGED:String       = "IntEvent.BRUSH_NUMLINKS_CHANGED";
+		public static const BRUSH_ALPHA_IMG_CHANGED:String      = "IntEvent.BRUSH_ALPHA_IMG_CHANGED";
+		
 		private var _value:int;
 		
 		public function IntEvent(type:String, value:int):void

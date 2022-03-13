@@ -23,7 +23,7 @@ package controller.tasks
 			//TODO: Consider this a composite task, where we check prefs/sharedObject first...
 			
 			_canvasModel.sizeMultiplier     = Constants.CANVAS_SIZE_MULTI_DEFAULT;
-			_canvasModel.color       = Constants.CANVAS_COLOR_DEFAULT;
+			_canvasModel.color              = Constants.CANVAS_COLOR_DEFAULT;
 
 			_brushModel.alphaImageSelectedIndex = Constants.BRUSH_ALPHA_IMG_INDEX;
 			//-- actual images set in previous task (PopulateModelWith Images...) consider putting them in own model...
@@ -31,7 +31,6 @@ package controller.tasks
 			_brushModel.color               = Constants.BRUSH_COLOR_DEFAULT;
 			_brushModel.alpha               = Constants.BRUSH_ALPHA_DEFAULT;
 			_brushModel.blendmode           = Constants.BRUSH_BLENDMODE_DEFAULT;
-			_brushModel.blendmodeIndex      = Constants.BRUSH_BLENDMODE_INDEX;
 			_brushModel.numLinks            = Constants.NUM_LINKS_DEFAULT;
 			_brushModel.chainLinkColor      = Constants.CHAIN_LINK_COLOR;
 			_brushModel.chainLinkSize       = Constants.CHAIN_LINK_SIZE;

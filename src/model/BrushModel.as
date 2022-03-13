@@ -15,7 +15,6 @@ package model
 		public var color:uint;
 		public var alpha:Number;
 		public var blendmode:String;
-		public var blendmodeIndex:int;
 		public var numLinks:int;
 		public var chainLinkColor:uint;
 		public var chainLinkSize:int;

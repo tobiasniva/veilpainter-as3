@@ -21,6 +21,7 @@ package view
 		{
 			this.mouseChildren = this.mouseEnabled = false;
 			
+			//TODO: Consider creating this bitmapdata in command, and notify this view AND feed it to brush from there - at the same time...
 			var screenSize:Point = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
 			var bmpSize:Point = new Point(screenSize.x * sizeMultiplier, screenSize.y * sizeMultiplier);
 			_bmpData = new BitmapData(bmpSize.x, bmpSize.y, false, bgColor);

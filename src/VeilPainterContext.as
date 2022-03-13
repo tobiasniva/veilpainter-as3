@@ -1,9 +1,11 @@
 package
 {
+	import controller.commands.CanvasUpdatedCommand;
 	import controller.commands.InitAppCommand;
 	import controller.commands.QuitAppCommand;
 
 	import event.AppEvent;
+	import event.BmpDataEvent;
 
 	import flash.display.DisplayObjectContainer;
 
@@ -47,7 +49,10 @@ package
 			// Commands
 			commandMap.mapEvent(AppEvent.STARTUP,   InitAppCommand);
 			commandMap.mapEvent(AppEvent.QUIT,      QuitAppCommand);
+			//
+			commandMap.mapEvent(BmpDataEvent.CANVAS_BMPDATA_CHANGED, CanvasUpdatedCommand);
 
+			
 			// Kickstart whole operation...
 			super.startup();
 			dispatchEvent(new AppEvent(AppEvent.STARTUP));
