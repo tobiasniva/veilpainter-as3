@@ -28,7 +28,7 @@ package helpers
 			}
 		}
 
-		private function onPermission(e:PermissionEvent)
+		private function onPermission(e:PermissionEvent):void
 		{
 			trace("onPermission " + e.status);
 			f.removeEventListener(PermissionEvent.PERMISSION_STATUS, onPermission);
