@@ -7,6 +7,11 @@
 		"output": "bin/VeilPainter.swf"
 	},
 	"mainClass": "VeilPainter",
-	"application": "VeilPainter-desktop.xml"
-	//"application": "VeilPainter-android.xml"
+	"application": "VeilPainter-android.xml",
+	"airOptions": {
+		"files": [
+			{ "file": "assets/alphas", "path": "alphas" },
+			{ "file": "assets/icons", "path": "icons" }
+		]
+	}
 }
