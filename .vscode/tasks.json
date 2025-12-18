@@ -1,22 +1,27 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Package and Install Android",
-            "dependsOn": ["ActionScript: package debug - asconfig.json"],
-            "type": "shell",
-            "command": "adb",
-            "args": [
-                "install",
-                "-r",
-                "${workspaceFolder}\\bin\\VeilPainter.apk"
-            ],
-            "group": "none",
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        }
-    ]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Android: Install + Run",
+      "type": "shell",
+
+      "dependsOn": [
+        "ActionScript: package debug - asconfig.json"
+      ],
+
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "& { adb shell am force-stop com.gimbalgames.veilpainter; adb install -r \"${workspaceFolder}\\bin\\VeilPainter.apk\"; adb shell monkey -p com.gimbalgames.veilpainter -c android.intent.category.LAUNCHER 1 }"
+      ],
+
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+
+      "problemMatcher": []
+    }
+  ]
 }
