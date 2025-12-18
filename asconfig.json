@@ -1,0 +1,12 @@
+{
+	"config": "airmobile",
+	"compilerOptions": {
+		"source-path": [
+			"src"
+		],
+		"output": "bin/VeilPainter.swf"
+	},
+	"mainClass": "VeilPainter",
+	"application": "VeilPainter-desktop.xml"
+	//"application": "VeilPainter-android.xml"
+}
