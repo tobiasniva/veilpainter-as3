@@ -8,7 +8,7 @@
         {
             "type": "swf",
             "request": "launch",
-            "name": "Launch ANDROID",
+            "name": "DEBUG DESKTOP",
             "screensize": "768x1280:768x1232",
             "screenDPI": 318,
             "versionPlatform": "AND",

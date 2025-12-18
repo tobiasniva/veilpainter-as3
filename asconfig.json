@@ -9,6 +9,24 @@
 	"mainClass": "VeilPainter",
 	"application": "VeilPainter-android.xml",
 	"airOptions": {
+		"signingOptions": {
+			"debug": {
+				"keystore": "certs/debug_cert.p12",
+				"storetype": "pkcs12"
+			},
+			"release": {
+				"keystore": "certs/debug_cert.p12",
+				"storetype": "pkcs12"
+			}
+		},
+		"android": {
+			"output": "bin/VeilPainter.apk",
+			"target": "apk-debug",
+			"signingOptions": {
+				"keystore": "certs/debug_cert.p12",
+				"storetype": "pkcs12"
+			}
+		},
 		"files": [
 			{ "file": "assets/alphas", "path": "alphas" },
 			{ "file": "assets/icons", "path": "icons" }
