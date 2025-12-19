@@ -105,9 +105,9 @@ package
 			}
 			Style.setStyle(Style.DARK);
 			
-//			_gui = new GuiTablet(this);
+			// _gui = new GuiTablet(this);
 			_gui = new GuiPhone(this);
-//			_gui = new GuiDesktop(this);
+			// _gui = new GuiDesktop(this);
 			addChild(_gui);
 
 			//-- Mouse
@@ -169,7 +169,9 @@ package
 			
 			var imgName:String = "VeilPainter_" + dtf.format(d) + ".png";
 
-			var file:File = File.documentsDirectory.resolvePath("VeilPainter/" + imgName);
+			//TODO: Have documentsDirectory on Windows, but else applicationStorageDirectory?
+			var file:File = File.applicationStorageDirectory.resolvePath("VeilPainter/" + imgName);
+			// var file:File = File.documentsDirectory.resolvePath("VeilPainter/" + imgName);
 			trace("Should save to: " + file.nativePath);
 
 			var fileStream:FileStream = new FileStream();
