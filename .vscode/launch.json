@@ -5,7 +5,7 @@
       "type": "swf",
       "request": "launch",
       "name": "Debug Desktop (SWF)",
-      "preLaunchTask": "ActionScript: compile debug - asconfig.json",
+      "preLaunchTask": "TNA-Desktop_compile_copy_assets",
       "screensize": "768x1280:768x1232",
       "screenDPI": 320,
       "versionPlatform": "AND"
