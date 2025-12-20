@@ -10,8 +10,12 @@ package data
 	 */
 	public class Constants
 	{
+
+		public static const UI_SCALE_PHONE:int     			= 4;
+		public static const UI_SCALE_TABLET:int     		= 4;
+		public static const UI_SCALE_DESKTOP:int     		= 1;
 		
-		public static const SIZE_MULTIPLIER_DEFAULT:int     = 1;
+		public static const SIZE_MULTIPLIER_DEFAULT:int     = 1; // regarding scale of bitmap vs screen size
 		
 		public static const BG_COLOR_DEFAULT:uint           = 0x222222;
 		

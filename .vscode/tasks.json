@@ -21,12 +21,12 @@
       "type": "shell",
       "dependsOn": [
         "Adobe AIR: package Android release - asconfig.json"
+        // "Adobe AIR: package Android debug - asconfig.json"
       ],
       "command": "cmd",
       "args": [
         "/c",
         "adb shell am force-stop air.com.gimbalgames.veilpainter & adb install -r \"${workspaceFolder}\\bin\\VeilPainter.apk\" & adb shell am start -n air.com.gimbalgames.veilpainter/.AIRAppEntry"
-        // "adb shell am force-stop air.com.gimbalgames.veilpainter & adb install -r \"${workspaceFolder}\\bin\\VeilPainter.apk\" & adb shell monkey -p air.com.gimbalgames.veilpainter -c android.intent.category.LAUNCHER 1"
       ],
       "group": { "kind": "build", "isDefault": true },
       "problemMatcher": []

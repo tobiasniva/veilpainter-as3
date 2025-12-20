@@ -4,11 +4,20 @@
     {
       "type": "swf",
       "request": "launch",
-      "name": "Debug Desktop (SWF)",
+      "name": "Mobile GUI",
       "preLaunchTask": "TNA-Desktop_compile_copy_assets",
       "screensize": "768x1280:768x1232",
       "screenDPI": 320,
       "versionPlatform": "AND"
+    },
+    {
+      "type": "swf",
+      "request": "launch",
+      "name": "Desktop GUI",
+      "preLaunchTask": "TNA-Desktop_compile_copy_assets",
+      "screensize": "1920x1080:1920x1040",
+      "screenDPI": 96,
+      "versionPlatform": "WIN"
     }
   ]
 }

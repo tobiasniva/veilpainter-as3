@@ -1,12 +1,9 @@
 package
 {
 	import behavior.Brush;
-
 	import com.adobe.images.PNGEncoder;
 	import com.bit101.components.Style;
-
 	import data.Constants;
-
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
@@ -21,16 +18,14 @@ package
 	import flash.geom.Point;
 	import flash.globalization.DateTimeFormatter;
 	import flash.utils.ByteArray;
-
 	import helpers.CheckPermission;
-
 	import ui.StyleSizer;
-
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
-
 	import view.GuiBase;
 	import view.GuiPhone;
+	import view.GuiDesktop;
+	import flash.system.Capabilities;
 
 	/**
 	 *
@@ -67,6 +62,10 @@ package
 			_chkPerm = new CheckPermission();
 			_chkPerm.addEventListener(Event.COMPLETE, onPermissionGranted);
 			_chkPerm.StartCheck();
+
+			trace("OS: " + Capabilities.os);
+			trace("DPI: " + Capabilities.screenDPI);
+			trace("res: x: " + Capabilities.screenResolutionX + "y: " + Capabilities.screenResolutionY);
 		}
 		
 		private function onPermissionGranted(e:Event):void
@@ -108,6 +107,7 @@ package
 			// _gui = new GuiTablet(this);
 			_gui = new GuiPhone(this);
 			// _gui = new GuiDesktop(this);
+
 			addChild(_gui);
 
 			//-- Mouse
@@ -143,6 +143,8 @@ package
 		//-- 
 		public function resetCanvas(sizeMultiplier:Number, bgColor:uint):void
 		{
+			trace("Reset canvas");
+
 			_sizeMultiplier = sizeMultiplier;
 			_bmpSize.x = screenSize.x * _sizeMultiplier;
 			_bmpSize.y = screenSize.y * _sizeMultiplier;
