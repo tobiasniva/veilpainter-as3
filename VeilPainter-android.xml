@@ -24,7 +24,7 @@
     </icon>
 
     <android>
-        <addAirToAppID>false</addAirToAppID> <!-- NOTE! We disabled this for clarity - now the id above is what ends up on device. -->
+        <!--<addAirToAppID>false</addAirToAppID>--> <!-- NOTE! Not needed anymore - changed this in adt.cfg in airsdk -->
         <manifestAdditions>
             <![CDATA[
             <manifest android:installLocation="auto">
