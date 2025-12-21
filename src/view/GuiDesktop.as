@@ -1,5 +1,6 @@
 package view
 {
+	import data.Constants
 	/**
 	 *
 	 * @author: Tobi Wan Kenobi
@@ -7,8 +8,9 @@ package view
 	 */
 	public class GuiDesktop extends GuiBase
 	{
-		public function GuiDesktop(parent:VeilPainter, uiScale:int)
+		public function GuiDesktop(parent:VeilPainter)
 		{
+			var uiScale:int = Constants.UI_SCALE_DESKTOP;
 			super(parent, uiScale);
 			
 			//-- Layout gui

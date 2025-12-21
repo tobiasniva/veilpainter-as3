@@ -1,7 +1,6 @@
 package view
 {
-	import ui.StyleSizer;
-
+	import data.Constants;
 	/**
 	 *
 	 * @author: Tobi Wan Kenobi
@@ -9,9 +8,9 @@ package view
 	 */
 	public class GuiTablet extends GuiBase
 	{
-		public function GuiTablet(parent:VeilPainter, uiScale:int)
+		public function GuiTablet(parent:VeilPainter)
 		{
-			super(parent, uiScale);
+			super(parent, Constants.UI_SCALE_TABLET);
 			
 			var sldx:int = 20;
 			var sldw:int = 520;

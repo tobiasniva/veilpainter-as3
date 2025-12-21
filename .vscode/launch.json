@@ -4,7 +4,7 @@
     {
       "type": "swf",
       "request": "launch",
-      "name": "Mobile GUI",
+      "name": "Phone GUI",
       "preLaunchTask": "TNA-Desktop_compile_copy_assets",
       "screensize": "768x1280:768x1232",
       "screenDPI": 320,

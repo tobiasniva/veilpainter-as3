@@ -3,7 +3,6 @@ package view
 	import com.bit101.components.ColorChooser;
 	import com.bit101.components.Style;
 	import data.Constants;
-	import ui.StyleSizer;
 
 	/**
 	 *
@@ -12,12 +11,12 @@ package view
 	 */
 	public class GuiPhone extends GuiBase
 	{
-		public function GuiPhone(parent:VeilPainter, uiScale:int)
+		public function GuiPhone(parent:VeilPainter)
 		{
-			var uiScaleHack:int = uiScale;
+			var uiScaleHack:int = Constants.UI_SCALE_PHONE;
 
 			if(parent.screenSize.x < 1080) {
-				uiScaleHack = uiScale - 1;
+				uiScaleHack = 3;
 			}
 
 			super(parent, uiScaleHack);

@@ -62,7 +62,7 @@ package view
 		protected var _btnSaveImage:PushButton;
 
 		
-		public function GuiBase(parent:VeilPainter, uiScale:int)
+		public function GuiBase(parent:VeilPainter, uiScale:int = 1)
 		{
 			StyleSizer.ComponentScale(uiScale);
 

@@ -99,8 +99,8 @@ package
 			Style.setStyle(Style.DARK);
 			
 			// _gui = new GuiTablet(this, Constants.UI_SCALE_TABLET);
-			// _gui = new GuiPhone(this, Constants.UI_SCALE_PHONE);
-			_gui = new GuiDesktop(this, Constants.UI_SCALE_DESKTOP);
+			_gui = new GuiPhone(this);
+			// _gui = new GuiDesktop(this);
 
 			addChild(_gui);
 
