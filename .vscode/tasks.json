@@ -26,7 +26,7 @@
       "command": "cmd",
       "args": [
         "/c",
-        "adb shell am force-stop air.com.gimbalgames.veilpainter & adb install -r \"${workspaceFolder}\\bin\\VeilPainter.apk\" & adb shell am start -n air.com.gimbalgames.veilpainter/.AIRAppEntry"
+        "adb shell am force-stop com.gimbalgames.veilpainter & adb install -r \"${workspaceFolder}\\bin\\VeilPainter.apk\" & adb shell am start -n com.gimbalgames.veilpainter/.AIRAppEntry"
       ],
       "group": { "kind": "build", "isDefault": true },
       "problemMatcher": []
