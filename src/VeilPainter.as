@@ -1,8 +1,6 @@
 package
 {
 	import behavior.Brush;
-	import com.adobe.images.PNGEncoder;
-	import com.bit101.components.Style;
 	import data.Constants;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -12,20 +10,19 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.geom.Point;
 	import flash.globalization.DateTimeFormatter;
 	import flash.utils.ByteArray;
 	import helpers.CheckPermission;
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
+	import utils.SaveImageWithDialog;
 	import view.GuiBase;
 	import view.GuiPhone;
 	import view.GuiDesktop;
 	import flash.system.Capabilities;
-
+	import com.adobe.images.PNGEncoder;
+	import flash.filesystem.File
 	/**
 	 *
 	 * @author: Tobi Wan Kenobi
@@ -95,9 +92,6 @@ package
 			brush.shape = ShapeFactory.getCircle(Constants.CHAIN_LINK_SIZE, Constants.CHAIN_LINK_COLOR);
 			addChildAt(brush, getChildIndex(_bmp) + 1);
 			
-			//TODO: Select GUI and scale...
-			Style.setStyle(Style.DARK);
-			
 			// _gui = new GuiTablet(this, Constants.UI_SCALE_TABLET);
 			_gui = new GuiPhone(this);
 			// _gui = new GuiDesktop(this);
@@ -158,22 +152,18 @@ package
 			trace("perm status: " + File.permissionStatus);
 			
 			var byteArray:ByteArray = PNGEncoder.encode(_bmpData);
-
 			var d:Date = new Date();
 			var dtf:DateTimeFormatter = new DateTimeFormatter("en-US");
 			dtf.setDateTimePattern("yyyyMMdd_hhmmss");
-			
-			var imgName:String = "VeilPainter_" + dtf.format(d) + ".png";
+			var imgName:String = "veil_" + dtf.format(d) + ".png";
 
-			//TODO: Have documentsDirectory on Windows, but else applicationStorageDirectory?
-			var file:File = File.applicationStorageDirectory.resolvePath("VeilPainter/" + imgName);
-			// var file:File = File.documentsDirectory.resolvePath("VeilPainter/" + imgName);
-			trace("Should save to: " + file.nativePath);
-
-			var fileStream:FileStream = new FileStream();
-			fileStream.open(file, FileMode.WRITE);
-			fileStream.writeBytes(byteArray);
-			fileStream.close();
+			SaveImageWithDialog.savePNG(
+				byteArray,
+				imgName,
+				function():void { trace("Saved: " + imgName); },
+				function():void { trace("User canceled"); },
+				function(err:String):void { trace("Save failed: " + err); }
+			);
 		}
 	}
 }

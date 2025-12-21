@@ -2,31 +2,22 @@ package view
 {
 	import behavior.Brush;
 	import behavior.ImageWithLabel;
-
 	import com.bit101.components.CheckBox;
-
 	import com.bit101.components.ColorChooser;
-
 	import com.bit101.components.ComboBox;
-
 	import com.bit101.components.HUISlider;
 	import com.bit101.components.Label;
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
+	import com.bit101.components.Style;
 	import ui.StyleSizer;
-
 	import data.BlendModes;
-
 	import data.Constants;
-
 	import data.Strings;
-
 	import flash.display.Bitmap;
-
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
-
 	import utils.LoadAlphaImages;
 
 	/**
@@ -65,6 +56,7 @@ package view
 		public function GuiBase(parent:VeilPainter, uiScale:int = 1)
 		{
 			StyleSizer.ComponentScale(uiScale);
+			Style.setStyle(Style.DARK);
 
 			this.mouseEnabled = false; //TODO: Good to not pick up mouse...but safe for everything within this?
 
