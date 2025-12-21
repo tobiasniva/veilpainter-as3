@@ -92,10 +92,7 @@ package
 			brush.shape = ShapeFactory.getCircle(Constants.CHAIN_LINK_SIZE, Constants.CHAIN_LINK_COLOR);
 			addChildAt(brush, getChildIndex(_bmp) + 1);
 			
-			// _gui = new GuiTablet(this, Constants.UI_SCALE_TABLET);
-			_gui = new GuiPhone(this);
-			// _gui = new GuiDesktop(this);
-
+			_gui = getGui(Constants.UI_TYPE);
 			addChild(_gui);
 
 			//-- Mouse
@@ -104,6 +101,23 @@ package
 
 			//-- Ticker
 			stage.addEventListener(Event.ENTER_FRAME, update);
+		}
+
+		private function getGui(guiType:int):GuiBase
+		{
+			switch(guiType) {
+				case 1:
+					return new GuiDesktop(this);
+					break;
+				case 2:
+					return new GuiPhone(this); //TODO: Create GuiTablet...
+					break;
+				case 4:
+					return new GuiPhone(this);
+					break;
+				default:
+					return new GuiDesktop(this);
+			}
 		}
 
 		private function update(e:Event):void
