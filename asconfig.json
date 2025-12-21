@@ -1,0 +1,26 @@
+{
+  "config": "airmobile",
+  "compilerOptions": {
+    "source-path": ["src"],
+    "output": "bin/VeilPainter.swf",
+    "debug": true
+  },
+  "mainClass": "VeilPainter",
+
+  "application": "VeilPainter-android.xml",
+
+  "airOptions": {
+    "android": {
+      "output": "bin/VeilPainter.apk",
+      "signingOptions": {
+        "keystore": "certs/debug_cert.p12",
+        "storetype": "pkcs12"
+      }
+      /* omit password here; VS Code will prompt */
+    },
+    "files": [
+      { "file": "assets/alphas", "path": "alphas" },
+      { "file": "assets/icons",  "path": "icons" }
+    ]
+  }
+}

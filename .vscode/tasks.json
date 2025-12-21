@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "TNA-copy_assets_to_bin",
+      "type": "shell",
+      "command": "cmd",
+      "args": ["/c", "${workspaceFolder}\\build\\copy-assets.bat"],
+      "problemMatcher": []
+    },
+    {
+      "label": "TNA-Desktop_compile_copy_assets",
+      "dependsOn": [
+        "ActionScript: compile debug - asconfig.json",
+        "TNA-copy_assets_to_bin"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "TNA-Android_install_and_run",
+      "type": "shell",
+      "dependsOn": [
+        "Adobe AIR: package Android release - asconfig.json"
+        // "Adobe AIR: package Android debug - asconfig.json"
+      ],
+      "command": "cmd",
+      "args": [
+        "/c",
+        "adb shell am force-stop com.gimbalgames.veilpainter & adb install -r \"${workspaceFolder}\\bin\\VeilPainter.apk\" & adb shell am start -n com.gimbalgames.veilpainter/.AIRAppEntry"
+      ],
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    }
+  ]
+}

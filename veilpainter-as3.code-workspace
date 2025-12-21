@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"as3mxml.sdk.framework": "d:\\_sdks\\air_sdks\\AIRSDK_51.2.2"
+	}
+}

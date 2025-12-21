@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<application xmlns="http://ns.adobe.com/air/application/51.2.2">
+
+    <id>com.gimbalgames.veilpainter</id>
+    <filename>VeilPainter</filename>
+    <name>VeilPainter</name>
+    <versionNumber>1.0.1</versionNumber>
+
+    <initialWindow>
+        <content>SWF file name is set automatically at compile time</content>
+        <visible>true</visible>
+        <aspectRatio>portrait</aspectRatio>
+        <autoOrients>false</autoOrients>
+        <fullScreen>true</fullScreen>
+    </initialWindow>
+    
+    <icon>
+        <image36x36>icons/icon_36.png</image36x36>
+        <image48x48>icons/icon_48.png</image48x48>
+        <image72x72>icons/icon_72.png</image72x72>
+        <image96x96>icons/icon_96.png</image96x96>
+        <image144x144>icons/icon_144.png</image144x144>
+    </icon>
+
+    <android>
+        <addAirToAppID>false</addAirToAppID> <!-- NOTE! We disabled this for clarity - now the id above is what ends up on device. -->
+        <manifestAdditions>
+            <![CDATA[
+            <manifest android:installLocation="auto">
+                <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="30" />
+            </manifest>
+            ]]>
+            </manifestAdditions>
+    </android>
+
+</application>
