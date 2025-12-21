@@ -2,7 +2,7 @@
 
 <application xmlns="http://ns.adobe.com/air/application/51.2.2">
 
-    <id>air.com.gimbalgames.veilpainter</id>
+    <id>com.gimbalgames.veilpainter</id>
     <filename>VeilPainter</filename>
     <name>VeilPainter</name>
     <versionNumber>1.0.1</versionNumber>
