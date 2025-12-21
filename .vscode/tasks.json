@@ -30,6 +30,18 @@
       ],
       "group": { "kind": "build", "isDefault": true },
       "problemMatcher": []
+    },
+    {
+      "label": "TNA-Package_aab",
+      "dependsOn": [
+        "Adobe AIR: package Android release - asconfig.json"
+      ],
+      "options": {
+        "env": {
+          "CreateAndroidAppBundle": "true"
+        }
+      },
+      "problemMatcher": []
     }
   ]
 }
