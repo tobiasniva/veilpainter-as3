@@ -13,6 +13,7 @@ package view
 	import com.bit101.components.Label;
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
+	import ui.StyleSizer;
 
 	import data.BlendModes;
 
@@ -61,8 +62,10 @@ package view
 		protected var _btnSaveImage:PushButton;
 
 		
-		public function GuiBase(parent:VeilPainter)
+		public function GuiBase(parent:VeilPainter, uiScale:int)
 		{
+			StyleSizer.ComponentScale(uiScale);
+
 			this.mouseEnabled = false; //TODO: Good to not pick up mouse...but safe for everything within this?
 
 			//TODO: Remove these ugly refs...solve with some event system...?

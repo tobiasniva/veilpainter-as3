@@ -19,7 +19,6 @@ package
 	import flash.globalization.DateTimeFormatter;
 	import flash.utils.ByteArray;
 	import helpers.CheckPermission;
-	import ui.StyleSizer;
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
 	import view.GuiBase;
@@ -97,16 +96,11 @@ package
 			addChildAt(brush, getChildIndex(_bmp) + 1);
 			
 			//TODO: Select GUI and scale...
-			if(screenSize.x < 1080) {
-				StyleSizer.ComponentScale(3);
-			} else {
-				StyleSizer.ComponentScale(4);
-			}
 			Style.setStyle(Style.DARK);
 			
-			// _gui = new GuiTablet(this);
-			_gui = new GuiPhone(this);
-			// _gui = new GuiDesktop(this);
+			// _gui = new GuiTablet(this, Constants.UI_SCALE_TABLET);
+			// _gui = new GuiPhone(this, Constants.UI_SCALE_PHONE);
+			_gui = new GuiDesktop(this, Constants.UI_SCALE_DESKTOP);
 
 			addChild(_gui);
 

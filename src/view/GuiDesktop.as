@@ -7,9 +7,9 @@ package view
 	 */
 	public class GuiDesktop extends GuiBase
 	{
-		public function GuiDesktop(parent:VeilPainter)
+		public function GuiDesktop(parent:VeilPainter, uiScale:int)
 		{
-			super(parent);
+			super(parent, uiScale);
 			
 			//-- Layout gui
 			_sldElasticity.x = 10;

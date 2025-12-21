@@ -2,7 +2,7 @@ package view
 {
 	import com.bit101.components.ColorChooser;
 	import com.bit101.components.Style;
-
+	import data.Constants;
 	import ui.StyleSizer;
 
 	/**
@@ -12,9 +12,15 @@ package view
 	 */
 	public class GuiPhone extends GuiBase
 	{
-		public function GuiPhone(parent:VeilPainter)
+		public function GuiPhone(parent:VeilPainter, uiScale:int)
 		{
-			super(parent);
+			var uiScaleHack:int = uiScale;
+
+			if(parent.screenSize.x < 1080) {
+				uiScaleHack = uiScale - 1;
+			}
+
+			super(parent, uiScaleHack);
 			
 			var PADDING:int     = 50;
 			var WIDTH_FULL:int  = _screenSize.x - (PADDING * 2);

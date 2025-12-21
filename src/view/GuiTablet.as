@@ -9,9 +9,9 @@ package view
 	 */
 	public class GuiTablet extends GuiBase
 	{
-		public function GuiTablet(parent:VeilPainter)
+		public function GuiTablet(parent:VeilPainter, uiScale:int)
 		{
-			super(parent);
+			super(parent, uiScale);
 			
 			var sldx:int = 20;
 			var sldw:int = 520;
