@@ -24,7 +24,7 @@
     </icon>
 
     <android>
-        <addAirToAppID>false</addAirToAppID>
+        <addAirToAppID>false</addAirToAppID> <!-- NOTE! We disabled this for clarity - now the id above is what ends up on device. -->
         <manifestAdditions>
             <![CDATA[
             <manifest android:installLocation="auto">
