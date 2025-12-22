@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<application xmlns="http://ns.adobe.com/air/application/51.2.2">
+<application xmlns="http://ns.adobe.com/air/application/51.0">
+<!-- <application xmlns="http://ns.adobe.com/air/application/51.2.2"> -->
 
     <id>com.gimbalgames.veilpainter</id>
     <filename>VeilPainter</filename>
@@ -8,7 +9,7 @@
     <versionNumber>1.0.1</versionNumber>
 
     <initialWindow>
-        <content>SWF file name is set automatically at compile time</content>
+        <content>VeilPainter.swf</content>
         <visible>true</visible>
         <aspectRatio>portrait</aspectRatio>
         <autoOrients>false</autoOrients>

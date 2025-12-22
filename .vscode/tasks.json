@@ -20,6 +20,7 @@
       "label": "TNA-Android_install_and_run",
       "type": "shell",
       "dependsOn": [
+        "TNA-copy_assets_to_bin",
         "Adobe AIR: package Android release - asconfig.json"
         // "Adobe AIR: package Android debug - asconfig.json"
       ],
@@ -41,6 +42,32 @@
           "CreateAndroidAppBundle": "true"
         }
       },
+      "problemMatcher": []
+    },
+    {
+      "label": "TNA-Package_aab_ADT",
+      "type": "shell",
+      "dependsOn": [
+        "TNA-copy_assets_to_bin",
+        "Adobe AIR: package Android release - asconfig.json"
+      ],
+      "command": "D:\\_sdks\\air_sdks\\AIRSDK_51.2.2\\bin\\adt.bat",
+      "args": [
+        "-package",
+        "-target",
+        "aab",
+        "-storetype",
+        "pkcs12",
+        "-keystore",
+        "${workspaceFolder}\\certs\\debug_cert.p12",
+        "-storepass",
+        "password",
+        "${workspaceFolder}\\bin\\VeilPainter.aab",
+        "${workspaceFolder}\\VeilPainter-android.xml",
+        "-C",
+        "${workspaceFolder}\\bin",
+        "."
+      ],
       "problemMatcher": []
     }
   ]
