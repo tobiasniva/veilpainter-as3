@@ -33,18 +33,6 @@
       "problemMatcher": []
     },
     {
-      "label": "TNA-Package_aab",
-      "dependsOn": [
-        "Adobe AIR: package Android release - asconfig.json"
-      ],
-      "options": {
-        "env": {
-          "CreateAndroidAppBundle": "true"
-        }
-      },
-      "problemMatcher": []
-    },
-    {
       "label": "TNA-Package_aab_ADT",
       "type": "shell",
       "dependsOn": [
@@ -59,9 +47,9 @@
         "-storetype",
         "pkcs12",
         "-keystore",
-        "${workspaceFolder}\\certs\\debug_cert.p12",
+        "d:\\_keys\\VeilPainter\\veilpainter-upload.p12",
         "-storepass",
-        "password",
+        "gimbal07",
         "${workspaceFolder}\\bin\\VeilPainter.aab",
         "${workspaceFolder}\\VeilPainter-android.xml",
         "-C",
