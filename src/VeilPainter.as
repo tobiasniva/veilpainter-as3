@@ -62,7 +62,7 @@ package
 				safeArea.y = _screenSize.y;
 			}
 
-			_bmpSize 	= new Point(_screenSize.x * _sizeMultiplier, _screenSize.y * _sizeMultiplier);
+			_bmpSize 	= new Point(safeArea.x * _sizeMultiplier, safeArea.y * _sizeMultiplier);
 			
 			_chkPerm = new CheckPermission();
 			_chkPerm.addEventListener(Event.COMPLETE, onPermissionGranted);
@@ -160,8 +160,8 @@ package
 			trace("Reset canvas");
 
 			_sizeMultiplier = sizeMultiplier;
-			_bmpSize.x = _screenSize.x * _sizeMultiplier;
-			_bmpSize.y = _screenSize.y * _sizeMultiplier;
+			_bmpSize.x = safeArea.x * _sizeMultiplier;
+			_bmpSize.y = safeArea.y * _sizeMultiplier;
 
 //			_bmpData.dispose();
 
