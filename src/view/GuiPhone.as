@@ -15,7 +15,7 @@ package view
 		{
 			var uiScaleHack:int = Constants.UI_SCALE_PHONE;
 
-			if(parent.screenSize.x < 1080) {
+			if(parent.safeArea.x < 1080) {
 				uiScaleHack = 3;
 			}
 

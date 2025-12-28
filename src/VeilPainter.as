@@ -8,6 +8,7 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
+	import flash.display.Screen;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -24,7 +25,6 @@ package
 	import com.adobe.images.PNGEncoder;
 	import flash.filesystem.File
 	/**
-	 *
 	 * @author: Tobi Wan Kenobi
 	 * Sort of the main class acting as a hub, holding the bitmap, brush and gui etc...
 	 */
@@ -32,9 +32,10 @@ package
 	public class VeilPainter extends Sprite
 	{
 		public var brush:Brush;
-		public var screenSize:Point;
+		public var safeArea:Point;
 		public var loadAlphaImages:LoadAlphaImages;
 		
+		private var _screenSize:Point;
 		private var _bmpSize:Point;
 		private var _sizeMultiplier:int;
 
@@ -52,16 +53,20 @@ package
 			stage.displayState 	= StageDisplayState.FULL_SCREEN_INTERACTIVE; //-- Needed to be able to type into e.g. color chooser!
 
 			_sizeMultiplier = Constants.SIZE_MULTIPLIER_DEFAULT;
-			screenSize = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
-			_bmpSize 	= new Point(screenSize.x * _sizeMultiplier, screenSize.y * _sizeMultiplier);
+			_screenSize = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
+			safeArea = new Point(Screen.mainScreen.safeArea.width, Screen.mainScreen.safeArea.height); // Used for mobile devices with notches etc.
+
+			// hack for making safe area work in the simulator...
+			if(Capabilities.playerType == "Desktop" && (Capabilities.os.toLowerCase().indexOf("windows") != -1 || Capabilities.os.toLowerCase().indexOf("mac") != -1) ) {
+				safeArea.x = _screenSize.x;
+				safeArea.y = _screenSize.y;
+			}
+
+			_bmpSize 	= new Point(_screenSize.x * _sizeMultiplier, _screenSize.y * _sizeMultiplier);
 			
 			_chkPerm = new CheckPermission();
 			_chkPerm.addEventListener(Event.COMPLETE, onPermissionGranted);
 			_chkPerm.StartCheck();
-
-			trace("OS: " + Capabilities.os);
-			trace("DPI: " + Capabilities.screenDPI);
-			trace("res: x: " + Capabilities.screenResolutionX + "y: " + Capabilities.screenResolutionY);
 		}
 		
 		private function onPermissionGranted(e:Event):void
@@ -94,6 +99,13 @@ package
 			
 			_gui = getGui(Constants.UI_TYPE);
 			addChild(_gui);
+
+			// TEMP frame for bounds check
+			var bnd:Sprite = new Sprite();
+			bnd.mouseEnabled = false;
+			bnd.graphics.lineStyle(4, 0xff0000, 1);
+			bnd.graphics.drawRect(0, 0, safeArea.x, safeArea.y);
+			addChild(bnd);
 
 			//-- Mouse
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, toggleDrawing);
@@ -148,8 +160,8 @@ package
 			trace("Reset canvas");
 
 			_sizeMultiplier = sizeMultiplier;
-			_bmpSize.x = screenSize.x * _sizeMultiplier;
-			_bmpSize.y = screenSize.y * _sizeMultiplier;
+			_bmpSize.x = _screenSize.x * _sizeMultiplier;
+			_bmpSize.y = _screenSize.y * _sizeMultiplier;
 
 //			_bmpData.dispose();
 

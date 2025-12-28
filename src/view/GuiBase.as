@@ -62,7 +62,7 @@ package view
 
 			//TODO: Remove these ugly refs...solve with some event system...?
 			_parent = parent;
-			_screenSize = parent.screenSize;
+			_screenSize = parent.safeArea;
 			_brush = parent.brush;
 			_loadAlphaImages = parent.loadAlphaImages;
 			
