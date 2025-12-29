@@ -6,7 +6,7 @@
     <id>com.gimbalgames.veilpainter</id>
     <filename>VeilPainter</filename>
     <name>VeilPainter</name>
-    <versionNumber>1.0.1</versionNumber>
+    <versionNumber>1.0.2</versionNumber>
 
     <initialWindow>
         <content>VeilPainter.swf</content>

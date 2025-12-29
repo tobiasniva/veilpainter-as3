@@ -101,11 +101,11 @@ package
 			addChild(_gui);
 
 			// TEMP frame for bounds check
-			var bnd:Sprite = new Sprite();
-			bnd.mouseEnabled = false;
-			bnd.graphics.lineStyle(4, 0xff0000, 1);
-			bnd.graphics.drawRect(0, 0, safeArea.x, safeArea.y);
-			addChild(bnd);
+			// var bnd:Sprite = new Sprite();
+			// bnd.mouseEnabled = false;
+			// bnd.graphics.lineStyle(4, 0xff0000, 1);
+			// bnd.graphics.drawRect(0, 0, safeArea.x, safeArea.y);
+			// addChild(bnd);
 
 			//-- Mouse
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, toggleDrawing);
