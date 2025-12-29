@@ -17,19 +17,11 @@
       "problemMatcher": []
     },
     {
-      "label": "TNA-Android_install_and_run",
-      "type": "shell",
+      "label": "TNA-Android_debug_build_with_assets",
       "dependsOn": [
         "TNA-copy_assets_to_bin",
-        "Adobe AIR: package Android release - asconfig.json"
-        // "Adobe AIR: package Android debug - asconfig.json"
+        "Adobe AIR: package Android debug - asconfig.json"
       ],
-      "command": "cmd",
-      "args": [
-        "/c",
-        "adb shell am force-stop com.gimbalgames.veilpainter & adb install -r \"${workspaceFolder}\\bin\\VeilPainter.apk\" & adb shell am start -n com.gimbalgames.veilpainter/.AIRAppEntry"
-      ],
-      "group": { "kind": "build", "isDefault": true },
       "problemMatcher": []
     },
     {

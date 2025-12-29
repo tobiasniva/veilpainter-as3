@@ -12,6 +12,7 @@
   "airOptions": {
     "android": {
       "output": "bin/VeilPainter.apk",
+      "listen": true,
       "signingOptions": {
         "keystore": "certs/debug_cert.p12",
         "storetype": "pkcs12"

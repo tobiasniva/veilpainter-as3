@@ -178,9 +178,10 @@ package
 			trace("perm status: " + File.permissionStatus);
 			
 			var byteArray:ByteArray = PNGEncoder.encode(_bmpData);
+			
 			var d:Date = new Date();
 			var dtf:DateTimeFormatter = new DateTimeFormatter("en-US");
-			dtf.setDateTimePattern("yyyyMMdd_hhmmss");
+			dtf.setDateTimePattern("yyyyMMdd_HHmmss");
 			var imgName:String = "veil_" + dtf.format(d) + ".png";
 
 			SaveImageWithDialog.savePNG(
@@ -188,7 +189,12 @@ package
 				imgName,
 				function():void { trace("Saved: " + imgName); },
 				function():void { trace("User canceled"); },
-				function(err:String):void { trace("Save failed: " + err); }
+				function(err:String):void
+				{
+					trace("Save failed: " + err);
+					//TODO: Show alert dialog?
+					trace("Tip: On this device/OS, saving to DCIM/Drive may fail. Please choose Downloads and try again.");
+				}
 			);
 		}
 	}

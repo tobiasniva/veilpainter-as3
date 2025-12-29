@@ -18,6 +18,15 @@
       "screensize": "1920x1080:1920x1040",
       "screenDPI": 96,
       "versionPlatform": "WIN"
+    },
+    {
+      "type": "swf",
+      "request": "attach",
+      "name": "Android (USB) - traces",
+      "platform": "android",
+      "connect": true,
+      "preLaunchTask": "TNA-Android_debug_build_with_assets"
+
     }
   ]
 }

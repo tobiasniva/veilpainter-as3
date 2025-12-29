@@ -4,9 +4,14 @@ package utils
     import flash.utils.ByteArray;
     import flash.events.Event;
     import flash.events.IOErrorEvent;
+    import flash.events.SecurityErrorEvent;
 
     /**
      * Simple helper to save a ByteArray as a file via the OS save UI (Android SAF-style picker).
+     *
+     * Notes:
+     * - Clones the ByteArray before calling FileReference.save() to avoid async mutation issues.
+     * - Handles SecurityErrorEvent to surface permission/provider failures clearly.
      */
     public final class SaveImageWithDialog
     {
@@ -41,9 +46,6 @@ package utils
                 return;
             }
 
-            // Some encoders leave the position at the end; reset to ensure full write.
-            bytes.position = 0;
-
             // Prevent re-entry (double-tap Save) from colliding with an active FileReference.
             if (_fr != null)
             {
@@ -59,15 +61,32 @@ package utils
             _fr.addEventListener(Event.COMPLETE, handleComplete);
             _fr.addEventListener(Event.CANCEL, handleCancel);
             _fr.addEventListener(IOErrorEvent.IO_ERROR, handleError);
+            _fr.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
 
+            // FileReference.save() is async; clone the bytes to avoid any mutation/reuse by caller.
+            var data:ByteArray = new ByteArray();
             try
             {
-                _fr.save(bytes, filename);
+                bytes.position = 0;
+                data.writeBytes(bytes, 0, bytes.length);
+                data.position = 0;
             }
             catch (e:Error)
             {
+                var prepMsg:String = (e && e.message) ? e.message : "Failed preparing data for save.";
+                cleanup();
+                if (_onError != null) _onError(prepMsg);
+                return;
+            }
+
+            try
+            {
+                _fr.save(data, filename);
+            }
+            catch (e2:Error)
+            {
                 // If save() throws immediately (rare), clean up and report.
-                var msg:String = (e && e.message) ? e.message : "Unknown error";
+                var msg:String = (e2 && e2.message) ? e2.message : "Unknown error";
                 cleanup();
                 if (_onError != null) _onError(msg);
             }
@@ -100,7 +119,18 @@ package utils
         private static function handleError(e:IOErrorEvent):void
         {
             var cb:Function = _onError;
-            var msg:String = (e && e.text) ? e.text : "IO error";
+            var msg:String = "IOError"
+                + (("errorID" in e) ? (" #" + e["errorID"]) : "")
+                + (e && e.text && e.text.length > 0 ? (": " + e.text) : ": File I/O error");
+            cleanup();
+            if (cb != null) cb(msg);
+        }
+
+
+        private static function handleSecurityError(e:SecurityErrorEvent):void
+        {
+            var cb:Function = _onError;
+            var msg:String = (e && e.text && e.text.length > 0) ? e.text : "Security error";
             cleanup();
             if (cb != null) cb(msg);
         }
@@ -112,6 +142,7 @@ package utils
                 _fr.removeEventListener(Event.COMPLETE, handleComplete);
                 _fr.removeEventListener(Event.CANCEL, handleCancel);
                 _fr.removeEventListener(IOErrorEvent.IO_ERROR, handleError);
+                _fr.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
             }
             _fr = null;
 
