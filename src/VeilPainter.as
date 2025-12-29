@@ -18,9 +18,7 @@ package
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
 	import utils.SaveImageWithDialog;
-	import view.GuiBase;
-	import view.GuiPhone;
-	import view.GuiDesktop;
+	import view.*
 	import flash.system.Capabilities;
 	import com.adobe.images.PNGEncoder;
 	import flash.filesystem.File
@@ -192,8 +190,19 @@ package
 				function(err:String):void
 				{
 					trace("Save failed: " + err);
-					//TODO: Show alert dialog?
-					trace("Tip: On this device/OS, saving to DCIM/Drive may fail. Please choose Downloads and try again.");
+					createAndShowPopup("Save failed", "This location is not supported on your device. Please choose Downloads and try again."
+				);
+				}
+			);
+		}
+
+		private function createAndShowPopup(header:String, msg:String):void
+		{
+			var dlg:ModalDialog = new ModalDialog(this);
+			dlg.show(header, msg, "OK",
+				function():void
+				{
+					trace("User clicked OK");
 				}
 			);
 		}
