@@ -12,8 +12,8 @@ package data
 	{
 		public static const UI_TYPE:int 	    			= 4; // 1=desktop, 2=tablet, 4=phone
 
-		public static const UI_SCALE_PHONE:int     			= 4;
-		public static const UI_SCALE_TABLET:int     		= 4;
+		public static const UI_SCALE_PHONE:int     			= 3;
+		public static const UI_SCALE_TABLET:int     		= 3;
 		public static const UI_SCALE_DESKTOP:int     		= 1;
 		
 		public static const SIZE_MULTIPLIER_DEFAULT:int     = 1; // regarding scale of bitmap vs screen size

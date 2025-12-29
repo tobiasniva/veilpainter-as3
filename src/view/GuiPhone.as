@@ -15,9 +15,9 @@ package view
 		{
 			var uiScaleHack:int = Constants.UI_SCALE_PHONE;
 
-			if(parent.safeArea.x < 1080) {
-				uiScaleHack = 3;
-			}
+			// if(parent.safeArea.x < 1080) {
+			// 	uiScaleHack = 3;
+			// }
 
 			super(parent, uiScaleHack);
 			
