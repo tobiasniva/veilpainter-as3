@@ -24,7 +24,6 @@ package
 	import com.adobe.images.PNGEncoder;
 	import flash.filesystem.File
 	import flash.display.DisplayObjectContainer;
-	import flash.geom.Rectangle;
 	/**
 	 * @author: Tobi Wan Kenobi
 	 * Sort of the main class acting as a hub, holding the bitmap, brush and gui etc...
@@ -100,13 +99,9 @@ package
 			addChildAt(brush, 1); // Above bitmap
 			
 			//-- GUI
-			_uiRoot = new Sprite();
-			addChildAt(_uiRoot, 2); // Above brush for now...
-			
 			_gui = new Gui(this);
-			_uiRoot.addChild(_gui);
-			
-			applyUiScaleAndLayout();
+			addChildAt(_gui, 2); // Above brush
+			applyLayout();
 
 			//-- Mouse
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, toggleDrawing);
@@ -116,31 +111,15 @@ package
 			stage.addEventListener(Event.ENTER_FRAME, update);
 		}
 
-		private function applyUiScaleAndLayout():void
+		private function applyLayout():void
 		{
 			// Determine UI scale:
-			var uiScale:int = Constants.UI_SCALE_PHONE; //TODO: Figure out how/when we want to set this...
-
-			// Physical stage size:
-			var pw:int = safeArea.x;
-			var ph:int = safeArea.y;
-
-			// Logical size for layout:
-			var logicalW:int = int(pw / uiScale);
-			var logicalH:int = int(ph / uiScale);
-			_uiRoot.scaleX = _uiRoot.scaleY = uiScale;
-
-			//TEMP debug rectangle!!!
-			// var rect:Sprite = new Sprite();
-			// rect.graphics.lineStyle(1, 0xff0000);
-			// rect.graphics.drawRect(0, 0, logicalW, logicalH);
-			// _uiRoot.addChild(rect);
-			// return;
+			var uiScale:int = Constants.UI_SCALE_PHONE; //TODO: Figure out how/when we want to set... dpi vs actual screen etc...
 
 			// Metrics + layout
-			var isPortrait:Boolean = (ph >= pw);
+			var isPortrait:Boolean = (safeArea.y >= safeArea.x);
 			var isTablet:Boolean = false;
-			var layoutMetrics:LayoutMetrics = new LayoutMetrics(logicalW, logicalH, uiScale, isTablet, isPortrait);
+			var layoutMetrics:LayoutMetrics = new LayoutMetrics(safeArea.x, safeArea.y, uiScale, isTablet, isPortrait);
 
 			_gui.relayout(layoutMetrics, new PhonePortraitLayout());
 		}

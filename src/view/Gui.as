@@ -21,6 +21,7 @@ package view
 	import view.layout.IGuiLayout;
 	import view.layout.LayoutMetrics;
 	import utils.LoadAlphaImages;
+	import ui.StyleSizer;
 
 	public class Gui extends Sprite
 	{
@@ -67,6 +68,8 @@ package view
 
 		private function createComponents():void
 		{
+			StyleSizer.ComponentScale(Constants.UI_SCALE_PHONE); //TODO: Consider moving elsewhere?
+
 			_sldElasticity = new HUISlider(this);
 			_sldElasticity.label = Strings.LBL_ELASTICITY;
 			_sldElasticity.addEventListener(Event.CHANGE, onElasticityChanged);
@@ -141,9 +144,9 @@ package view
 		}
 
 		// Call this whenever screen/orientation/scale changes
-		public function relayout(m:LayoutMetrics, layout:IGuiLayout):void
+		public function relayout(layoutMetrics:LayoutMetrics, layout:IGuiLayout):void
 		{
-			layout.apply(this, m);
+			layout.apply(this, layoutMetrics);
 		}
 
 		// --- Expose components for layout strategies (read-only) ---
