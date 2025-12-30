@@ -204,7 +204,7 @@ package view
 
 		protected function onBlendModeChanged(e:Event):void
 		{
-			_brush.blendModeIndex = _cmbBlendMode.selectedIndex;
+			_brush.brushBlendmode = String(_cmbBlendMode.selectedItem);
 		}
 
 		protected function onSaveImageToDesktop(e:Event):void
