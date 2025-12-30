@@ -18,11 +18,13 @@ package
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
 	import utils.SaveImageWithDialog;
-	import view.*
+	import view.Gui;
+	import view.layout.*;
 	import flash.system.Capabilities;
 	import com.adobe.images.PNGEncoder;
 	import flash.filesystem.File
 	import flash.display.DisplayObjectContainer;
+	import flash.geom.Rectangle;
 	/**
 	 * @author: Tobi Wan Kenobi
 	 * Sort of the main class acting as a hub, holding the bitmap, brush and gui etc...
@@ -40,6 +42,7 @@ package
 
 		private var _bmp:Bitmap;
 		private var _bmpData:BitmapData;
+		private var _uiRoot:Sprite;
 		private var _gui:Gui;
 		private var _chkPerm:CheckPermission;
 
@@ -94,13 +97,16 @@ package
 			brush.brushAlpha           = Constants.BRUSH_ALPHA_DEFAULT;
 			brush.brushBlendmode       = Constants.BRUSH_BLENDMODE_DEFAULT;
 			brush.shape = ShapeFactory.getCircle(Constants.CHAIN_LINK_SIZE, Constants.CHAIN_LINK_COLOR);
-			addChildAt(brush, getChildIndex(_bmp) + 1);
+			addChildAt(brush, 1); // Above bitmap
 			
 			//-- GUI
-			_gui = new Gui(this);
-			// _gui = GuiFactory.createGUI(Constants.UI_TYPE, this);
+			_uiRoot = new Sprite();
+			addChildAt(_uiRoot, 2); // Above brush for now...
 			
-			addChild(_gui);
+			_gui = new Gui(this);
+			_uiRoot.addChild(_gui);
+			
+			applyUiScaleAndLayout();
 
 			//-- Mouse
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, toggleDrawing);
@@ -108,6 +114,35 @@ package
 
 			//-- Ticker
 			stage.addEventListener(Event.ENTER_FRAME, update);
+		}
+
+		private function applyUiScaleAndLayout():void
+		{
+			// Determine UI scale:
+			var uiScale:int = Constants.UI_SCALE_PHONE; //TODO: Figure out how/when we want to set this...
+
+			// Physical stage size:
+			var pw:int = safeArea.x;
+			var ph:int = safeArea.y;
+
+			// Logical size for layout:
+			var logicalW:int = int(pw / uiScale);
+			var logicalH:int = int(ph / uiScale);
+			_uiRoot.scaleX = _uiRoot.scaleY = uiScale;
+
+			//TEMP debug rectangle!!!
+			// var rect:Sprite = new Sprite();
+			// rect.graphics.lineStyle(1, 0xff0000);
+			// rect.graphics.drawRect(0, 0, logicalW, logicalH);
+			// _uiRoot.addChild(rect);
+			// return;
+
+			// Metrics + layout
+			var isPortrait:Boolean = (ph >= pw);
+			var isTablet:Boolean = false;
+			var layoutMetrics:LayoutMetrics = new LayoutMetrics(logicalW, logicalH, uiScale, isTablet, isPortrait);
+
+			_gui.relayout(layoutMetrics, new PhonePortraitLayout());
 		}
 
 		private function update(e:Event):void

@@ -167,6 +167,16 @@ package view
 		public function get btnSaveImage():PushButton { return _btnSaveImage; }
 
 		// --- Your existing handlers (verbatim semantics) ---
+		public function show():void
+		{
+			this.visible = true;
+		}
+
+		public function hide():void
+		{
+			this.visible = false;
+		}
+
 		protected function onResetCanvas(e:Event):void
 		{
 			_parent.resetCanvas(_stpSizeMultiplier.value, _colorPickerBG.value);
