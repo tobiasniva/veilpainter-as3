@@ -35,36 +35,36 @@ package view.layout
 			gui.lblAlphaImage.visible = false;
 			gui.cmbAlphaImage.x = PADDING;
 			gui.cmbAlphaImage.y = 500;								//500
-			gui.cmbAlphaImage.width = (PADDING * 2) + WIDTH_HALF;
+			gui.cmbAlphaImage.width = WIDTH_HALF;
 
 			gui.lblBlendModes.visible = false;
-			gui.cmbBlendMode.x = PADDING;
-			gui.cmbBlendMode.y = 600;								//600
-			gui.cmbBlendMode.width = (PADDING * 2) + WIDTH_HALF;
+			gui.cmbBlendMode.x = X_MID;
+			gui.cmbBlendMode.y = 500;								//500
+			gui.cmbBlendMode.width = WIDTH_HALF;
 
 			gui.sldAlpha.x = PADDING;
-			gui.sldAlpha.y = 725;									//725
+			gui.sldAlpha.y = 625;									//725
 			gui.sldAlpha.width = WIDTH_SLD;
 
 			gui.stpNumLinks.x = PADDING;
-			gui.stpNumLinks.y = 900;								//900
+			gui.stpNumLinks.y = 800;								//800
 			gui.stpNumLinks.width = WIDTH_THIRD;
 			gui.lblNumLinks.visible = false;
 
 			gui.stpSizeMultiplier.x = (PADDING * 2) + WIDTH_THIRD;
-			gui.stpSizeMultiplier.y = 900;							//900
+			gui.stpSizeMultiplier.y = 800;							//800
 			gui.stpSizeMultiplier.width = WIDTH_THIRD;
-			gui.stpSizeMultiplier.enabled = false;
+			gui.stpSizeMultiplier.enabled = false; //TODO: We disable this on mobile for now!
 
 			gui.chkDebug.x = (PADDING * 3) + (WIDTH_THIRD * 2);
-			gui.chkDebug.y = 920;									//920
+			gui.chkDebug.y = 820;									//820
 
 			gui.colorPicker.x = PADDING;
-			gui.colorPicker.y = 1100;								//1100
+			gui.colorPicker.y = 1000;								//1000
 			gui.colorPicker.popupAlign = ColorChooser.TOP_LEFT;
 
 			gui.colorPickerBG.x = X_MID;
-			gui.colorPickerBG.y = 1100;								//1100
+			gui.colorPickerBG.y = 1000;								//1000
 			gui.colorPickerBG.popupAlign = ColorChooser.TOP_RIGHT;
 
 			gui.btnClear.x = PADDING;
