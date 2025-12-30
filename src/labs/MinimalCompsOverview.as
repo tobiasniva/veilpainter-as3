@@ -10,6 +10,7 @@ package labs
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
 	import com.bit101.components.RadioButton;
+	import com.bit101.components.Style;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -28,9 +29,9 @@ package labs
 	[SWF(backgroundColor="#eeeeee", frameRate="60", width="1024", height="1024")]
 	public class MinimalCompsOverview extends Sprite
 	{
-		private static const BGCOL:uint         = 0xdddddd;
-		private static const GRIDCOLSUB:uint    = 0xd6d6d6;
-		private static const GRIDCOL:uint       = 0xcccccc;
+		private static const BGCOL:uint         = 0x444444;
+		private static const GRIDCOLSUB:uint    = 0x333333;
+		private static const GRIDCOL:uint       = 0x222222;
 		private static const GRIDSIZESUB:int    = 10;
 		private static const GRIDSIZE:int       = 30;
 		
@@ -64,6 +65,8 @@ package labs
 			
 			_scaler = 3;
 			scaleStyle(_scaler);
+
+			Style.setStyle(Style.DARK);
 			
 			drawGUI();
 		}
@@ -111,6 +114,7 @@ package labs
 
 		private function scaleStyle(scale:Number = 1):void
 		{
+			trace("scaleStyle: " + scale);
 			StyleSizer.ComponentScale(scale);
 		}
 
