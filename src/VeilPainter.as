@@ -17,7 +17,6 @@ package
 	import helpers.CheckPermission;
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
-	import utils.GuiFactory;
 	import utils.SaveImageWithDialog;
 	import view.*
 	import flash.system.Capabilities;
@@ -41,7 +40,7 @@ package
 
 		private var _bmp:Bitmap;
 		private var _bmpData:BitmapData;
-		private var _gui:GuiBase;
+		private var _gui:Gui;
 		private var _chkPerm:CheckPermission;
 
 
@@ -98,7 +97,9 @@ package
 			addChildAt(brush, getChildIndex(_bmp) + 1);
 			
 			//-- GUI
-			_gui = GuiFactory.createGUI(Constants.UI_TYPE, this);
+			_gui = new Gui(this);
+			// _gui = GuiFactory.createGUI(Constants.UI_TYPE, this);
+			
 			addChild(_gui);
 
 			//-- Mouse
@@ -174,8 +175,7 @@ package
 				function(err:String):void
 				{
 					trace("Save failed: " + err);
-					GuiFactory.createAndShowPopup(parent, "Save failed", "This location is not supported on your device. Please choose Downloads and try again."
-				);
+					//TODO: implemtent popup with hint that saving to downloads folder might work
 				}
 			);
 		}

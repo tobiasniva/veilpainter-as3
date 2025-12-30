@@ -10,76 +10,76 @@ package view
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
 	import com.bit101.components.Style;
-	import ui.StyleSizer;
 	import data.BlendModes;
 	import data.Constants;
 	import data.Strings;
+
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.geom.Point;
+
+	import view.layout.IGuiLayout;
+	import view.layout.LayoutMetrics;
 	import utils.LoadAlphaImages;
 
-	/**
-	 *
-	 * @author: Tobi Wan Kenobi
-	 * Figure out what we actually want gui to support. Interface?
-	 * Difference between tablet/phone gui? (for sure...)
-	 */
-	public class GuiBase extends Sprite
+	public class Gui extends Sprite
 	{
-		//-- refs in parent class...
 		private var _parent:VeilPainter;
 		private var _brush:Brush;
+		private var _loadAlphaImages:LoadAlphaImages;
 
-		protected var _screenSize:Point;
-		protected var _loadAlphaImages:LoadAlphaImages;
-		protected var _sldElasticity:HUISlider;
-		protected var _sldStrength:HUISlider;
-		protected var _sldStrengthDegradation:HUISlider;
-		protected var _sldAlpha:HUISlider;
-		protected var _stpNumLinks:NumericStepper;
-		protected var _cmbAlphaImage:ComboBox;
-		protected var _cmbBlendMode:ComboBox;
-		protected var _colorPicker:ColorChooser;
-		protected var _colorPickerBG:ColorChooser;
-		protected var _stpSizeMultiplier:NumericStepper;
-		protected var _chkDebug:CheckBox;
-		
-		protected var _lblAlphaImage:Label;
-		protected var _lblNumLinks:Label;
-		protected var _lblBlendModes:Label;
-		protected var _btnClear:PushButton;
-		protected var _btnSaveImage:PushButton;
+		// Components (same set as GuiBase)
+		private var _sldElasticity:HUISlider;
+		private var _sldStrength:HUISlider;
+		private var _sldStrengthDegradation:HUISlider;
+		private var _sldAlpha:HUISlider;
 
-		
-		public function GuiBase(parent:VeilPainter, uiScale:int = 1)
+		private var _stpNumLinks:NumericStepper;
+		private var _cmbAlphaImage:ComboBox;
+		private var _cmbBlendMode:ComboBox;
+		private var _colorPicker:ColorChooser;
+		private var _colorPickerBG:ColorChooser;
+		private var _stpSizeMultiplier:NumericStepper;
+		private var _chkDebug:CheckBox;
+
+		private var _lblAlphaImage:Label;
+		private var _lblNumLinks:Label;
+		private var _lblBlendModes:Label;
+		private var _btnClear:PushButton;
+		private var _btnSaveImage:PushButton;
+
+		public function Gui(parent:VeilPainter)
 		{
-			StyleSizer.ComponentScale(uiScale);
-			Style.setStyle(Style.DARK);
+			super();
 
-			this.mouseEnabled = false; //TODO: Good to not pick up mouse...but safe for everything within this?
-
-			//TODO: Remove these ugly refs...solve with some event system...?
 			_parent = parent;
-			_screenSize = parent.safeArea;
 			_brush = parent.brush;
 			_loadAlphaImages = parent.loadAlphaImages;
-			
-			//-- Create components TODO: Consider putting them in container, to be able to separate behaviour phone/tablet?
+
+			// Keep a consistent style. Do not do component scaling here.
+			Style.setStyle(Style.DARK);
+
+			// You had this in GuiBase; leaving it as-is:
+			this.mouseEnabled = false;
+
+			createComponents();
+		}
+
+		private function createComponents():void
+		{
 			_sldElasticity = new HUISlider(this);
 			_sldElasticity.label = Strings.LBL_ELASTICITY;
 			_sldElasticity.addEventListener(Event.CHANGE, onElasticityChanged);
 			_sldElasticity.setSliderParams(Constants.ELASTICITY_MIN, Constants.ELASTICITY_MAX, Constants.ELASTICITY_DEFAULT);
 			_sldElasticity.labelPrecision = 2;
-			_sldElasticity.tick = 0.01
+			_sldElasticity.tick = 0.01;
 
 			_sldStrength = new HUISlider(this);
 			_sldStrength.label = Strings.LBL_STRENGTH;
 			_sldStrength.addEventListener(Event.CHANGE, onStrengthChanged);
 			_sldStrength.setSliderParams(Constants.STRENGTH_MIN, Constants.STRENGTH_MAX, Constants.STRENGTH_DEFAULT);
 			_sldStrength.labelPrecision = 3;
-			_sldStrength.tick = 0.001
+			_sldStrength.tick = 0.001;
 
 			_sldStrengthDegradation = new HUISlider(this);
 			_sldStrengthDegradation.label = Strings.LBL_STRENGTH_DEGR;
@@ -91,7 +91,8 @@ package view
 			_lblAlphaImage = new Label(this, 0, 0, Strings.LBL_ALPHA_IMG);
 
 			_cmbAlphaImage = new ComboBox(this);
-			for each(var img:ImageWithLabel in _loadAlphaImages.images)  {
+			for each (var img:ImageWithLabel in _loadAlphaImages.images)
+			{
 				_cmbAlphaImage.addItem(img.label);
 			}
 			_cmbAlphaImage.selectedIndex = 0;
@@ -125,7 +126,6 @@ package view
 			_colorPicker = new ColorChooser(this, 0, 0, Constants.BRUSH_COLOR_DEFAULT, onColorChanged);
 			_colorPicker.usePopup = true;
 
-			//-- STUFF @ right...
 			_btnClear = new PushButton(this, 0, 0, Strings.LBL_CLEAR, onResetCanvas);
 
 			_stpSizeMultiplier = new NumericStepper(this, 0, 0, onResetCanvas);
@@ -139,22 +139,34 @@ package view
 
 			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);
 		}
-		
-		public function show():void
+
+		// Call this whenever screen/orientation/scale changes
+		public function relayout(m:LayoutMetrics, layout:IGuiLayout):void
 		{
-			this.visible = true;
+			layout.apply(this, m);
 		}
 
-		public function hide():void
-		{
-			this.visible = false;
-		}
+		// --- Expose components for layout strategies (read-only) ---
+		public function get sldElasticity():HUISlider { return _sldElasticity; }
+		public function get sldStrength():HUISlider { return _sldStrength; }
+		public function get sldStrengthDegradation():HUISlider { return _sldStrengthDegradation; }
+		public function get sldAlpha():HUISlider { return _sldAlpha; }
 
-		protected function onSaveImageToDesktop(e:Event):void
-		{
-			_parent.saveImage();
-		}
+		public function get stpNumLinks():NumericStepper { return _stpNumLinks; }
+		public function get cmbAlphaImage():ComboBox { return _cmbAlphaImage; }
+		public function get cmbBlendMode():ComboBox { return _cmbBlendMode; }
+		public function get colorPicker():ColorChooser { return _colorPicker; }
+		public function get colorPickerBG():ColorChooser { return _colorPickerBG; }
+		public function get stpSizeMultiplier():NumericStepper { return _stpSizeMultiplier; }
+		public function get chkDebug():CheckBox { return _chkDebug; }
 
+		public function get lblAlphaImage():Label { return _lblAlphaImage; }
+		public function get lblNumLinks():Label { return _lblNumLinks; }
+		public function get lblBlendModes():Label { return _lblBlendModes; }
+		public function get btnClear():PushButton { return _btnClear; }
+		public function get btnSaveImage():PushButton { return _btnSaveImage; }
+
+		// --- Your existing handlers (verbatim semantics) ---
 		protected function onResetCanvas(e:Event):void
 		{
 			_parent.resetCanvas(_stpSizeMultiplier.value, _colorPickerBG.value);
@@ -187,12 +199,17 @@ package view
 
 		protected function onAlphaChanged(e:Event):void
 		{
-			_brush.brushAlpha = _sldAlpha.value;
+			_brush.alpha = _sldAlpha.value;
 		}
 
 		protected function onBlendModeChanged(e:Event):void
 		{
-			_brush.brushBlendmode = String(_cmbBlendMode.selectedItem);
+			_brush.blendModeIndex = _cmbBlendMode.selectedIndex;
+		}
+
+		protected function onSaveImageToDesktop(e:Event):void
+		{
+			_parent.saveImage();
 		}
 
 		protected function onAlphaImageChanged(e:Event):void
