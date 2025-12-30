@@ -99,6 +99,7 @@ package
 			addChildAt(brush, 1); // Above bitmap
 			
 			//-- GUI
+			//TODO: Decide on where and when we set the ui scale...
 			_gui = new Gui(this);
 			addChildAt(_gui, 2); // Above brush
 			applyLayout();
@@ -114,7 +115,7 @@ package
 		private function applyLayout():void
 		{
 			// Determine UI scale:
-			var uiScale:int = Constants.UI_SCALE_PHONE; //TODO: Figure out how/when we want to set... dpi vs actual screen etc...
+			var uiScale:int = Constants.UI_SCALE_PHONE;
 
 			// Metrics + layout
 			var isPortrait:Boolean = (safeArea.y >= safeArea.x);

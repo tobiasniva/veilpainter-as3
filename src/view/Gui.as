@@ -57,10 +57,7 @@ package view
 			_brush = parent.brush;
 			_loadAlphaImages = parent.loadAlphaImages;
 
-			// Keep a consistent style. Do not do component scaling here.
 			Style.setStyle(Style.DARK);
-
-			// You had this in GuiBase; leaving it as-is:
 			this.mouseEnabled = false;
 
 			createComponents();

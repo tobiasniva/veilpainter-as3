@@ -3,14 +3,11 @@ package view.layout
 	import com.bit101.components.ColorChooser;
 	import com.bit101.components.Style;
 	import view.Gui;
-	import ui.StyleSizer;
 
 	public class PhonePortraitLayout implements IGuiLayout
 	{
 		public function apply(gui:Gui, lm:LayoutMetrics):void
 		{
-			// StyleSizer.ComponentScale(lm.uiScale); //TODO: Consider moving elsewhere?
-
 			var PADDING:int     = 50;
 			var WIDTH_FULL:int  = lm.screenW - (PADDING * 2);
 			var WIDTH_SLD:int   = lm.screenW;
@@ -19,7 +16,7 @@ package view.layout
 			var X_MID:int       = lm.screenW - PADDING - WIDTH_HALF;
 			var Y_BOTTOM:int    = lm.screenH - Style.COMMON_20 - PADDING;
 
-			// Layout gui (directly re-using your old coordinates)
+			// Layout
 			gui.sldElasticity.x = PADDING;
 			gui.sldElasticity.y = 100; 								//100
 			gui.sldElasticity.width = WIDTH_SLD;
