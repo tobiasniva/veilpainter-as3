@@ -1,0 +1,10 @@
+{
+  "config": "airmobile",
+  "compilerOptions": {
+    "source-path": ["src"],
+    "output": "bin/TEMP.swf",
+    "debug": true
+  },
+  "mainClass": "labs/MinimalCompsOverview", // Change this to your main class
+  "application": "VeilPainter-android.xml"
+}

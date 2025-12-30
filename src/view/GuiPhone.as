@@ -13,13 +13,8 @@ package view
 	{
 		public function GuiPhone(parent:VeilPainter)
 		{
-			var uiScaleHack:int = Constants.UI_SCALE_PHONE;
-
-			// if(parent.safeArea.x < 1080) {
-			// 	uiScaleHack = 3;
-			// }
-
-			super(parent, uiScaleHack);
+			var uiScale:int = Constants.UI_SCALE_PHONE;
+			super(parent, uiScale);
 			
 			var PADDING:int     = 50;
 			var WIDTH_FULL:int  = _screenSize.x - (PADDING * 2);

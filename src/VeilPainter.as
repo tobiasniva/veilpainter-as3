@@ -17,11 +17,13 @@ package
 	import helpers.CheckPermission;
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
+	import utils.GuiFactory;
 	import utils.SaveImageWithDialog;
 	import view.*
 	import flash.system.Capabilities;
 	import com.adobe.images.PNGEncoder;
 	import flash.filesystem.File
+	import flash.display.DisplayObjectContainer;
 	/**
 	 * @author: Tobi Wan Kenobi
 	 * Sort of the main class acting as a hub, holding the bitmap, brush and gui etc...
@@ -95,15 +97,9 @@ package
 			brush.shape = ShapeFactory.getCircle(Constants.CHAIN_LINK_SIZE, Constants.CHAIN_LINK_COLOR);
 			addChildAt(brush, getChildIndex(_bmp) + 1);
 			
-			_gui = getGui(Constants.UI_TYPE);
+			//-- GUI
+			_gui = GuiFactory.createGUI(Constants.UI_TYPE, this);
 			addChild(_gui);
-
-			// TEMP frame for bounds check
-			// var bnd:Sprite = new Sprite();
-			// bnd.mouseEnabled = false;
-			// bnd.graphics.lineStyle(4, 0xff0000, 1);
-			// bnd.graphics.drawRect(0, 0, safeArea.x, safeArea.y);
-			// addChild(bnd);
 
 			//-- Mouse
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, toggleDrawing);
@@ -111,23 +107,6 @@ package
 
 			//-- Ticker
 			stage.addEventListener(Event.ENTER_FRAME, update);
-		}
-
-		private function getGui(guiType:int):GuiBase
-		{
-			switch(guiType) {
-				case 1:
-					return new GuiDesktop(this);
-					break;
-				case 2:
-					return new GuiPhone(this); //TODO: Create GuiTablet...
-					break;
-				case 4:
-					return new GuiPhone(this);
-					break;
-				default:
-					return new GuiDesktop(this);
-			}
 		}
 
 		private function update(e:Event):void
@@ -155,6 +134,10 @@ package
 		//-- 
 		public function resetCanvas(sizeMultiplier:Number, bgColor:uint):void
 		{
+			//TEMP popup test
+			GuiFactory.createAndShowPopup(this, "Designing popup", "A quite long and verbose message to show how the popup dialog handles larger amounts of text. Hopefully it looks good on all devices!"
+			);
+
 			trace("Reset canvas");
 
 			_sizeMultiplier = sizeMultiplier;
@@ -182,6 +165,7 @@ package
 			dtf.setDateTimePattern("yyyyMMdd_HHmmss");
 			var imgName:String = "veil_" + dtf.format(d) + ".png";
 
+			var parent:DisplayObjectContainer = this as DisplayObjectContainer;
 			SaveImageWithDialog.savePNG(
 				byteArray,
 				imgName,
@@ -190,19 +174,8 @@ package
 				function(err:String):void
 				{
 					trace("Save failed: " + err);
-					createAndShowPopup("Save failed", "This location is not supported on your device. Please choose Downloads and try again."
+					GuiFactory.createAndShowPopup(parent, "Save failed", "This location is not supported on your device. Please choose Downloads and try again."
 				);
-				}
-			);
-		}
-
-		private function createAndShowPopup(header:String, msg:String):void
-		{
-			var dlg:ModalDialog = new ModalDialog(this);
-			dlg.show(header, msg, "OK",
-				function():void
-				{
-					trace("User clicked OK");
 				}
 			);
 		}

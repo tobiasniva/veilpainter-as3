@@ -26,7 +26,19 @@
       "platform": "android",
       "connect": true,
       "preLaunchTask": "TNA-Android_debug_build_with_assets"
-
+      
+    },
+    //
+    // Temporary config for testing MinimalComps overview!
+    {
+      "type": "swf",
+      "request": "launch",
+      "name": "MinimalCompsOverview",
+      "screensize": "1024x1024:1024x1024",
+      "screenDPI": 320,
+      "versionPlatform": "AND",
+      // "asconfigPath": "asconfig.TEMP.json",
+      "preLaunchTask": "ActionScript: compile debug - asconfig.TEMP.json"
     }
   ]
 }

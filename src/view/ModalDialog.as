@@ -3,7 +3,7 @@ package view
     import com.bit101.components.Label;
     import com.bit101.components.PushButton;
     import com.bit101.components.Window;
-
+    import ui.StyleSizer
     import flash.display.DisplayObjectContainer;
     import flash.display.Sprite;
     import flash.events.Event;
