@@ -21,6 +21,7 @@ package labs
 	import flash.events.Event;
 
 	import ui.StyleSizer;
+	import view.ModalDialog;
 
 	/**
 	 *
@@ -29,7 +30,7 @@ package labs
 	[SWF(backgroundColor="#eeeeee", frameRate="60", width="1024", height="1024")]
 	public class MinimalCompsOverview extends Sprite
 	{
-		private static const BGCOL:uint         = 0x444444;
+		private static const BGCOL:uint         = 0x555555;
 		private static const GRIDCOLSUB:uint    = 0x333333;
 		private static const GRIDCOL:uint       = 0x222222;
 		private static const GRIDSIZESUB:int    = 10;
@@ -82,7 +83,7 @@ package labs
 			_cmb.numVisibleItems = 4;
 			_cmb.selectedIndex = _scaler - 1;
 			_cmb.addEventListener(Event.SELECT, selectUiScale);
-			_btn = new PushButton(this, pad, pad + (30 * _scaler), "Button");
+			_btn = new PushButton(this, pad, pad + (30 * _scaler), "Button", btnClicked);
 
 			var rdY:int = pad + (60 * _scaler);
 			_rd0 = new RadioButton(this, pad, rdY, "Radio 0", true, null, "radioGroup");
@@ -103,6 +104,13 @@ package labs
 			_colChooser.usePopup = true;
 			_colChooser.popupAlign = ColorChooser.TOP_LEFT;
 			
+		}
+
+		private function btnClicked(e:Event):void
+		{
+			// trace("Button clicked!");
+			var dlg:ModalDialog = new ModalDialog(parent);
+			dlg.show("Title or header", "And here comes a lengthy message that should be displayed in the dialog box.", "OK");
 		}
 
 		private function selectUiScale(e:Event):void
