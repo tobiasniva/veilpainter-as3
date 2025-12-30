@@ -22,11 +22,19 @@
     {
       "type": "swf",
       "request": "attach",
-      "name": "Android (USB) - traces",
+      "name": "Android - debug (USB)",
       "platform": "android",
       "connect": true,
       "preLaunchTask": "TNA-Android_debug_build_with_assets"
       
+    },
+    {
+      "type": "swf",
+      "request": "attach",
+      "name": "Android - release",
+      "platform": "android",
+      // "connect": true,
+      "preLaunchTask": "TNA-Android_release_build_with_assets"
     },
     //
     // Temporary config for testing MinimalComps overview!

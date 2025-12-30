@@ -25,6 +25,14 @@
       "problemMatcher": []
     },
     {
+      "label": "TNA-Android_release_build_with_assets",
+      "dependsOn": [
+        "TNA-copy_assets_to_bin",
+        "Adobe AIR: package Android release - asconfig.json"
+      ],
+      "problemMatcher": []
+    },
+    {
       "label": "TNA-Package_aab_ADT",
       "type": "shell",
       "dependsOn": [

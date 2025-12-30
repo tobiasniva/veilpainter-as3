@@ -135,8 +135,8 @@ package
 		public function resetCanvas(sizeMultiplier:Number, bgColor:uint):void
 		{
 			//TEMP popup test
-			GuiFactory.createAndShowPopup(this, "Designing popup", "A quite long and verbose message to show how the popup dialog handles larger amounts of text. Hopefully it looks good on all devices!"
-			);
+			// GuiFactory.createAndShowPopup(this, "Designing popup", "A quite long and verbose message to show how the popup dialog handles larger amounts of text. Hopefully it looks good on all devices!"
+			// );
 
 			trace("Reset canvas");
 
