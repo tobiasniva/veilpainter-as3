@@ -17,9 +17,6 @@ package view.viewport
 		private var _lastW:int = -1;
 		private var _lastH:int = -1;
 
-		/**
-		 * getSafeArea must return a Point(width,height) – your existing working approach.
-		 */
 		public function ViewportService(stage:Stage, getSafeArea:Function)
 		{
 			_stage = stage;
@@ -60,7 +57,7 @@ package view.viewport
 			_lastW = w;
 			_lastH = h;
 
-			// Wrap Point into Rectangle ONLY for the event (since your event expects Rectangle)
+			// Wrap Point into Rectangle ONLY for the event - since your event expects Rectangle...
 			dispatchEvent(new ViewportChangedEvent(new Rectangle(0, 0, w, h)));
 		}
 	}

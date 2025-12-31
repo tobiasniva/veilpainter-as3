@@ -58,8 +58,7 @@ package
 			stage.displayState 	= StageDisplayState.FULL_SCREEN_INTERACTIVE; //-- Needed to be able to type into e.g. color chooser!
 
 			_sizeMultiplier = Constants.SIZE_MULTIPLIER_DEFAULT;
-			// _screenSize = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
-			_safeArea = getSafeAreaSize(); // Used for mobile devices with notches etc.
+			_safeArea = getSafeAreaSize();
 			
 			loadAlphaImages = new LoadAlphaImages();
 			loadAlphaImages.addEventListener(Event.COMPLETE, init);
@@ -67,7 +66,7 @@ package
 		
 		private function getSafeAreaSize():Point
 		{
-			// EXACTLY your existing logic:
+			//-- On desktop, just use full screen size...
 			var screenSize:Point = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
 			var safe:Point = new Point(Screen.mainScreen.safeArea.width, Screen.mainScreen.safeArea.height);
 
@@ -132,13 +131,11 @@ package
 
 		private function onViewportChanged(e:ViewportChangedEvent):void
 		{
-			// if (_safeArea.x == e.screenW && _safeArea.y == e.screenH) return;
-
 			_safeArea.x = e.screenW;
 			_safeArea.y = e.screenH;
 
 			_layoutManager.refresh(_safeArea.x, _safeArea.y, true);
-			resetCanvas(_sizeMultiplier, Constants.BG_COLOR_DEFAULT); //TODO: preserve image?
+			resetCanvas(_sizeMultiplier, Constants.BG_COLOR_DEFAULT); //TODO: Preserve image - rotate/transform into new bmpData...
 		}
 
 		private function update(e:Event):void
