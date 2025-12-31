@@ -10,7 +10,7 @@ package data
 	 */
 	public class Constants
 	{
-		public static const UI_TYPE:int 	    			= 4; // 1=desktop, 2=tablet, 4=phone
+		public static const MIN_TABLET_SCREEN_W:int     	= 900;
 
 		public static const UI_SCALE_PHONE:int     			= 3;
 		public static const UI_SCALE_TABLET:int     		= 3;

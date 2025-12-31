@@ -2,8 +2,10 @@ package
 {
 	import behavior.Brush;
 	import data.Constants;
+	import data.Strings;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageDisplayState;
@@ -11,6 +13,7 @@ package
 	import flash.display.Screen;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filesystem.File
 	import flash.geom.Point;
 	import flash.globalization.DateTimeFormatter;
 	import flash.utils.ByteArray;
@@ -18,12 +21,11 @@ package
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
 	import utils.SaveImageWithDialog;
-	import view.Gui;
-	import view.layout.*;
 	import flash.system.Capabilities;
 	import com.adobe.images.PNGEncoder;
-	import flash.filesystem.File
-	import flash.display.DisplayObjectContainer;
+	import ui.StyleSizer
+	import view.Gui;
+	import view.layout.LayoutManager;
 	/**
 	 * @author: Tobi Wan Kenobi
 	 * Sort of the main class acting as a hub, holding the bitmap, brush and gui etc...
@@ -99,10 +101,17 @@ package
 			addChildAt(brush, 1); // Above bitmap
 			
 			//-- GUI
-			//TODO: Decide on where and when we set the ui scale...
+			//TODO: Decide on where and when we set the ui scale...and scale components before they are created!
+			var uiScale:int = Constants.UI_SCALE_PHONE;
+			StyleSizer.ComponentScale(uiScale);
 			_gui = new Gui(this);
 			addChildAt(_gui, 2); // Above brush
-			applyLayout();
+
+			//-- Layout Manager
+			// var layoutSelector:LayoutSelector = new LayoutSelector(Constants.MIN_TABLET_SCREEN_W);
+			var layoutManager:LayoutManager = new LayoutManager(stage, _gui, uiScale);
+			layoutManager.registerLayout(Strings.PHONE_PORTRAIT, new view.layout.PhonePortraitLayout());
+			layoutManager.start();
 
 			//-- Mouse
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, toggleDrawing);
@@ -110,19 +119,6 @@ package
 
 			//-- Ticker
 			stage.addEventListener(Event.ENTER_FRAME, update);
-		}
-
-		private function applyLayout():void
-		{
-			// Determine UI scale:
-			var uiScale:int = Constants.UI_SCALE_PHONE;
-
-			// Metrics + layout
-			var isPortrait:Boolean = (safeArea.y >= safeArea.x);
-			var isTablet:Boolean = false;
-			var layoutMetrics:LayoutMetrics = new LayoutMetrics(safeArea.x, safeArea.y, uiScale, isTablet, isPortrait);
-
-			_gui.relayout(layoutMetrics, new PhonePortraitLayout());
 		}
 
 		private function update(e:Event):void

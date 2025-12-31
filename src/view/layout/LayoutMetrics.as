@@ -6,17 +6,13 @@ package view.layout
 	{
 		public var screenW:int;
 		public var screenH:int;
-		public var uiScale:Number;
-		public var isTablet:Boolean;
-		public var isPortrait:Boolean;
+		public var uiScale:int;
 
-		public function LayoutMetrics(screenWidth:int, screenHeight:int, uiScale:Number, isTablet:Boolean, isPortrait:Boolean)
+		public function LayoutMetrics(screenWidth:int, screenHeight:int, uiScale:int)
 		{
 			this.screenW = screenWidth;
 			this.screenH = screenHeight;
 			this.uiScale = uiScale;
-			this.isTablet = isTablet;
-			this.isPortrait = isPortrait;
 		}
 	}
 }

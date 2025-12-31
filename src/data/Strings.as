@@ -18,5 +18,11 @@ package data
 		public static const LBL_DEBUG:String                = "Debug";
 		public static const LBL_CLEAR:String                = "Clear";
 		public static const LBL_SAVE:String                 = "Save";
+
+
+		public static const PHONE_PORTRAIT:String           = "phone_portrait";
+		public static const PHONE_LANDSCAPE:String          = "phone_landscape";
+		public static const TABLET_PORTRAIT:String          = "tablet_portrait";
+		public static const TABLET_LANDSCAPE:String         = "tablet_landscape";
 	}
 }
