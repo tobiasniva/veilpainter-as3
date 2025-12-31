@@ -2,6 +2,7 @@ package view.layout
 {
 	import view.Gui;
 	import data.Strings;
+	import flash.geom.Point;
 
 	public final class LayoutManager
 	{
@@ -30,7 +31,7 @@ package view.layout
 		{
 			_uiScale = value;
 		}
-
+		
 		// whenever screen size or orientation changes...
 		public function refresh(screenW:int, screenH:int, force:Boolean = false):void
 		{

@@ -15,9 +15,9 @@ package
 	import flash.events.MouseEvent;
 	import flash.filesystem.File
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.globalization.DateTimeFormatter;
 	import flash.utils.ByteArray;
-	import helpers.CheckPermission;
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
 	import utils.SaveImageWithDialog;
@@ -27,6 +27,8 @@ package
 	import ui.StyleSizer
 	import view.Gui;
 	import view.layout.*;
+	import view.viewport.*;
+	import event.ViewportChangedEvent;
 	/**
 	 * @author: Tobi Wan Kenobi
 	 * Sort of the main class acting as a hub, holding the bitmap, brush and gui etc...
@@ -46,7 +48,7 @@ package
 		private var _bmpData:BitmapData;
 		private var _uiRoot:Sprite;
 		private var _gui:Gui;
-		private var _chkPerm:CheckPermission;
+		private var _layoutManager:LayoutManager;
 
 
 		public function VeilPainter()
@@ -57,23 +59,32 @@ package
 			stage.displayState 	= StageDisplayState.FULL_SCREEN_INTERACTIVE; //-- Needed to be able to type into e.g. color chooser!
 
 			_sizeMultiplier = Constants.SIZE_MULTIPLIER_DEFAULT;
-			_screenSize = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
-			_safeArea = new Point(Screen.mainScreen.safeArea.width, Screen.mainScreen.safeArea.height); // Used for mobile devices with notches etc.
-
-			// hack for making safe area work in the simulator...
-			if(Capabilities.playerType == "Desktop" && (Capabilities.os.toLowerCase().indexOf("windows") != -1 || Capabilities.os.toLowerCase().indexOf("mac") != -1) ) {
-				_safeArea.x = _screenSize.x;
-				_safeArea.y = _screenSize.y;
-			}
+			// _screenSize = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
+			_safeArea = getSafeAreaSize(); // Used for mobile devices with notches etc.
 			
 			loadAlphaImages = new LoadAlphaImages();
 			loadAlphaImages.addEventListener(Event.COMPLETE, init);
 		}
 		
+		private function getSafeAreaSize():Point
+		{
+			// EXACTLY your existing logic:
+			var screenSize:Point = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
+			var safe:Point = new Point(Screen.mainScreen.safeArea.width, Screen.mainScreen.safeArea.height);
+
+			if (Capabilities.playerType == "Desktop" &&
+				(Capabilities.os.toLowerCase().indexOf("windows") != -1 || Capabilities.os.toLowerCase().indexOf("mac") != -1))
+			{
+				safe.x = screenSize.x;
+				safe.y = screenSize.y;
+			}
+			return safe;
+		}
+
 		private function init(e:Event):void
 		{
 			loadAlphaImages.removeEventListener(Event.COMPLETE, init);
-			
+
 			//-- Init canvas
 			_bmpSize 	= new Point(_safeArea.x * _sizeMultiplier, _safeArea.y * _sizeMultiplier);
 			_bmpData = new BitmapData(_bmpSize.x, _bmpSize.y, false, Constants.BG_COLOR_DEFAULT);
@@ -101,11 +112,16 @@ package
 			_gui = new Gui(this);
 			addChildAt(_gui, 2); // Above brush
 
-			//-- Layout Manager
-			var layoutManager:LayoutManager = new LayoutManager(_gui, uiScale);
-			layoutManager.registerLayout(Strings.PHONE_PORTRAIT, new PhonePortraitLayout());
-			layoutManager.registerLayout(Strings.PHONE_LANDSCAPE, new PhoneLandscapeLayout());
-			layoutManager.refresh(_safeArea.x, _safeArea.y, true);
+			//-- Layout Manager - NEEDS GUI!
+			_layoutManager = new LayoutManager(_gui, uiScale);
+			_layoutManager.registerLayout(Strings.PHONE_PORTRAIT, new PhonePortraitLayout());
+			_layoutManager.registerLayout(Strings.PHONE_LANDSCAPE, new PhoneLandscapeLayout());
+			_layoutManager.refresh(_safeArea.x, _safeArea.y, true);
+
+			//-- Viewport resize listener - RELIES ON GUI BEING INITIALIZED!
+			var viewportService:ViewportService = new ViewportService(stage, getSafeAreaSize);
+			viewportService.addEventListener(ViewportChangedEvent.VIEWPORT_CHANGED, onViewportChanged);
+			viewportService.start();
 
 			//-- Mouse
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, toggleDrawing);
@@ -113,6 +129,17 @@ package
 
 			//-- Ticker
 			stage.addEventListener(Event.ENTER_FRAME, update);
+		}
+
+		private function onViewportChanged(e:ViewportChangedEvent):void
+		{
+			// if (_safeArea.x == e.screenW && _safeArea.y == e.screenH) return;
+
+			_safeArea.x = e.screenW;
+			_safeArea.y = e.screenH;
+
+			_layoutManager.refresh(_safeArea.x, _safeArea.y, true);
+			resetCanvas(_sizeMultiplier, Constants.BG_COLOR_DEFAULT); //TODO: preserve image?
 		}
 
 		private function update(e:Event):void
@@ -140,10 +167,6 @@ package
 		//-- 
 		public function resetCanvas(sizeMultiplier:Number, bgColor:uint):void
 		{
-			//TEMP popup test
-			// GuiFactory.createAndShowPopup(this, "Designing popup", "A quite long and verbose message to show how the popup dialog handles larger amounts of text. Hopefully it looks good on all devices!"
-			// );
-
 			trace("Reset canvas");
 
 			_sizeMultiplier = sizeMultiplier;
