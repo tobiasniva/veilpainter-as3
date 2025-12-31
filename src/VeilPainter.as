@@ -15,7 +15,6 @@ package
 	import flash.events.MouseEvent;
 	import flash.filesystem.File
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	import flash.globalization.DateTimeFormatter;
 	import flash.utils.ByteArray;
 	import utils.LoadAlphaImages;
