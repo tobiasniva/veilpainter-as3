@@ -12,8 +12,7 @@ package data
 	{
 		public static const MIN_TABLET_SCREEN_W:int     	= 900;
 
-		public static const UI_SCALE_PHONE:int     			= 3;
-		public static const UI_SCALE_TABLET:int     		= 3;
+		public static const UI_SCALE_MOBILE:int     		= 3; // For phones and tablets for now - consider calc from dpi vs screen size later
 		public static const UI_SCALE_DESKTOP:int     		= 1;
 		
 		public static const SIZE_MULTIPLIER_DEFAULT:int     = 1; // regarding scale of bitmap vs screen size

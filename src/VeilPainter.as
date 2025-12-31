@@ -21,6 +21,7 @@ package
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
 	import utils.SaveImageWithDialog;
+	import utils.UiScaleUtil
 	import flash.system.Capabilities;
 	import com.adobe.images.PNGEncoder;
 	import ui.StyleSizer
@@ -94,8 +95,7 @@ package
 			addChildAt(brush, 1); // Above bitmap
 			
 			//-- GUI
-			//TODO: Decide on where and when we set the ui scale...and scale components before they are created!
-			var uiScale:int = Constants.UI_SCALE_PHONE;
+			var uiScale:int = UiScaleUtil.computeUiScale();
 			StyleSizer.ComponentScale(uiScale);
 			_gui = new Gui(this);
 			addChildAt(_gui, 2); // Above brush

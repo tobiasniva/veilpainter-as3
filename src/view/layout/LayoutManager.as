@@ -9,7 +9,7 @@ package view.layout
 		private var _uiScale:Number;
 		private var _selector:LayoutSelector;
 
-		private var _layouts:Object = {}; // key:String -> IGuiLayout
+		private var _layouts:Object = {};
 		private var _lastKey:String = null;
 		private var _lastW:int = -1;
 		private var _lastH:int = -1;
