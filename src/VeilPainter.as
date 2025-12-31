@@ -26,8 +26,7 @@ package
 	import com.adobe.images.PNGEncoder;
 	import ui.StyleSizer
 	import view.Gui;
-	import view.layout.LayoutManager;
-	import view.layout.PhonePortraitLayout;
+	import view.layout.*;
 	/**
 	 * @author: Tobi Wan Kenobi
 	 * Sort of the main class acting as a hub, holding the bitmap, brush and gui etc...
@@ -96,6 +95,8 @@ package
 			
 			//-- GUI
 			var uiScale:int = UiScaleUtil.computeUiScale();
+			trace("UI Scale: " + uiScale);
+			trace("dpi: " + Capabilities.screenDPI);
 			StyleSizer.ComponentScale(uiScale);
 			_gui = new Gui(this);
 			addChildAt(_gui, 2); // Above brush
@@ -103,6 +104,7 @@ package
 			//-- Layout Manager
 			var layoutManager:LayoutManager = new LayoutManager(_gui, uiScale);
 			layoutManager.registerLayout(Strings.PHONE_PORTRAIT, new PhonePortraitLayout());
+			layoutManager.registerLayout(Strings.PHONE_LANDSCAPE, new PhoneLandscapeLayout());
 			layoutManager.refresh(_safeArea.x, _safeArea.y, true);
 
 			//-- Mouse

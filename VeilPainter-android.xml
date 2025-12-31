@@ -11,8 +11,8 @@
     <initialWindow>
         <content>VeilPainter.swf</content>
         <visible>true</visible>
-        <aspectRatio>portrait</aspectRatio>
-        <autoOrients>false</autoOrients>
+        <aspectRatio>any</aspectRatio>
+        <autoOrients>true</autoOrients>
         <fullScreen>true</fullScreen>
     </initialWindow>
     

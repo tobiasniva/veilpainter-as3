@@ -4,9 +4,18 @@
     {
       "type": "swf",
       "request": "launch",
-      "name": "Phone GUI",
+      "name": "Phone Portrait GUI",
       "preLaunchTask": "TNA-Desktop_compile_copy_assets",
       "screensize": "768x1280:768x1232",
+      "screenDPI": 320,
+      "versionPlatform": "AND"
+    },
+    {
+      "type": "swf",
+      "request": "launch",
+      "name": "Phone Landscape GUI",
+      "preLaunchTask": "TNA-Desktop_compile_copy_assets",
+      "screensize": "1280x720:1280x672",
       "screenDPI": 320,
       "versionPlatform": "AND"
     },
