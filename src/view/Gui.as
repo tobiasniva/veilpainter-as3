@@ -208,7 +208,7 @@ package view
 
 		protected function onAlphaChanged(e:Event):void
 		{
-			_brush.alpha = _sldAlpha.value;
+			_brush.brushAlpha = _sldAlpha.value;
 		}
 
 		protected function onBlendModeChanged(e:Event):void
