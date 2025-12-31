@@ -45,7 +45,7 @@ package helpers
 
 		private function permissionSucceeded():void
 		{
-			trace("Permission ok.");
+			trace("Permission to documentsDirectory.");
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 

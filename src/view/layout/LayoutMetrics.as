@@ -6,9 +6,9 @@ package view.layout
 	{
 		public var screenW:int;
 		public var screenH:int;
-		public var uiScale:int;
+		public var uiScale:Number;
 
-		public function LayoutMetrics(screenWidth:int, screenHeight:int, uiScale:int)
+		public function LayoutMetrics(screenWidth:int, screenHeight:int, uiScale:Number)
 		{
 			this.screenW = screenWidth;
 			this.screenH = screenHeight;

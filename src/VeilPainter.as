@@ -26,6 +26,7 @@ package
 	import ui.StyleSizer
 	import view.Gui;
 	import view.layout.LayoutManager;
+	import view.layout.PhonePortraitLayout;
 	/**
 	 * @author: Tobi Wan Kenobi
 	 * Sort of the main class acting as a hub, holding the bitmap, brush and gui etc...
@@ -34,9 +35,9 @@ package
 	public class VeilPainter extends Sprite
 	{
 		public var brush:Brush;
-		public var safeArea:Point;
 		public var loadAlphaImages:LoadAlphaImages;
 		
+		private var _safeArea:Point;
 		private var _screenSize:Point;
 		private var _bmpSize:Point;
 		private var _sizeMultiplier:int;
@@ -57,32 +58,24 @@ package
 
 			_sizeMultiplier = Constants.SIZE_MULTIPLIER_DEFAULT;
 			_screenSize = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
-			safeArea = new Point(Screen.mainScreen.safeArea.width, Screen.mainScreen.safeArea.height); // Used for mobile devices with notches etc.
+			_safeArea = new Point(Screen.mainScreen.safeArea.width, Screen.mainScreen.safeArea.height); // Used for mobile devices with notches etc.
 
 			// hack for making safe area work in the simulator...
 			if(Capabilities.playerType == "Desktop" && (Capabilities.os.toLowerCase().indexOf("windows") != -1 || Capabilities.os.toLowerCase().indexOf("mac") != -1) ) {
-				safeArea.x = _screenSize.x;
-				safeArea.y = _screenSize.y;
+				_safeArea.x = _screenSize.x;
+				_safeArea.y = _screenSize.y;
 			}
-
-			_bmpSize 	= new Point(safeArea.x * _sizeMultiplier, safeArea.y * _sizeMultiplier);
 			
-			_chkPerm = new CheckPermission();
-			_chkPerm.addEventListener(Event.COMPLETE, onPermissionGranted);
-			_chkPerm.StartCheck();
-		}
-		
-		private function onPermissionGranted(e:Event):void
-		{
 			loadAlphaImages = new LoadAlphaImages();
-			loadAlphaImages.addEventListener(Event.COMPLETE, onAlphaImagesLoaded);
+			loadAlphaImages.addEventListener(Event.COMPLETE, init);
 		}
 		
-		private function onAlphaImagesLoaded(e:Event):void
+		private function init(e:Event):void
 		{
-			loadAlphaImages.removeEventListener(Event.COMPLETE, onAlphaImagesLoaded);
+			loadAlphaImages.removeEventListener(Event.COMPLETE, init);
 			
 			//-- Init canvas
+			_bmpSize 	= new Point(_safeArea.x * _sizeMultiplier, _safeArea.y * _sizeMultiplier);
 			_bmpData = new BitmapData(_bmpSize.x, _bmpSize.y, false, Constants.BG_COLOR_DEFAULT);
 			_bmp = new Bitmap(_bmpData);
 			addChildAt(_bmp, 0);
@@ -108,10 +101,9 @@ package
 			addChildAt(_gui, 2); // Above brush
 
 			//-- Layout Manager
-			// var layoutSelector:LayoutSelector = new LayoutSelector(Constants.MIN_TABLET_SCREEN_W);
-			var layoutManager:LayoutManager = new LayoutManager(stage, _gui, uiScale);
-			layoutManager.registerLayout(Strings.PHONE_PORTRAIT, new view.layout.PhonePortraitLayout());
-			layoutManager.start();
+			var layoutManager:LayoutManager = new LayoutManager(_gui, uiScale);
+			layoutManager.registerLayout(Strings.PHONE_PORTRAIT, new PhonePortraitLayout());
+			layoutManager.refresh(_safeArea.x, _safeArea.y, true);
 
 			//-- Mouse
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, toggleDrawing);
@@ -153,8 +145,8 @@ package
 			trace("Reset canvas");
 
 			_sizeMultiplier = sizeMultiplier;
-			_bmpSize.x = safeArea.x * _sizeMultiplier;
-			_bmpSize.y = safeArea.y * _sizeMultiplier;
+			_bmpSize.x = _safeArea.x * _sizeMultiplier;
+			_bmpSize.y = _safeArea.y * _sizeMultiplier;
 
 //			_bmpData.dispose();
 

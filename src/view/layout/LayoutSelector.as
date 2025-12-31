@@ -11,21 +11,11 @@ package view.layout
 			_tabletMinPx = tabletMinPx;
 		}
 
-		public function isPortrait(screenW:int, screenH:int):Boolean
-		{
-			return screenH >= screenW;
-		}
-
-		public function isTablet(screenW:int, screenH:int):Boolean
-		{
-			return Math.min(screenW, screenH) >= _tabletMinPx;
-		}
-
 		// Returns a layout key string you can map to strategies...
 		public function layoutKey(screenW:int, screenH:int):String
 		{
-			var portrait:Boolean = isPortrait(screenW, screenH);
-			var tablet:Boolean = isTablet(screenW, screenH);
+			var portrait:Boolean = screenH >= screenW;
+			var tablet:Boolean = Math.min(screenW, screenH) >= _tabletMinPx;
 
 			if (!tablet && portrait) return Strings.PHONE_PORTRAIT;
 			if (!tablet && !portrait) return Strings.PHONE_LANDSCAPE;
