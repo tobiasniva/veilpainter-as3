@@ -2,7 +2,6 @@ package
 {
 	import behavior.Brush;
 	import com.adobe.images.PNGEncoder;
-	import core.AppEventBus;
 	import core.AppModel;
 	import data.Constants;
 	import data.Strings;
@@ -45,9 +44,14 @@ package
 
 		public function VeilPainter()
 		{
-			//-- Not needed, just for clarity - singletons...
-			AppEventBus.instance;
-			AppModel.instance;
+			super();
+			if (stage) initAddedToStage();
+			else addEventListener(Event.ADDED_TO_STAGE, initAddedToStage);
+		}
+
+		private function initAddedToStage():void
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, initAddedToStage);
 
 			stage.scaleMode 	= StageScaleMode.NO_SCALE;
 			stage.align 		= StageAlign.TOP_LEFT;
@@ -57,9 +61,7 @@ package
 			// Model inits
 			AppModel.instance.stageSize = new Point(stage.width, stage.height);
 			AppModel.instance.canvasMultiplier = Constants.CANVAS_MULTIPLIER_DEFAULT;
-
 			trace(AppModel.instance.stageSize);
-			return;
 
 			loadAlphaImages = new LoadAlphaImages();
 			loadAlphaImages.addEventListener(Event.COMPLETE, init);
