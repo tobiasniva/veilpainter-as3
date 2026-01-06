@@ -129,11 +129,11 @@ package view
 
 			_stpSizeMultiplier = new NumericStepper(this, 0, 0, onResetCanvas);
 			_stpSizeMultiplier.minimum = 1;
-			_stpSizeMultiplier.value = Constants.SIZE_MULTIPLIER_DEFAULT;
+			_stpSizeMultiplier.value = Constants.CANVAS_MULTIPLIER_DEFAULT;
 			_stpSizeMultiplier.maximum = 4;
 			_stpSizeMultiplier.width = 52;
 
-			_colorPickerBG = new ColorChooser(this, 0, 0, Constants.BG_COLOR_DEFAULT, onResetCanvas);
+			_colorPickerBG = new ColorChooser(this, 0, 0, Constants.CANVAS_COLOR_DEFAULT, onResetCanvas);
 			_colorPickerBG.usePopup = true;
 
 			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);
@@ -178,7 +178,7 @@ package view
 
 		protected function onResetCanvas(e:Event):void
 		{
-			_parent.resetCanvas(_stpSizeMultiplier.value, _colorPickerBG.value);
+			_parent.resetCanvas();
 		}
 
 		protected function onNumLinksChanged(e:Event):void

@@ -10,12 +10,11 @@ package data
 	 */
 	public class Constants
 	{
-		public static const UI_SCALE_MOBILE:int     		= 3; // For phones and tablets for now...
-		public static const UI_SCALE_DESKTOP:int     		= 1;
+		public static const UI_SCALE_DEFAULT:int     		= 3; // For phones and tablets for now...
+		// public static const UI_SCALE_DESKTOP:int     		= 1;
 		
-		public static const SIZE_MULTIPLIER_DEFAULT:int     = 1; // regarding scale of bitmap vs screen size
-		
-		public static const BG_COLOR_DEFAULT:uint           = 0x222222;
+		public static const CANVAS_MULTIPLIER_DEFAULT:int   = 1; // regarding scale of bitmap vs screen size
+		public static const CANVAS_COLOR_DEFAULT:uint       = 0x222222;
 		
 		public static const BRUSH_COLOR_DEFAULT:uint        = 0x99aacc;
 		public static const BRUSH_ALPHA_DEFAULT:Number      = 0.5;

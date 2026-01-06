@@ -1,5 +1,6 @@
 package view.viewport
 {
+	import core.AppModel;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -12,15 +13,13 @@ package view.viewport
 	public final class ViewportService extends EventDispatcher
 	{
 		private var _stage:Stage;
-		private var _getSafeArea:Function;
 
 		private var _lastW:int = -1;
 		private var _lastH:int = -1;
 
-		public function ViewportService(stage:Stage, getSafeArea:Function)
+		public function ViewportService(stage:Stage)
 		{
 			_stage = stage;
-			_getSafeArea = getSafeArea;
 		}
 
 		public function start(dispatchInitial:Boolean = true):void
@@ -45,7 +44,7 @@ package view.viewport
 
 		private function updateAndDispatch(force:Boolean):void
 		{
-			var p:Point = _getSafeArea() as Point;
+			var p:Point = AppModel.instance.stageSize;
 			if (!p) return;
 
 			var w:int = int(p.x);

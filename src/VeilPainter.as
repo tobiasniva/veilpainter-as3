@@ -2,7 +2,8 @@ package
 {
 	import behavior.Brush;
 	import com.adobe.images.PNGEncoder;
-	import core.*;
+	import core.AppEventBus;
+	import core.AppModel;
 	import data.Constants;
 	import data.Strings;
 	import event.ViewportChangedEvent;
@@ -13,7 +14,6 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
-	import flash.display.Screen;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filesystem.File
@@ -36,11 +36,6 @@ package
 		public var brush:Brush;
 		public var loadAlphaImages:LoadAlphaImages;
 		
-		private var _safeArea:Point;
-		private var _screenSize:Point;
-		private var _bmpSize:Point;
-		private var _sizeMultiplier:int;
-
 		private var _bmp:Bitmap;
 		private var _bmpData:BitmapData;
 		private var _uiRoot:Sprite;
@@ -59,26 +54,15 @@ package
 			stage.displayState 	= StageDisplayState.FULL_SCREEN;
 			stage.displayState 	= StageDisplayState.FULL_SCREEN_INTERACTIVE; //-- Needed to be able to type into e.g. color chooser!
 
-			_sizeMultiplier = Constants.SIZE_MULTIPLIER_DEFAULT;
-			_safeArea = getSafeAreaSize();
-			
+			// Model inits
+			AppModel.instance.stageSize = new Point(stage.width, stage.height);
+			AppModel.instance.canvasMultiplier = Constants.CANVAS_MULTIPLIER_DEFAULT;
+
+			trace(AppModel.instance.stageSize);
+			return;
+
 			loadAlphaImages = new LoadAlphaImages();
 			loadAlphaImages.addEventListener(Event.COMPLETE, init);
-		}
-		
-		private function getSafeAreaSize():Point
-		{
-			//-- On desktop, just use full screen size...
-			var screenSize:Point = new Point(stage.fullScreenWidth, stage.fullScreenHeight);
-			var safe:Point = new Point(Screen.mainScreen.safeArea.width, Screen.mainScreen.safeArea.height);
-
-			if (Capabilities.playerType == "Desktop" &&
-				(Capabilities.os.toLowerCase().indexOf("windows") != -1 || Capabilities.os.toLowerCase().indexOf("mac") != -1))
-			{
-				safe.x = screenSize.x;
-				safe.y = screenSize.y;
-			}
-			return safe;
 		}
 
 		private function init(e:Event):void
@@ -86,13 +70,15 @@ package
 			loadAlphaImages.removeEventListener(Event.COMPLETE, init);
 
 			//-- Init canvas
-			_bmpSize 	= new Point(_safeArea.x * _sizeMultiplier, _safeArea.y * _sizeMultiplier);
-			_bmpData = new BitmapData(_bmpSize.x, _bmpSize.y, false, Constants.BG_COLOR_DEFAULT);
+			// var bmpSize:Point = AppModel.instance.stageSize;
+			var bmpSize:Point = new Point(768, 1232);
+			var canvasCol:uint = AppModel.instance.canvasColor;
+			_bmpData = new BitmapData(bmpSize.x, bmpSize.y, false, canvasCol);
 			_bmp = new Bitmap(_bmpData);
 			addChildAt(_bmp, 0);
 
 			//-- Create Brush
-			brush = new Brush(_bmpData, _sizeMultiplier, Constants.NUM_LINKS_DEFAULT);
+			brush = new Brush(_bmpData, AppModel.instance.canvasMultiplier, Constants.NUM_LINKS_DEFAULT);
 			brush.alphaImage           = loadAlphaImages.images[0].bitmap;
 			brush.elasticity           = Constants.ELASTICITY_DEFAULT;
 			brush.strength             = Constants.STRENGTH_DEFAULT;
@@ -116,10 +102,10 @@ package
 			_layoutManager = new LayoutManager(_gui, uiScale);
 			_layoutManager.registerLayout(Strings.PHONE_PORTRAIT, new PhonePortraitLayout());
 			_layoutManager.registerLayout(Strings.PHONE_LANDSCAPE, new PhoneLandscapeLayout());
-			_layoutManager.refresh(_safeArea.x, _safeArea.y, true);
+			_layoutManager.refresh(true);
 
 			//-- Viewport resize listener - RELIES ON GUI BEING INITIALIZED!
-			var viewportService:ViewportService = new ViewportService(stage, getSafeAreaSize);
+			var viewportService:ViewportService = new ViewportService(stage);
 			viewportService.addEventListener(ViewportChangedEvent.VIEWPORT_CHANGED, onViewportChanged);
 			viewportService.start();
 
@@ -133,11 +119,10 @@ package
 
 		private function onViewportChanged(e:ViewportChangedEvent):void
 		{
-			_safeArea.x = e.screenW;
-			_safeArea.y = e.screenH;
+			AppModel.instance.stageSize = new Point(e.screenW, e.screenH);
 
-			_layoutManager.refresh(_safeArea.x, _safeArea.y, true);
-			resetCanvas(_sizeMultiplier, Constants.BG_COLOR_DEFAULT); //TODO: Preserve image - rotate/transform into new bmpData...
+			_layoutManager.refresh(true);
+			resetCanvas(); //TODO: Preserve image - rotate/transform into new bmpData...
 		}
 
 		private function update(e:Event):void
@@ -163,24 +148,21 @@ package
 		}
 
 		//-- 
-		public function resetCanvas(sizeMultiplier:Number, bgColor:uint):void
+		public function resetCanvas():void
 		{
 			trace("Reset canvas");
-
-			_sizeMultiplier = sizeMultiplier;
-			_bmpSize.x = _safeArea.x * _sizeMultiplier;
-			_bmpSize.y = _safeArea.y * _sizeMultiplier;
-
 //			_bmpData.dispose();
+			var bs:Point = new Point(AppModel.instance.stageSize.x, AppModel.instance.stageSize.y);
 
-			_bmpData = new BitmapData(_bmpSize.x, _bmpSize.y, false, bgColor);
+			_bmpData = new BitmapData(bs.x, bs.y, false, AppModel.instance.canvasColor);
 			_bmp.bitmapData = _bmpData;
-			_bmp.scaleX = _bmp.scaleY = 1 / _sizeMultiplier;
+			_bmp.scaleX = _bmp.scaleY = 1 / AppModel.instance.canvasMultiplier;
 
 			brush.canvas = _bmpData;
-			brush.canvasSizeMultiplier = _sizeMultiplier;
+			brush.canvasSizeMultiplier = AppModel.instance.canvasMultiplier;
 		}
 
+		//-- TODO: Move to own class...
 		public function saveImage():void
 		{
 			trace("perm status: " + File.permissionStatus);

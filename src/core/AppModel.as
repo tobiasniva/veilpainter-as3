@@ -1,32 +1,33 @@
 package core {
 
-	import flash.display.BlendMode;
+    import data.Constants;
+	import flash.geom.Point;
 
     public class AppModel
 	{
         private static var _instance:AppModel;
 
 		//-- App wise
-		public var uiScale:Number 				= 1;
-		public var stageWidth:int				= 720;
-		public var stageHeight:int				= 1280;
+		public var stageSize:Point				= new Point(0, 0);
+		public var uiScale:Number 				= Constants.UI_SCALE_DEFAULT;
 
 		//-- canvas
-		public var bgColor:uint 				= 0x222222;
+		public var canvasColor:uint 			= Constants.CANVAS_COLOR_DEFAULT;
+        public var canvasMultiplier:int         = Constants.CANVAS_MULTIPLIER_DEFAULT;
 
 		//-- brush
-        public var brushColor:uint 				= 0x99aacc;
-        public var brushAlpha:Number 			= 0.5;
-        public var brushBlendMode:String 		= BlendMode.NORMAL;
-        public var brushBlendModeIndex:int 		= 0;
+        public var brushColor:uint 				= Constants.BRUSH_COLOR_DEFAULT;
+        public var brushAlpha:Number 			= Constants.BRUSH_ALPHA_DEFAULT;
+        public var brushBlendMode:String 		= Constants.BRUSH_BLENDMODE_DEFAULT;
+        public var brushBlendModeIndex:int 		= Constants.BRUSH_BLENDMODE_INDEX;
 
-        public var brushLinkColor:uint 			= 0x808080;
-        public var brushLinkSize:int 			= 4;
-        public var brushNumLinks:int 			= 4;
+        public var brushLinkColor:uint 			= Constants.CHAIN_LINK_COLOR;
+        public var brushLinkSize:int 			= Constants.CHAIN_LINK_SIZE;
+        public var brushNumLinks:int 			= Constants.NUM_LINKS_DEFAULT;
         
-		public var brushElasticity:Number		= 0.85;
-        public var brushStrength:Number			= 0.028;
-        public var brushDegradation:Number		= 2.7;
+		public var brushElasticity:Number		= Constants.ELASTICITY_DEFAULT;
+        public var brushStrength:Number			= Constants.STRENGTH_DEFAULT;
+        public var brushDegradation:Number		= Constants.DEGRADATION_DEFAULT;
 
 		//-- configs
 		public var debugDraw:Boolean = false;

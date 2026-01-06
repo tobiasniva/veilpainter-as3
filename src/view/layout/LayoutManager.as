@@ -3,6 +3,7 @@ package view.layout
 	import view.Gui;
 	import data.Strings;
 	import flash.geom.Point;
+	import core.AppModel;
 
 	public final class LayoutManager
 	{
@@ -33,8 +34,11 @@ package view.layout
 		}
 		
 		// whenever screen size or orientation changes...
-		public function refresh(screenW:int, screenH:int, force:Boolean = false):void
+		public function refresh(force:Boolean = false):void
 		{
+			var screenW:int = AppModel.instance.stageSize.x;
+			var screenH:int = AppModel.instance.stageSize.y;
+
 			if (!force && screenW == _lastW && screenH == _lastH)
 				return;
 
