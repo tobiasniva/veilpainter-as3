@@ -1,8 +1,11 @@
 package
 {
 	import behavior.Brush;
+	import com.adobe.images.PNGEncoder;
+	import core.*;
 	import data.Constants;
 	import data.Strings;
+	import event.ViewportChangedEvent;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
@@ -17,21 +20,16 @@ package
 	import flash.geom.Point;
 	import flash.globalization.DateTimeFormatter;
 	import flash.utils.ByteArray;
+	import flash.system.Capabilities;
+	import ui.StyleSizer
 	import utils.LoadAlphaImages;
 	import utils.ShapeFactory;
 	import utils.SaveImageWithDialog;
 	import utils.UiScaleUtil
-	import flash.system.Capabilities;
-	import com.adobe.images.PNGEncoder;
-	import ui.StyleSizer
 	import view.Gui;
 	import view.layout.*;
 	import view.viewport.*;
-	import event.ViewportChangedEvent;
-	/**
-	 * @author: Tobi Wan Kenobi
-	 * Sort of the main class acting as a hub, holding the bitmap, brush and gui etc...
-	 */
+
 	[SWF(backgroundColor="#000000", frameRate="60", width="1024", height="768")]
 	public class VeilPainter extends Sprite
 	{
@@ -52,6 +50,10 @@ package
 
 		public function VeilPainter()
 		{
+			//-- Not needed, just for clarity - singletons...
+			AppEventBus.instance;
+			AppModel.instance;
+
 			stage.scaleMode 	= StageScaleMode.NO_SCALE;
 			stage.align 		= StageAlign.TOP_LEFT;
 			stage.displayState 	= StageDisplayState.FULL_SCREEN;

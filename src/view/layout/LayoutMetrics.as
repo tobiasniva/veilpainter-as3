@@ -1,7 +1,5 @@
 package view.layout
 {
-	import flash.geom.Rectangle;
-
 	public class LayoutMetrics
 	{
 		public var screenW:int;
