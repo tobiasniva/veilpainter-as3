@@ -45,23 +45,27 @@ package
 		public function VeilPainter()
 		{
 			super();
-			if (stage) initAddedToStage();
-			else addEventListener(Event.ADDED_TO_STAGE, initAddedToStage);
+			if (stage) onAddedToStage();
+			else addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 
-		private function initAddedToStage():void
+		private function onAddedToStage(e:Event = null):void
 		{
-			removeEventListener(Event.ADDED_TO_STAGE, initAddedToStage);
+			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			stage.addEventListener(Event.RESIZE, initialResizeCorrectStageSize);
+			initialResizeCorrectStageSize();
+		}
 
-			stage.scaleMode 	= StageScaleMode.NO_SCALE;
-			stage.align 		= StageAlign.TOP_LEFT;
-			stage.displayState 	= StageDisplayState.FULL_SCREEN;
-			stage.displayState 	= StageDisplayState.FULL_SCREEN_INTERACTIVE; //-- Needed to be able to type into e.g. color chooser!
+		private function initialResizeCorrectStageSize():void
+		{
+			stage.removeEventListener(Event.RESIZE, initialResizeCorrectStageSize);
 
 			// Model inits
-			AppModel.instance.stageSize = new Point(stage.width, stage.height);
+			AppModel.instance.stageSize = new Point(stage.stageWidth, stage.stageHeight);
 			AppModel.instance.canvasMultiplier = Constants.CANVAS_MULTIPLIER_DEFAULT;
-			trace(AppModel.instance.stageSize);
 
 			loadAlphaImages = new LoadAlphaImages();
 			loadAlphaImages.addEventListener(Event.COMPLETE, init);
