@@ -7,8 +7,7 @@ package view.viewport
 	import flash.events.StageOrientationEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-
-	import event.ViewportChangedEvent;
+	import events.ViewportChangedEvent;
 
 	public final class ViewportService extends EventDispatcher
 	{
@@ -44,11 +43,8 @@ package view.viewport
 
 		private function updateAndDispatch(force:Boolean):void
 		{
-			var p:Point = AppModel.instance.stageSize;
-			if (!p) return;
-
-			var w:int = int(p.x);
-			var h:int = int(p.y);
+			var w:int = _stage.stageWidth;
+			var h:int = _stage.stageHeight;
 
 			if (!force && w == _lastW && h == _lastH)
 				return;
@@ -56,7 +52,10 @@ package view.viewport
 			_lastW = w;
 			_lastH = h;
 
-			// Wrap Point into Rectangle ONLY for the event - since your event expects Rectangle...
+			// Update model if you want centralized single source of truth
+			AppModel.instance.stageSize = new Point(w, h);
+
+			// Dispatch event
 			dispatchEvent(new ViewportChangedEvent(new Rectangle(0, 0, w, h)));
 		}
 	}

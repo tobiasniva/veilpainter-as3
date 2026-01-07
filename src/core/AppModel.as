@@ -33,19 +33,15 @@ package core {
 		public var debugDraw:Boolean = false;
 
 
-        // public function AppModel(enforcer:SingletonEnforcer) {}
-        public function AppModel() {
-            trace("[AppModel] constructor");
-        }
+        public function AppModel(enforcer:SingletonEnforcer) {}
 
         public static function get instance():AppModel {
             if (_instance == null) {
-                _instance = new AppModel();
-                // _instance = new AppModel(new SingletonEnforcer());
+                _instance = new AppModel(new SingletonEnforcer());
             }
             return _instance;
         }
     }
 }
 
-// class SingletonEnforcer {}
+class SingletonEnforcer {}

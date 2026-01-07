@@ -5,7 +5,7 @@ package
 	import core.AppModel;
 	import data.Constants;
 	import data.Strings;
-	import event.ViewportChangedEvent;
+	import events.ViewportChangedEvent;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
@@ -76,8 +76,7 @@ package
 			loadAlphaImages.removeEventListener(Event.COMPLETE, init);
 
 			//-- Init canvas
-			// var bmpSize:Point = AppModel.instance.stageSize;
-			var bmpSize:Point = new Point(768, 1232);
+			var bmpSize:Point = AppModel.instance.stageSize;
 			var canvasCol:uint = AppModel.instance.canvasColor;
 			_bmpData = new BitmapData(bmpSize.x, bmpSize.y, false, canvasCol);
 			_bmp = new Bitmap(_bmpData);
