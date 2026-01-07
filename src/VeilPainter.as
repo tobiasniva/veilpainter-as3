@@ -83,12 +83,12 @@ package
 			//-- Create Brush
 			brush = new Brush(_bmpData); //TODO: Extract bmp/canvas ref from within brush...
 			brush.alphaImage           = loadAlphaImages.images[0].bitmap;
-			brush.elasticity           = Constants.ELASTICITY_DEFAULT;
-			brush.strength             = Constants.STRENGTH_DEFAULT;
-			brush.strengthDegradation  = Constants.DEGRADATION_DEFAULT;
-			brush.brushColor           = Constants.BRUSH_COLOR_DEFAULT;
-			brush.brushAlpha           = Constants.BRUSH_ALPHA_DEFAULT;
-			brush.brushBlendmode       = Constants.BRUSH_BLENDMODE_DEFAULT;
+			// brush.elasticity           = Constants.ELASTICITY_DEFAULT;
+			// brush.strength             = Constants.STRENGTH_DEFAULT;
+			// brush.strengthDegradation  = Constants.DEGRADATION_DEFAULT;
+			// brush.brushColor           = Constants.BRUSH_COLOR_DEFAULT;
+			// brush.brushAlpha           = Constants.BRUSH_ALPHA_DEFAULT;
+			// brush.brushBlendmode       = Constants.BRUSH_BLENDMODE_DEFAULT;
 			brush.shape = ShapeFactory.getCircle(Constants.CHAIN_LINK_SIZE, Constants.CHAIN_LINK_COLOR);
 			addChildAt(brush, 1); // Above bitmap
 			

@@ -43,8 +43,13 @@ package behavior
 			var strength:Number = AppModel.instance.brushStrength;
 			var strengthDegr:Number = AppModel.instance.brushDegradation;
 			var fade:Boolean = false;
-
 			super(numLinks, elasticity, strength, strengthDegr, fade);
+
+			//-- set initial values...
+			_brushColor 	= AppModel.instance.brushColor;
+			_brushAlpha 	= AppModel.instance.brushAlpha;
+			_brushBlendmode = AppModel.instance.brushBlendMode;
+			// brush.shape = ShapeFactory.getCircle(Constants.CHAIN_LINK_SIZE, Constants.CHAIN_LINK_COLOR);
 		}
 
 		override public function init():void
