@@ -109,6 +109,7 @@ package
 			resetCanvas(); //TODO: Preserve image - rotate/transform into new bmpData...
 		}
 
+		//TODO: Figure out if event can feed this into brush...stable?
 		private function update(e:Event):void
 		{
 			var target:Point = new Point(mouseX, mouseY);

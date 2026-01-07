@@ -166,25 +166,21 @@ package view
 		// --- Handlers...
 		private function onDrawStarted(e:DrawEvent):void
 		{
-			setVisibility(!AppModel.instance.uiHideOnDraw);
+			if(AppModel.instance.uiHideOnDraw)
+				this.visible = false;
 		}
 
 		private function onDrawEnded(e:DrawEvent):void
 		{
-			setVisibility(true);
+			//TODO: Implement delay until ui shows again? config/setting in model?
+			this.visible = true;
 		}
 
-		private function setVisibility(isVisible:Boolean):void
-		{
-			this.visible = isVisible;
-		}
-
+		//TODO: Figure out after canvas is refactored...
 		protected function onResetCanvas(e:Event):void
 		{
 			_parent.resetCanvas();
 		}
-
-		//TODO: Figure out after canvas is refactored...
 		protected function onSaveImageToDesktop(e:Event):void
 		{
 			_parent.saveImage();
