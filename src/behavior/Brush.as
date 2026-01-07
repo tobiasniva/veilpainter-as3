@@ -4,6 +4,7 @@ package behavior
 	import core.AppEventBus;
 	import data.AlphaImages;
 	import events.BrushEvent;
+	import events.DrawEvent;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -56,6 +57,10 @@ package behavior
 
 			//-- add listeners to gui changing brush properties...
 			AppEventBus.instance.addEventListener(BrushEvent.SETTINGS_CHANGED, onSettingsChanged);
+
+			//-- listeners for started/ended drawing - subject to change when refactor goes forward...
+			AppEventBus.instance.addEventListener(DrawEvent.DRAW_STARTED, onDrawStarted);
+			AppEventBus.instance.addEventListener(DrawEvent.DRAW_ENDED, onDrawEnded);
 
 		}
 
@@ -182,15 +187,17 @@ package behavior
 				generateQuadImages();
 		}
 
-		/*
-			Getters/setters
-		 */
-
-		public function set isDrawing(value:Boolean):void
+		private function onDrawStarted(e:DrawEvent):void
 		{
-			_isDrawing = value;
+			_isDrawing = true;
 		}
 
+		private function onDrawEnded(e:DrawEvent):void
+		{
+			_isDrawing = false;
+		}
+
+		//-- TODO: Figure out later...
 		public function set canvas(value:BitmapData):void
 		{
 			_canvas = value;

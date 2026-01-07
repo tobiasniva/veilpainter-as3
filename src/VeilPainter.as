@@ -115,16 +115,15 @@ package
 			brush.update(target);
 		}
 
+		//TODO: Figure out where/who should own this....?
 		private function toggleDrawing(e:MouseEvent):void
 		{
 			if (e.type == MouseEvent.MOUSE_DOWN && e.target == stage)
 			{
-				brush.isDrawing = true;
 				AppEventBus.instance.dispatchEvent(new DrawEvent(DrawEvent.DRAW_STARTED));
 			}
 			else
 			{
-				brush.isDrawing = false;
 				AppEventBus.instance.dispatchEvent(new DrawEvent(DrawEvent.DRAW_ENDED));
 			}
 		}
