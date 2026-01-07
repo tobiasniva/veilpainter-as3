@@ -34,13 +34,11 @@ package
 	{
 		public var brush:Brush;
 		public var loadAlphaImages:LoadAlphaImages;
-		
 		private var _bmp:Bitmap;
 		private var _bmpData:BitmapData;
 		private var _uiRoot:Sprite;
 		private var _gui:Gui;
 		private var _layoutManager:LayoutManager;
-
 
 		public function VeilPainter()
 		{
