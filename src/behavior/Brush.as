@@ -22,7 +22,7 @@ package behavior
 		private var _canvasSizeMultiplier:int;
 		private var _alphaImage:Bitmap;
 		private var _brushColor:uint;
-		private var _brushAlpha:Number;
+		private var _brushOpacity:Number;
 		private var _brushBlendmode:String;
 		private var _quads:Vector.<Vector.<Point>>;
 		private var _quadImages:Vector.<BitmapData>;
@@ -49,7 +49,7 @@ package behavior
 
 			//-- set initial values...
 			_brushColor 	= AppModel.instance.brushColor;
-			_brushAlpha 	= AppModel.instance.brushAlpha;
+			_brushOpacity 	= AppModel.instance.brushOpacity;
 			_brushBlendmode = AppModel.instance.brushBlendMode;
 			_alphaImage = initAlphaImage; //-- alpha image before shape, cause triggers init...
 			shape = ShapeFactory.getCircle(AppModel.instance.brushLinkSize, AppModel.instance.brushLinkColor);
@@ -133,7 +133,7 @@ package behavior
 
 			for(var i:int = 0; i < totalQuadImages; i++)
 			{
-				_quadImages[i] = QuadFactory.getQuadImage(_alphaImage, i, totalQuadImages, _brushColor, _brushAlpha);
+				_quadImages[i] = QuadFactory.getQuadImage(_alphaImage, i, totalQuadImages, _brushColor, _brushOpacity);
 			}
 		}
 
@@ -168,10 +168,15 @@ package behavior
 		private function onSettingsChanged(e:BrushEvent):void
 		{
 			_brushColor = AppModel.instance.brushColor;
-			_brushAlpha = AppModel.instance.brushAlpha;
+			_brushOpacity = AppModel.instance.brushOpacity;
 			_alphaImage = AlphaImages.getAll()[AppModel.instance.brushAlphaImage].bitmap;
 			_brushBlendmode = AppModel.instance.brushBlendMode;
 			_canvasSizeMultiplier = AppModel.instance.canvasMultiplier;
+			
+			numLinks = AppModel.instance.brushNumLinks;
+			elasticity = AppModel.instance.brushElasticity;
+			strength = AppModel.instance.brushStrength;
+			strengthDegradation = AppModel.instance.brushDegradation;
 
 			if(e.shouldRegenerate)
 				generateQuadImages();

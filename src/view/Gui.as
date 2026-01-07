@@ -98,7 +98,7 @@ package view
 
 			_sldAlpha = new HUISlider(this);
 			_sldAlpha.addEventListener(Event.CHANGE, onAlphaChanged);
-			_sldAlpha.setSliderParams(0, 1, Constants.BRUSH_ALPHA_DEFAULT);
+			_sldAlpha.setSliderParams(0, 1, Constants.BRUSH_OPACITY_DEFAULT);
 			_sldAlpha.labelPrecision = 1;
 			_sldAlpha.tick = 0.1;
 
@@ -184,6 +184,13 @@ package view
 			_parent.resetCanvas();
 		}
 
+		//TODO: Figure out after canvas is refactored...
+		protected function onSaveImageToDesktop(e:Event):void
+		{
+			_parent.saveImage();
+		}
+
+		//-- Brush-related
 		protected function onNumLinksChanged(e:Event):void
 		{
 			AppModel.instance.brushNumLinks = _stpNumLinks.value;
@@ -211,7 +218,7 @@ package view
 
 		protected function onAlphaChanged(e:Event):void
 		{
-			AppModel.instance.brushAlpha = _sldAlpha.value;
+			AppModel.instance.brushOpacity = _sldAlpha.value;
 		}
 
 		protected function onBlendModeChanged(e:Event):void
@@ -227,12 +234,6 @@ package view
 		protected function onDebugChanged(e:Event):void
 		{
 			AppModel.instance.debugDraw = _chkDebug.selected;
-		}
-
-		//TODO: Figure out after canvas is refactored...
-		protected function onSaveImageToDesktop(e:Event):void
-		{
-			_parent.saveImage();
 		}
 	}
 }

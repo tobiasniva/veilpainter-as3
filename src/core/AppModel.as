@@ -18,7 +18,7 @@ package core {
 
         //-- brush (private backing fields)
         private var _brushColor:uint            = Constants.BRUSH_COLOR_DEFAULT;
-        private var _brushAlpha:Number          = Constants.BRUSH_ALPHA_DEFAULT;
+        private var _brushOpacity:Number         = Constants.BRUSH_OPACITY_DEFAULT;
         private var _brushAlphaImage:int        = 0;
         private var _brushBlendMode:String      = Constants.BRUSH_BLENDMODE_DEFAULT;
         private var _brushBlendModeIndex:int    = Constants.BRUSH_BLENDMODE_INDEX;
@@ -43,10 +43,10 @@ package core {
             }
         }
 
-        public function get brushAlpha():Number { return _brushAlpha; }
-        public function set brushAlpha(value:Number):void {
-            if (_brushAlpha != value) {
-                _brushAlpha = value;
+        public function get brushOpacity():Number { return _brushOpacity; }
+        public function set brushOpacity(value:Number):void {
+            if (_brushOpacity != value) {
+                _brushOpacity = value;
                 AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED, true));
             }
         }

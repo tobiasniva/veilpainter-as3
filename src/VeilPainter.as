@@ -21,7 +21,6 @@ package
 	import flash.globalization.DateTimeFormatter;
 	import flash.utils.ByteArray;
 	import ui.StyleSizer
-	import utils.LoadAlphaImages;
 	import utils.SaveImageWithDialog;
 	import utils.UiScaleUtil
 	import view.Gui;
@@ -34,7 +33,6 @@ package
 	public class VeilPainter extends Sprite
 	{
 		public var brush:Brush;
-		public var loadAlphaImages:LoadAlphaImages;
 		private var _bmp:Bitmap;
 		private var _bmpData:BitmapData;
 		private var _uiRoot:Sprite;
@@ -54,25 +52,17 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-			stage.addEventListener(Event.RESIZE, initialResizeCorrectStageSize);
-			initialResizeCorrectStageSize();
-		}
-
-		private function initialResizeCorrectStageSize():void
-		{
-			stage.removeEventListener(Event.RESIZE, initialResizeCorrectStageSize);
-
-			// Model inits - TODO: Implement prefs...
-			AppModel.instance.stageSize = new Point(stage.stageWidth, stage.stageHeight);
-			AppModel.instance.canvasMultiplier = Constants.CANVAS_MULTIPLIER_DEFAULT;
-
-			loadAlphaImages = new LoadAlphaImages();
-			loadAlphaImages.addEventListener(Event.COMPLETE, init);
+			stage.addEventListener(Event.RESIZE, init);
+			init(null);
 		}
 
 		private function init(e:Event):void
 		{
-			loadAlphaImages.removeEventListener(Event.COMPLETE, init);
+			stage.removeEventListener(Event.RESIZE, init);
+
+			// Model inits - TODO: Implement prefs...
+			AppModel.instance.stageSize = new Point(stage.stageWidth, stage.stageHeight);
+			AppModel.instance.canvasMultiplier = Constants.CANVAS_MULTIPLIER_DEFAULT;
 
 			//-- Init canvas
 			var bmpSize:Point = AppModel.instance.stageSize;
