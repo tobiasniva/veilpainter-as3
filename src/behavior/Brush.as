@@ -1,5 +1,7 @@
 package behavior
 {
+	import core.AppModel;
+
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Shape;
@@ -8,10 +10,6 @@ package behavior
 	import utils.DistortImage;
 	import utils.QuadFactory;
 
-	/**
-	 *
-	 * @author: Tobi Wan Kenobi
-	 */
 	public class Brush extends Chain
 	{
 		private static const SEGMENTS:int = 1; //-- Kind of a quality setting for the distortion of quad images...
@@ -30,14 +28,21 @@ package behavior
 
 		private var _isInitialized:Boolean;
 
-		public function Brush(canvas:BitmapData, canvasSizeMultiplier:int = 1, numLinks:int = 10, elasticity:Number = 0.85, strength:Number = 0.028, strengthDegr:Number = 0.27, fade:Boolean = false)
+		public function Brush(canvas:BitmapData)
 		{
 			this.mouseChildren = this.mouseEnabled = false;
 
 			_isDrawing = false;
 			_isInitialized = false;
-			_canvasSizeMultiplier = canvasSizeMultiplier;
+			_canvasSizeMultiplier = AppModel.instance.canvasMultiplier;
 			_canvas = canvas;
+
+			//TODO: init these by triggering setters below...race condition?
+			var numLinks:int = AppModel.instance.brushNumLinks;
+			var elasticity:Number = AppModel.instance.brushElasticity;
+			var strength:Number = AppModel.instance.brushStrength;
+			var strengthDegr:Number = AppModel.instance.brushDegradation;
+			var fade:Boolean = false;
 
 			super(numLinks, elasticity, strength, strengthDegr, fade);
 		}

@@ -2,6 +2,7 @@ package view
 {
 	import behavior.Brush;
 	import behavior.ImageWithLabel;
+
 	import com.bit101.components.CheckBox;
 	import com.bit101.components.ColorChooser;
 	import com.bit101.components.ComboBox;
@@ -10,6 +11,9 @@ package view
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
 	import com.bit101.components.Style;
+
+	import core.AppModel;
+
 	import data.BlendModes;
 	import data.Constants;
 	import data.Strings;
@@ -183,37 +187,44 @@ package view
 
 		protected function onNumLinksChanged(e:Event):void
 		{
-			_brush.numLinks = _stpNumLinks.value;
+			// _brush.numLinks = _stpNumLinks.value;
+			AppModel.instance.brushNumLinks = _stpNumLinks.value;
 		}
 
 		protected function onElasticityChanged(e:Event):void
 		{
-			_brush.elasticity = _sldElasticity.value;
+			// _brush.elasticity = _sldElasticity.value;
+			AppModel.instance.brushElasticity = _sldElasticity.value;
 		}
 
 		protected function onStrengthChanged(e:Event):void
 		{
-			_brush.strength = _sldStrength.value;
+			// _brush.strength = _sldStrength.value;
+			AppModel.instance.brushStrength = _sldStrength.value;
 		}
 
 		protected function onStrengthDegradationChanged(e:Event):void
 		{
-			_brush.strengthDegradation = _sldStrengthDegradation.value;
+			// _brush.strengthDegradation = _sldStrengthDegradation.value;
+			AppModel.instance.brushDegradation = _sldStrengthDegradation.value;
 		}
 
 		protected function onColorChanged(e:Event):void
 		{
-			_brush.brushColor = _colorPicker.value;
+			// _brush.brushColor = _colorPicker.value;
+			AppModel.instance.brushColor = _colorPicker.value;
 		}
 
 		protected function onAlphaChanged(e:Event):void
 		{
-			_brush.brushAlpha = _sldAlpha.value;
+			// _brush.brushAlpha = _sldAlpha.value;
+			AppModel.instance.brushAlpha = _sldAlpha.value;
 		}
 
 		protected function onBlendModeChanged(e:Event):void
 		{
-			_brush.brushBlendmode = String(_cmbBlendMode.selectedItem);
+			// _brush.brushBlendmode = String(_cmbBlendMode.selectedItem);
+			AppModel.instance.brushBlendMode = String(_cmbBlendMode.selectedItem);
 		}
 
 		protected function onSaveImageToDesktop(e:Event):void
@@ -223,14 +234,16 @@ package view
 
 		protected function onAlphaImageChanged(e:Event):void
 		{
-			var index:int = _cmbAlphaImage.selectedIndex;
-			var img:Bitmap = _loadAlphaImages.images[index].bitmap;
-			_brush.alphaImage = img;
+			// var index:int = _cmbAlphaImage.selectedIndex;
+			// var img:Bitmap = _loadAlphaImages.images[index].bitmap;
+			// _brush.alphaImage = img;
+			AppModel.instance.brushBlendModeIndex = _cmbAlphaImage.selectedIndex;
 		}
 
 		protected function onDebugChanged(e:Event):void
 		{
-			_brush.debug = _chkDebug.selected;
+			// _brush.debug = _chkDebug.selected;
+			AppModel.instance.debugDraw = _chkDebug.selected;
 		}
 	}
 }

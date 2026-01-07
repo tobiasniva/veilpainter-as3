@@ -1,38 +1,119 @@
 package core {
 
     import data.Constants;
-	import flash.geom.Point;
+    import flash.geom.Point;
+    import events.BrushEvent;
 
     public class AppModel
-	{
+    {
         private static var _instance:AppModel;
 
-		//-- App wise
-		public var stageSize:Point				= new Point(0, 0);
-		public var uiScale:Number 				= Constants.UI_SCALE_DEFAULT;
+        //-- App wise
+        public var stageSize:Point              = new Point(0, 0);
+        public var uiScale:Number               = Constants.UI_SCALE_DEFAULT;
 
-		//-- canvas
-		public var canvasColor:uint 			= Constants.CANVAS_COLOR_DEFAULT;
+        //-- canvas
+        public var canvasColor:uint             = Constants.CANVAS_COLOR_DEFAULT;
         public var canvasMultiplier:int         = Constants.CANVAS_MULTIPLIER_DEFAULT;
 
-		//-- brush
-        public var brushColor:uint 				= Constants.BRUSH_COLOR_DEFAULT;
-        public var brushAlpha:Number 			= Constants.BRUSH_ALPHA_DEFAULT;
-        public var brushBlendMode:String 		= Constants.BRUSH_BLENDMODE_DEFAULT;
-        public var brushBlendModeIndex:int 		= Constants.BRUSH_BLENDMODE_INDEX;
+        //-- brush (private backing fields)
+        private var _brushColor:uint            = Constants.BRUSH_COLOR_DEFAULT;
+        private var _brushAlpha:Number          = Constants.BRUSH_ALPHA_DEFAULT;
+        private var _brushBlendMode:String      = Constants.BRUSH_BLENDMODE_DEFAULT;
+        private var _brushBlendModeIndex:int    = Constants.BRUSH_BLENDMODE_INDEX;
+        private var _brushLinkColor:uint        = Constants.CHAIN_LINK_COLOR;
+        private var _brushLinkSize:int          = Constants.CHAIN_LINK_SIZE;
+        private var _brushNumLinks:int          = Constants.NUM_LINKS_DEFAULT;
+        private var _brushElasticity:Number     = Constants.ELASTICITY_DEFAULT;
+        private var _brushStrength:Number       = Constants.STRENGTH_DEFAULT;
+        private var _brushDegradation:Number    = Constants.DEGRADATION_DEFAULT;
 
-        public var brushLinkColor:uint 			= Constants.CHAIN_LINK_COLOR;
-        public var brushLinkSize:int 			= Constants.CHAIN_LINK_SIZE;
-        public var brushNumLinks:int 			= Constants.NUM_LINKS_DEFAULT;
-        
-		public var brushElasticity:Number		= Constants.ELASTICITY_DEFAULT;
-        public var brushStrength:Number			= Constants.STRENGTH_DEFAULT;
-        public var brushDegradation:Number		= Constants.DEGRADATION_DEFAULT;
-
-		//-- configs
-		public var debugDraw:Boolean = false;
+        //-- configs
+        public var debugDraw:Boolean = false;
 
 
+        //-- Brush getters/setters with event dispatch
+        public function get brushColor():uint { return _brushColor; }
+        public function set brushColor(value:uint):void {
+            if (_brushColor != value) {
+                _brushColor = value;
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+            }
+        }
+
+        public function get brushAlpha():Number { return _brushAlpha; }
+        public function set brushAlpha(value:Number):void {
+            if (_brushAlpha != value) {
+                _brushAlpha = value;
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+            }
+        }
+
+        public function get brushBlendMode():String { return _brushBlendMode; }
+        public function set brushBlendMode(value:String):void {
+            if (_brushBlendMode != value) {
+                _brushBlendMode = value;
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+            }
+        }
+
+        public function get brushBlendModeIndex():int { return _brushBlendModeIndex; }
+        public function set brushBlendModeIndex(value:int):void {
+            if (_brushBlendModeIndex != value) {
+                _brushBlendModeIndex = value;
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+            }
+        }
+
+        public function get brushLinkColor():uint { return _brushLinkColor; }
+        public function set brushLinkColor(value:uint):void {
+            if (_brushLinkColor != value) {
+                _brushLinkColor = value;
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+            }
+        }
+
+        public function get brushLinkSize():int { return _brushLinkSize; }
+        public function set brushLinkSize(value:int):void {
+            if (_brushLinkSize != value) {
+                _brushLinkSize = value;
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+            }
+        }
+
+        public function get brushNumLinks():int { return _brushNumLinks; }
+        public function set brushNumLinks(value:int):void {
+            if (_brushNumLinks != value) {
+                _brushNumLinks = value;
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+            }
+        }
+
+        public function get brushElasticity():Number { return _brushElasticity; }
+        public function set brushElasticity(value:Number):void {
+            if (_brushElasticity != value) {
+                _brushElasticity = value;
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+            }
+        }
+
+        public function get brushStrength():Number { return _brushStrength; }
+        public function set brushStrength(value:Number):void {
+            if (_brushStrength != value) {
+                _brushStrength = value;
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+            }
+        }
+
+        public function get brushDegradation():Number { return _brushDegradation; }
+        public function set brushDegradation(value:Number):void {
+            if (_brushDegradation != value) {
+                _brushDegradation = value;
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+            }
+        }
+
+        //-- Model instance stuff...
         public function AppModel(enforcer:SingletonEnforcer) {}
 
         public static function get instance():AppModel {

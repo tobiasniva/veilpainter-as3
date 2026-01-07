@@ -81,12 +81,11 @@ package
 			addChildAt(_bmp, 0);
 
 			//-- Create Brush
-			brush = new Brush(_bmpData, AppModel.instance.canvasMultiplier, Constants.NUM_LINKS_DEFAULT);
+			brush = new Brush(_bmpData); //TODO: Extract bmp/canvas ref from within brush...
 			brush.alphaImage           = loadAlphaImages.images[0].bitmap;
 			brush.elasticity           = Constants.ELASTICITY_DEFAULT;
 			brush.strength             = Constants.STRENGTH_DEFAULT;
 			brush.strengthDegradation  = Constants.DEGRADATION_DEFAULT;
-//			brush.fade = true;
 			brush.brushColor           = Constants.BRUSH_COLOR_DEFAULT;
 			brush.brushAlpha           = Constants.BRUSH_ALPHA_DEFAULT;
 			brush.brushBlendmode       = Constants.BRUSH_BLENDMODE_DEFAULT;
