@@ -18,7 +18,7 @@ package data
 		
 		public static const BRUSH_COLOR_DEFAULT:uint        = 0x99aacc;
 		public static const BRUSH_ALPHA_DEFAULT:Number      = 0.5;
-		
+
 		public static const BRUSH_BLENDMODE_DEFAULT:String  = BlendMode.NORMAL;
 		public static const BRUSH_BLENDMODE_INDEX:int       = 0;         //-- Normal - see BlendModes
 		

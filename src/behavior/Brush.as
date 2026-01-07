@@ -1,6 +1,9 @@
 package behavior
 {
 	import core.AppModel;
+	import core.AppEventBus;
+	import data.AlphaImages;
+	import events.BrushEvent;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -52,6 +55,10 @@ package behavior
 			_brushBlendmode = AppModel.instance.brushBlendMode;
 			alphaImage = initAlphaImage; //-- alpha image before shape, cause triggers init...
 			shape = ShapeFactory.getCircle(AppModel.instance.brushLinkSize, AppModel.instance.brushLinkColor);
+
+			//-- add listeners to gui changing brush properties...
+			AppEventBus.instance.addEventListener(BrushEvent.SETTINGS_CHANGED, onSettingsChanged);
+
 		}
 
 		override public function init():void
@@ -160,31 +167,26 @@ package behavior
 			}
 		}
 
+		private function onSettingsChanged(e:BrushEvent):void
+		{
+			_brushColor = AppModel.instance.brushColor;
+			_brushAlpha = AppModel.instance.brushAlpha;
+			_alphaImage = AlphaImages.getAll()[AppModel.instance.brushAlphaImage].bitmap;
+			_brushBlendmode = AppModel.instance.brushBlendMode;
+			_canvasSizeMultiplier = AppModel.instance.canvasMultiplier;
+
+			if(e.shouldRegenerate)
+				generateQuadImages();
+		}
+
 		/*
 			Getters/setters
 		 */
-
-		public function set brushColor(value:uint):void
-		{
-			_brushColor = value;
-			if(_isInitialized) generateQuadImages();
-		}
-
-		public function set brushAlpha(value:Number):void
-		{
-			_brushAlpha = value;
-			if(_isInitialized) generateQuadImages();
-		}
 
 		public function set alphaImage(value:Bitmap):void
 		{
 			_alphaImage = value;
 			if(_isInitialized) generateQuadImages();
-		}
-
-		public function set brushBlendmode(value:String):void
-		{
-			_brushBlendmode = value;
 		}
 
 		public function set isDrawing(value:Boolean):void
@@ -195,11 +197,6 @@ package behavior
 		public function set canvas(value:BitmapData):void
 		{
 			_canvas = value;
-		}
-
-		public function set canvasSizeMultiplier(value:int):void
-		{
-			_canvasSizeMultiplier = value;
 		}
 	}
 }

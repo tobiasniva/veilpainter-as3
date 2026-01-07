@@ -1,6 +1,5 @@
 package view
 {
-	import behavior.Brush;
 	import behavior.ImageWithLabel;
 
 	import com.bit101.components.CheckBox;
@@ -14,11 +13,11 @@ package view
 
 	import core.AppModel;
 
+	import data.AlphaImages;
 	import data.BlendModes;
 	import data.Constants;
 	import data.Strings;
 
-	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.Event;
 
@@ -29,7 +28,6 @@ package view
 	public class Gui extends Sprite
 	{
 		private var _parent:VeilPainter;
-		private var _brush:Brush;
 		private var _loadAlphaImages:LoadAlphaImages;
 
 		// Components (same set as GuiBase)
@@ -57,8 +55,7 @@ package view
 			super();
 
 			_parent = parent;
-			_brush = parent.brush;
-			_loadAlphaImages = parent.loadAlphaImages;
+			// _loadAlphaImages = parent.loadAlphaImages;
 
 			Style.setStyle(Style.DARK);
 			this.mouseEnabled = false;
@@ -94,12 +91,12 @@ package view
 			_lblAlphaImage = new Label(this, 0, 0, Strings.LBL_ALPHA_IMG);
 
 			_cmbAlphaImage = new ComboBox(this);
-			for each (var img:ImageWithLabel in _loadAlphaImages.images)
+			for each (var img:ImageWithLabel in AlphaImages.getAll())
 			{
 				_cmbAlphaImage.addItem(img.label);
 			}
 			_cmbAlphaImage.selectedIndex = 0;
-			_cmbAlphaImage.numVisibleItems = _loadAlphaImages.images.length;
+			_cmbAlphaImage.numVisibleItems = AlphaImages.getAll().length;
 			_cmbAlphaImage.addEventListener(Event.SELECT, onAlphaImageChanged);
 
 			_sldAlpha = new HUISlider(this);
@@ -187,43 +184,36 @@ package view
 
 		protected function onNumLinksChanged(e:Event):void
 		{
-			// _brush.numLinks = _stpNumLinks.value;
 			AppModel.instance.brushNumLinks = _stpNumLinks.value;
 		}
 
 		protected function onElasticityChanged(e:Event):void
 		{
-			// _brush.elasticity = _sldElasticity.value;
 			AppModel.instance.brushElasticity = _sldElasticity.value;
 		}
 
 		protected function onStrengthChanged(e:Event):void
 		{
-			// _brush.strength = _sldStrength.value;
 			AppModel.instance.brushStrength = _sldStrength.value;
 		}
 
 		protected function onStrengthDegradationChanged(e:Event):void
 		{
-			// _brush.strengthDegradation = _sldStrengthDegradation.value;
 			AppModel.instance.brushDegradation = _sldStrengthDegradation.value;
 		}
 
 		protected function onColorChanged(e:Event):void
 		{
-			// _brush.brushColor = _colorPicker.value;
 			AppModel.instance.brushColor = _colorPicker.value;
 		}
 
 		protected function onAlphaChanged(e:Event):void
 		{
-			// _brush.brushAlpha = _sldAlpha.value;
 			AppModel.instance.brushAlpha = _sldAlpha.value;
 		}
 
 		protected function onBlendModeChanged(e:Event):void
 		{
-			// _brush.brushBlendmode = String(_cmbBlendMode.selectedItem);
 			AppModel.instance.brushBlendMode = String(_cmbBlendMode.selectedItem);
 		}
 
@@ -234,10 +224,7 @@ package view
 
 		protected function onAlphaImageChanged(e:Event):void
 		{
-			// var index:int = _cmbAlphaImage.selectedIndex;
-			// var img:Bitmap = _loadAlphaImages.images[index].bitmap;
-			// _brush.alphaImage = img;
-			AppModel.instance.brushBlendModeIndex = _cmbAlphaImage.selectedIndex;
+			AppModel.instance.brushAlphaImage = _cmbAlphaImage.selectedIndex;
 		}
 
 		protected function onDebugChanged(e:Event):void

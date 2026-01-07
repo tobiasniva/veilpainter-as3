@@ -3,6 +3,7 @@ package
 	import behavior.Brush;
 	import com.adobe.images.PNGEncoder;
 	import core.AppModel;
+	import data.AlphaImages;
 	import data.Constants;
 	import data.Strings;
 	import events.ViewportChangedEvent;
@@ -19,15 +20,14 @@ package
 	import flash.geom.Point;
 	import flash.globalization.DateTimeFormatter;
 	import flash.utils.ByteArray;
-	import flash.system.Capabilities;
 	import ui.StyleSizer
 	import utils.LoadAlphaImages;
 	import utils.SaveImageWithDialog;
-	import utils.ShapeFactory;
 	import utils.UiScaleUtil
 	import view.Gui;
 	import view.layout.*;
 	import view.viewport.*;
+	import behavior.ImageWithLabel;
 
 	[SWF(backgroundColor="#000000", frameRate="60", width="1024", height="768")]
 	public class VeilPainter extends Sprite
@@ -83,14 +83,14 @@ package
 			addChildAt(_bmp, 0);
 
 			//-- Create Brush
-			var initAlphaImage:Bitmap = loadAlphaImages.images[0].bitmap;
+			var initAlphaImage:Bitmap = AlphaImages.getAll()[0].bitmap;
 			brush = new Brush(_bmpData, initAlphaImage); //TODO: Extract bmp/canvas ref from within brush...
 			addChildAt(brush, 1); // Above bitmap
 			
 			//-- GUI
 			var uiScale:int = UiScaleUtil.computeUiScale();
-			trace("UI Scale: " + uiScale);
-			trace("dpi: " + Capabilities.screenDPI);
+			// trace("UI Scale: " + uiScale);
+			// trace("dpi: " + Capabilities.screenDPI);
 			StyleSizer.ComponentScale(uiScale);
 			_gui = new Gui(this);
 			addChildAt(_gui, 2); // Above brush
@@ -156,7 +156,7 @@ package
 			_bmp.scaleX = _bmp.scaleY = 1 / AppModel.instance.canvasMultiplier;
 
 			brush.canvas = _bmpData;
-			brush.canvasSizeMultiplier = AppModel.instance.canvasMultiplier;
+			// brush.canvasSizeMultiplier = AppModel.instance.canvasMultiplier;
 		}
 
 		//-- TODO: Move to own class...

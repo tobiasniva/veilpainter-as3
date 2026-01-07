@@ -19,6 +19,7 @@ package core {
         //-- brush (private backing fields)
         private var _brushColor:uint            = Constants.BRUSH_COLOR_DEFAULT;
         private var _brushAlpha:Number          = Constants.BRUSH_ALPHA_DEFAULT;
+        private var _brushAlphaImage:int        = 0;
         private var _brushBlendMode:String      = Constants.BRUSH_BLENDMODE_DEFAULT;
         private var _brushBlendModeIndex:int    = Constants.BRUSH_BLENDMODE_INDEX;
         private var _brushLinkColor:uint        = Constants.CHAIN_LINK_COLOR;
@@ -37,7 +38,7 @@ package core {
         public function set brushColor(value:uint):void {
             if (_brushColor != value) {
                 _brushColor = value;
-                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED, true));
             }
         }
 
@@ -45,7 +46,15 @@ package core {
         public function set brushAlpha(value:Number):void {
             if (_brushAlpha != value) {
                 _brushAlpha = value;
-                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED, true));
+            }
+        }
+
+        public function get brushAlphaImage():int { return _brushAlphaImage; }
+        public function set brushAlphaImage(value:int):void {
+            if (_brushAlphaImage != value) {
+                _brushAlphaImage = value;
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED, true));
             }
         }
 
@@ -53,7 +62,7 @@ package core {
         public function set brushBlendMode(value:String):void {
             if (_brushBlendMode != value) {
                 _brushBlendMode = value;
-                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED));
+                AppEventBus.instance.dispatchEvent(new BrushEvent(BrushEvent.SETTINGS_CHANGED, true));
             }
         }
 
