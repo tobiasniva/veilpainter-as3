@@ -18,8 +18,6 @@ package behavior
 	{
 		private static const SEGMENTS:int = 1; //-- Kind of a quality setting for the distortion of quad images...
 
-		public var debug:Boolean = false;
-
 		private var _canvas:BitmapData;
 		private var _canvasSizeMultiplier:int;
 		private var _alphaImage:Bitmap;
@@ -53,7 +51,7 @@ package behavior
 			_brushColor 	= AppModel.instance.brushColor;
 			_brushAlpha 	= AppModel.instance.brushAlpha;
 			_brushBlendmode = AppModel.instance.brushBlendMode;
-			alphaImage = initAlphaImage; //-- alpha image before shape, cause triggers init...
+			_alphaImage = initAlphaImage; //-- alpha image before shape, cause triggers init...
 			shape = ShapeFactory.getCircle(AppModel.instance.brushLinkSize, AppModel.instance.brushLinkColor);
 
 			//-- add listeners to gui changing brush properties...
@@ -96,7 +94,7 @@ package behavior
 				{
 					var quad:Vector.<Point> = _quads[i];
 
-					if(debug)
+					if(AppModel.instance.debugDraw)
 					{
 						var lines:Shape = new Shape();
 						lines.graphics.lineStyle(0, 0xff00ff, 0.25);
@@ -182,12 +180,6 @@ package behavior
 		/*
 			Getters/setters
 		 */
-
-		public function set alphaImage(value:Bitmap):void
-		{
-			_alphaImage = value;
-			if(_isInitialized) generateQuadImages();
-		}
 
 		public function set isDrawing(value:Boolean):void
 		{

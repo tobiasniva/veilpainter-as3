@@ -229,7 +229,6 @@ package view
 
 		protected function onDebugChanged(e:Event):void
 		{
-			// _brush.debug = _chkDebug.selected;
 			AppModel.instance.debugDraw = _chkDebug.selected;
 		}
 	}
