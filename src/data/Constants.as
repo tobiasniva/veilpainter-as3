@@ -11,7 +11,7 @@ package data
 	public class Constants
 	{
 		public static const UI_SCALE_DEFAULT:int     		= 3; // For phones and tablets for now...
-		// public static const UI_SCALE_DESKTOP:int     		= 1;
+		public static const UI_HIDE_ON_DRAW_DEFAULT:Boolean = true;
 		
 		public static const CANVAS_MULTIPLIER_DEFAULT:int   = 1; // regarding scale of bitmap vs screen size
 		public static const CANVAS_COLOR_DEFAULT:uint       = 0x222222;

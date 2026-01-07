@@ -27,7 +27,8 @@ package
 	import view.Gui;
 	import view.layout.*;
 	import view.viewport.*;
-	import behavior.ImageWithLabel;
+	import core.AppEventBus;
+	import events.DrawEvent;
 
 	[SWF(backgroundColor="#000000", frameRate="60", width="1024", height="768")]
 	public class VeilPainter extends Sprite
@@ -61,7 +62,7 @@ package
 		{
 			stage.removeEventListener(Event.RESIZE, initialResizeCorrectStageSize);
 
-			// Model inits
+			// Model inits - TODO: Implement prefs...
 			AppModel.instance.stageSize = new Point(stage.stageWidth, stage.stageHeight);
 			AppModel.instance.canvasMultiplier = Constants.CANVAS_MULTIPLIER_DEFAULT;
 
@@ -72,8 +73,6 @@ package
 		private function init(e:Event):void
 		{
 			loadAlphaImages.removeEventListener(Event.COMPLETE, init);
-
-			//-- Put alpha images in model...
 
 			//-- Init canvas
 			var bmpSize:Point = AppModel.instance.stageSize;
@@ -89,8 +88,6 @@ package
 			
 			//-- GUI
 			var uiScale:int = UiScaleUtil.computeUiScale();
-			// trace("UI Scale: " + uiScale);
-			// trace("dpi: " + Capabilities.screenDPI);
 			StyleSizer.ComponentScale(uiScale);
 			_gui = new Gui(this);
 			addChildAt(_gui, 2); // Above brush
@@ -133,14 +130,12 @@ package
 			if (e.type == MouseEvent.MOUSE_DOWN && e.target == stage)
 			{
 				brush.isDrawing = true;
-				_gui.hide();
-//				trace("isDrawing = true");
+				AppEventBus.instance.dispatchEvent(new DrawEvent(DrawEvent.DRAW_STARTED));
 			}
 			else
 			{
 				brush.isDrawing = false;
-				_gui.show();
-//				trace("isDrawing = false");
+				AppEventBus.instance.dispatchEvent(new DrawEvent(DrawEvent.DRAW_ENDED));
 			}
 		}
 

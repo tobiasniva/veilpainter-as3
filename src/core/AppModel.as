@@ -30,7 +30,8 @@ package core {
         private var _brushDegradation:Number    = Constants.DEGRADATION_DEFAULT;
 
         //-- configs
-        public var debugDraw:Boolean = false;
+        public var debugDraw:Boolean            = false;
+        public var uiHideOnDraw:Boolean         = Constants.UI_HIDE_ON_DRAW_DEFAULT;
 
 
         //-- Brush getters/setters with event dispatch

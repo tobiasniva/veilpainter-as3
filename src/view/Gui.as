@@ -1,7 +1,6 @@
 package view
 {
 	import behavior.ImageWithLabel;
-
 	import com.bit101.components.CheckBox;
 	import com.bit101.components.ColorChooser;
 	import com.bit101.components.ComboBox;
@@ -10,20 +9,18 @@ package view
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
 	import com.bit101.components.Style;
-
 	import core.AppModel;
-
 	import data.AlphaImages;
 	import data.BlendModes;
 	import data.Constants;
 	import data.Strings;
-
 	import flash.display.Sprite;
 	import flash.events.Event;
-
 	import view.layout.IGuiLayout;
 	import view.layout.LayoutMetrics;
 	import utils.LoadAlphaImages;
+	import core.AppEventBus;
+	import events.DrawEvent;
 
 	public class Gui extends Sprite
 	{
@@ -54,19 +51,19 @@ package view
 		{
 			super();
 
-			_parent = parent;
-			// _loadAlphaImages = parent.loadAlphaImages;
+			_parent = parent; //TODO: Refactor so not needed...
 
 			Style.setStyle(Style.DARK);
 			this.mouseEnabled = false;
 
 			createComponents();
+
+			AppEventBus.instance.addEventListener(DrawEvent.DRAW_STARTED, onDrawStarted);
+			AppEventBus.instance.addEventListener(DrawEvent.DRAW_ENDED, onDrawEnded);
 		}
 
 		private function createComponents():void
 		{
-			// StyleSizer.ComponentScale(Constants.UI_SCALE_PHONE); //TODO: Consider moving elsewhere?
-
 			_sldElasticity = new HUISlider(this);
 			_sldElasticity.label = Strings.LBL_ELASTICITY;
 			_sldElasticity.addEventListener(Event.CHANGE, onElasticityChanged);
@@ -166,15 +163,20 @@ package view
 		public function get btnClear():PushButton { return _btnClear; }
 		public function get btnSaveImage():PushButton { return _btnSaveImage; }
 
-		// --- Your existing handlers (verbatim semantics) ---
-		public function show():void
+		// --- Handlers...
+		private function onDrawStarted(e:DrawEvent):void
 		{
-			this.visible = true;
+			setVisibility(!AppModel.instance.uiHideOnDraw);
 		}
 
-		public function hide():void
+		private function onDrawEnded(e:DrawEvent):void
 		{
-			this.visible = false;
+			setVisibility(true);
+		}
+
+		private function setVisibility(isVisible:Boolean):void
+		{
+			this.visible = isVisible;
 		}
 
 		protected function onResetCanvas(e:Event):void
@@ -217,11 +219,6 @@ package view
 			AppModel.instance.brushBlendMode = String(_cmbBlendMode.selectedItem);
 		}
 
-		protected function onSaveImageToDesktop(e:Event):void
-		{
-			_parent.saveImage();
-		}
-
 		protected function onAlphaImageChanged(e:Event):void
 		{
 			AppModel.instance.brushAlphaImage = _cmbAlphaImage.selectedIndex;
@@ -230,6 +227,12 @@ package view
 		protected function onDebugChanged(e:Event):void
 		{
 			AppModel.instance.debugDraw = _chkDebug.selected;
+		}
+
+		//TODO: Figure out after canvas is refactored...
+		protected function onSaveImageToDesktop(e:Event):void
+		{
+			_parent.saveImage();
 		}
 	}
 }
