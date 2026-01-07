@@ -8,6 +8,7 @@ package behavior
 	import flash.geom.Point;
 
 	import utils.DistortImage;
+	import utils.ShapeFactory;
 	import utils.QuadFactory;
 
 	public class Brush extends Chain
@@ -28,7 +29,7 @@ package behavior
 
 		private var _isInitialized:Boolean;
 
-		public function Brush(canvas:BitmapData)
+		public function Brush(canvas:BitmapData, initAlphaImage:Bitmap)
 		{
 			this.mouseChildren = this.mouseEnabled = false;
 
@@ -49,7 +50,8 @@ package behavior
 			_brushColor 	= AppModel.instance.brushColor;
 			_brushAlpha 	= AppModel.instance.brushAlpha;
 			_brushBlendmode = AppModel.instance.brushBlendMode;
-			// brush.shape = ShapeFactory.getCircle(Constants.CHAIN_LINK_SIZE, Constants.CHAIN_LINK_COLOR);
+			alphaImage = initAlphaImage; //-- alpha image before shape, cause triggers init...
+			shape = ShapeFactory.getCircle(AppModel.instance.brushLinkSize, AppModel.instance.brushLinkColor);
 		}
 
 		override public function init():void

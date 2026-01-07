@@ -9,7 +9,7 @@ package core {
         private static var _instance:AppModel;
 
         //-- App wise
-        public var stageSize:Point              = new Point(0, 0);
+        public var stageSize:Point              = new Point(0, 0);                          //-- Needs init outsisde...
         public var uiScale:Number               = Constants.UI_SCALE_DEFAULT;
 
         //-- canvas

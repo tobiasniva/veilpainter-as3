@@ -22,8 +22,8 @@ package
 	import flash.system.Capabilities;
 	import ui.StyleSizer
 	import utils.LoadAlphaImages;
-	import utils.ShapeFactory;
 	import utils.SaveImageWithDialog;
+	import utils.ShapeFactory;
 	import utils.UiScaleUtil
 	import view.Gui;
 	import view.layout.*;
@@ -73,6 +73,8 @@ package
 		{
 			loadAlphaImages.removeEventListener(Event.COMPLETE, init);
 
+			//-- Put alpha images in model...
+
 			//-- Init canvas
 			var bmpSize:Point = AppModel.instance.stageSize;
 			var canvasCol:uint = AppModel.instance.canvasColor;
@@ -81,15 +83,8 @@ package
 			addChildAt(_bmp, 0);
 
 			//-- Create Brush
-			brush = new Brush(_bmpData); //TODO: Extract bmp/canvas ref from within brush...
-			brush.alphaImage           = loadAlphaImages.images[0].bitmap;
-			// brush.elasticity           = Constants.ELASTICITY_DEFAULT;
-			// brush.strength             = Constants.STRENGTH_DEFAULT;
-			// brush.strengthDegradation  = Constants.DEGRADATION_DEFAULT;
-			// brush.brushColor           = Constants.BRUSH_COLOR_DEFAULT;
-			// brush.brushAlpha           = Constants.BRUSH_ALPHA_DEFAULT;
-			// brush.brushBlendmode       = Constants.BRUSH_BLENDMODE_DEFAULT;
-			brush.shape = ShapeFactory.getCircle(Constants.CHAIN_LINK_SIZE, Constants.CHAIN_LINK_COLOR);
+			var initAlphaImage:Bitmap = loadAlphaImages.images[0].bitmap;
+			brush = new Brush(_bmpData, initAlphaImage); //TODO: Extract bmp/canvas ref from within brush...
 			addChildAt(brush, 1); // Above bitmap
 			
 			//-- GUI
