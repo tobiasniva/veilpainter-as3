@@ -18,14 +18,12 @@ package view
 	import flash.events.Event;
 	import view.layout.IGuiLayout;
 	import view.layout.LayoutMetrics;
-	import utils.LoadAlphaImages;
 	import core.AppEventBus;
 	import events.DrawEvent;
 
 	public class Gui extends Sprite
 	{
 		private var _parent:VeilPainter;
-		private var _loadAlphaImages:LoadAlphaImages;
 
 		// Components (same set as GuiBase)
 		private var _sldElasticity:HUISlider;
