@@ -31,7 +31,7 @@ package view
 		private var _sldElasticity:HUISlider;
 		private var _sldStrength:HUISlider;
 		private var _sldStrengthDegradation:HUISlider;
-		private var _sldAlpha:HUISlider;
+		private var _sldOpacity:HUISlider;
 
 		private var _stpNumLinks:NumericStepper;
 		private var _cmbAlphaImage:ComboBox;
@@ -96,11 +96,11 @@ package view
 			_cmbAlphaImage.numVisibleItems = AlphaImages.getAll().length;
 			_cmbAlphaImage.addEventListener(Event.SELECT, onAlphaImageChanged);
 
-			_sldAlpha = new HUISlider(this);
-			_sldAlpha.addEventListener(Event.CHANGE, onAlphaChanged);
-			_sldAlpha.setSliderParams(0, 1, Constants.BRUSH_OPACITY_DEFAULT);
-			_sldAlpha.labelPrecision = 1;
-			_sldAlpha.tick = 0.1;
+			_sldOpacity = new HUISlider(this);
+			_sldOpacity.addEventListener(Event.CHANGE, onOpacityChanged);
+			_sldOpacity.setSliderParams(0, 1, Constants.BRUSH_OPACITY_DEFAULT);
+			_sldOpacity.labelPrecision = 2;
+			_sldOpacity.tick = 0.01;
 
 			_lblNumLinks = new Label(this, 0, 0, Strings.LBL_NUM_LINKS);
 
@@ -147,7 +147,7 @@ package view
 		public function get sldElasticity():HUISlider { return _sldElasticity; }
 		public function get sldStrength():HUISlider { return _sldStrength; }
 		public function get sldStrengthDegradation():HUISlider { return _sldStrengthDegradation; }
-		public function get sldAlpha():HUISlider { return _sldAlpha; }
+		public function get sldOpacity():HUISlider { return _sldOpacity; }
 
 		public function get stpNumLinks():NumericStepper { return _stpNumLinks; }
 		public function get cmbAlphaImage():ComboBox { return _cmbAlphaImage; }
@@ -212,9 +212,9 @@ package view
 			AppModel.instance.brushColor = _colorPicker.value;
 		}
 
-		protected function onAlphaChanged(e:Event):void
+		protected function onOpacityChanged(e:Event):void
 		{
-			AppModel.instance.brushOpacity = _sldAlpha.value;
+			AppModel.instance.brushOpacity = _sldOpacity.value;
 		}
 
 		protected function onBlendModeChanged(e:Event):void

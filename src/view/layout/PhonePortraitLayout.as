@@ -39,9 +39,9 @@ package view.layout
 			gui.cmbBlendMode.y = 500;								//500
 			gui.cmbBlendMode.width = WIDTH_HALF;
 
-			gui.sldAlpha.x = PADDING;
-			gui.sldAlpha.y = 625;									//725
-			gui.sldAlpha.width = WIDTH_SLD;
+			gui.sldOpacity.x = PADDING;
+			gui.sldOpacity.y = 625;									//725
+			gui.sldOpacity.width = WIDTH_SLD;
 
 			gui.stpNumLinks.x = PADDING;
 			gui.stpNumLinks.y = 800;								//800

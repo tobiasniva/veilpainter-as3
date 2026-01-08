@@ -45,9 +45,9 @@ package view.layout
 			gui.cmbAlphaImage.y = 60;								//500
 			gui.cmbAlphaImage.width = WIDTH_FIFTH + PADDING;
 
-			gui.sldAlpha.x = X_MID + PADDING;
-			gui.sldAlpha.y = 180;									//725
-			gui.sldAlpha.width = WIDTH_SLD - PADDING;
+			gui.sldOpacity.x = X_MID + PADDING;
+			gui.sldOpacity.y = 180;									//725
+			gui.sldOpacity.width = WIDTH_SLD - PADDING;
 			//--
 			gui.colorPickerBG.x = gui.cmbBlendMode.x;
 			gui.colorPickerBG.y = 300;								//1000

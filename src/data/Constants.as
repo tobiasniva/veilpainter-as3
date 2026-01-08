@@ -32,7 +32,7 @@ package data
 		
 		public static const ELASTICITY_DEFAULT:Number       = 0.85;
 		public static const ELASTICITY_MIN:Number           = 0.0;
-		public static const ELASTICITY_MAX:Number           = 1.0;
+		public static const ELASTICITY_MAX:Number           = 0.99;
 		
 		public static const STRENGTH_DEFAULT:Number         = 0.028;
 		public static const STRENGTH_MIN:Number             = 0.0;
