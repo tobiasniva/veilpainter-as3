@@ -93,30 +93,19 @@ package
 			viewportService.addEventListener(ViewportChangedEvent.VIEWPORT_CHANGED, onViewportChanged);
 			viewportService.start();
 
-			//-- Mouse
+			//-- Mouse/touch to detect input for toggle stuff (e.g. drawing)
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, toggleDrawing);
 			stage.addEventListener(MouseEvent.MOUSE_UP, toggleDrawing);
-
-			//-- Ticker
-			stage.addEventListener(Event.ENTER_FRAME, update);
 		}
 
 		private function onViewportChanged(e:ViewportChangedEvent):void
 		{
 			AppModel.instance.stageSize = new Point(e.screenW, e.screenH);
-
 			_layoutManager.refresh(true);
-			resetCanvas(); //TODO: Preserve image - rotate/transform into new bmpData...
+			resetCanvas(); //-- TODO: Preserve image - rotate/transform into new bmpData...
 		}
 
-		//TODO: Figure out if event can feed this into brush...stable?
-		private function update(e:Event):void
-		{
-			var target:Point = new Point(mouseX, mouseY);
-			brush.update(target);
-		}
-
-		//TODO: Figure out where/who should own this....?
+		//-- TODO: Figure out where/who should own this....?
 		private function toggleDrawing(e:MouseEvent):void
 		{
 			if (e.type == MouseEvent.MOUSE_DOWN && e.target == stage)
@@ -129,7 +118,7 @@ package
 			}
 		}
 
-		//-- 
+		//-- TODO: Refactor canvas stuff...?
 		public function resetCanvas():void
 		{
 			trace("Reset canvas");

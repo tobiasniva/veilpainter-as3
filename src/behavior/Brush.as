@@ -14,6 +14,7 @@ package behavior
 	import utils.DistortImage;
 	import utils.ShapeFactory;
 	import utils.QuadFactory;
+	import flash.events.Event;
 
 	public class Brush extends Chain
 	{
@@ -62,6 +63,13 @@ package behavior
 			AppEventBus.instance.addEventListener(DrawEvent.DRAW_STARTED, onDrawStarted);
 			AppEventBus.instance.addEventListener(DrawEvent.DRAW_ENDED, onDrawEnded);
 
+			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		}
+
+		private function onAddedToStage(e:Event):void
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			stage.addEventListener(Event.ENTER_FRAME, ticker); //-- listener to start ticking/updating brush...
 		}
 
 		override public function init():void
@@ -83,8 +91,9 @@ package behavior
 			_isInitialized = true;
 		}
 
-		override public function update(target:Point):void
+		private function ticker(e:Event):void
 		{
+			var target:Point = new Point(mouseX, mouseY);
 			super.update(target);
 
 			if(_isDrawing)
