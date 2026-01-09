@@ -38,6 +38,10 @@ package view
 			// addChild(_bmp);
 		}
 
+
+		//TODO!!! CYCLICAL DEPENDECY - canvas reset from GUI, new bitmapData set in model...
+		//...that triggers this, and then we set new bmpData in model yet again!!!
+		
 		private function clearCanvas(e:CanvasEvent = null):void
 		{
 			var bmpSize:Point = AppModel.instance.stageSize;
