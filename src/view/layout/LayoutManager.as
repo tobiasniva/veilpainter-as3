@@ -2,7 +2,6 @@ package view.layout
 {
 	import view.Gui;
 	import data.Strings;
-	import flash.geom.Point;
 	import core.AppModel;
 
 	public final class LayoutManager

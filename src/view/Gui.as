@@ -9,7 +9,7 @@ package view
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
 	import com.bit101.components.Style;
-	import core.AppModel;
+	import core.BrushModel;
 	import data.AlphaImages;
 	import data.BlendModes;
 	import data.Constants;
@@ -20,6 +20,8 @@ package view
 	import view.layout.LayoutMetrics;
 	import core.AppEventBus;
 	import events.CanvasEvent;
+	import core.AppModel;
+	import core.CanvasModel;
 
 	public class Gui extends Sprite
 	{
@@ -56,8 +58,8 @@ package view
 
 			createComponents();
 
-			AppEventBus.instance.addEventListener(CanvasEvent.CANVAS_TOUCH_START, onDrawStarted);
-			AppEventBus.instance.addEventListener(CanvasEvent.CANVAS_TOUCH_END, onDrawEnded);
+			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_START, onDrawStarted);
+			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_END, onDrawEnded);
 		}
 
 		private function createComponents():void
@@ -177,7 +179,7 @@ package view
 		//TODO: Figure out after canvas is refactored...
 		protected function onResetCanvas(e:Event):void
 		{
-			_parent.resetCanvas();
+			CanvasModel.instance.color = _colorPickerBG.value;
 		}
 		protected function onSaveImageToDesktop(e:Event):void
 		{
@@ -187,42 +189,42 @@ package view
 		//-- Brush-related
 		protected function onNumLinksChanged(e:Event):void
 		{
-			AppModel.instance.brushNumLinks = _stpNumLinks.value;
+			BrushModel.instance.brushNumLinks = _stpNumLinks.value;
 		}
 
 		protected function onElasticityChanged(e:Event):void
 		{
-			AppModel.instance.brushElasticity = _sldElasticity.value;
+			BrushModel.instance.brushElasticity = _sldElasticity.value;
 		}
 
 		protected function onStrengthChanged(e:Event):void
 		{
-			AppModel.instance.brushStrength = _sldStrength.value;
+			BrushModel.instance.brushStrength = _sldStrength.value;
 		}
 
 		protected function onStrengthDegradationChanged(e:Event):void
 		{
-			AppModel.instance.brushDegradation = _sldStrengthDegradation.value;
+			BrushModel.instance.brushDegradation = _sldStrengthDegradation.value;
 		}
 
 		protected function onColorChanged(e:Event):void
 		{
-			AppModel.instance.brushColor = _colorPicker.value;
+			BrushModel.instance.brushColor = _colorPicker.value;
 		}
 
 		protected function onOpacityChanged(e:Event):void
 		{
-			AppModel.instance.brushOpacity = _sldOpacity.value;
+			BrushModel.instance.brushOpacity = _sldOpacity.value;
 		}
 
 		protected function onBlendModeChanged(e:Event):void
 		{
-			AppModel.instance.brushBlendMode = String(_cmbBlendMode.selectedItem);
+			BrushModel.instance.brushBlendMode = String(_cmbBlendMode.selectedItem);
 		}
 
 		protected function onAlphaImageChanged(e:Event):void
 		{
-			AppModel.instance.brushAlphaImage = _cmbAlphaImage.selectedIndex;
+			BrushModel.instance.brushAlphaImage = _cmbAlphaImage.selectedIndex;
 		}
 
 		protected function onDebugChanged(e:Event):void

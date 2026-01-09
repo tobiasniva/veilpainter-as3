@@ -1,26 +1,26 @@
 package behavior
 {
-	import core.AppModel;
+	import core.BrushModel;
 	import core.AppEventBus;
 	import data.AlphaImages;
 	import events.BrushEvent;
 	import events.CanvasEvent;
-
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import flash.geom.Point;
-
 	import utils.DistortImage;
 	import utils.ShapeFactory;
 	import utils.QuadFactory;
 	import flash.events.Event;
+	import core.CanvasModel;
+	import core.AppModel;
 
 	public class Brush extends Chain
 	{
 		private static const SEGMENTS:int = 1; //-- Kind of a quality setting for the distortion of quad images...
 
-		private var _canvas:BitmapData;
+		private var _canvasBmpData:BitmapData;
 		private var _canvasSizeMultiplier:int;
 		private var _alphaImage:Bitmap;
 		private var _brushColor:uint;
@@ -32,36 +32,37 @@ package behavior
 
 		private var _isInitialized:Boolean;
 
-		public function Brush(canvas:BitmapData, initAlphaImage:Bitmap)
+		public function Brush(initAlphaImage:Bitmap)
 		{
 			this.mouseChildren = this.mouseEnabled = false;
 
 			_isDrawing = false;
 			_isInitialized = false;
-			_canvasSizeMultiplier = AppModel.instance.canvasMultiplier;
-			_canvas = canvas;
+			_canvasSizeMultiplier = CanvasModel.instance.multiplier;
+			_canvasBmpData = CanvasModel.instance.bitmapData;
 
 			//TODO: init these by triggering setters below...race condition?
-			var numLinks:int = AppModel.instance.brushNumLinks;
-			var elasticity:Number = AppModel.instance.brushElasticity;
-			var strength:Number = AppModel.instance.brushStrength;
-			var strengthDegr:Number = AppModel.instance.brushDegradation;
+			var numLinks:int = BrushModel.instance.brushNumLinks;
+			var elasticity:Number = BrushModel.instance.brushElasticity;
+			var strength:Number = BrushModel.instance.brushStrength;
+			var strengthDegr:Number = BrushModel.instance.brushDegradation;
 			var fade:Boolean = false;
 			super(numLinks, elasticity, strength, strengthDegr, fade);
 
 			//-- set initial values...
-			_brushColor 	= AppModel.instance.brushColor;
-			_brushOpacity 	= AppModel.instance.brushOpacity;
-			_brushBlendmode = AppModel.instance.brushBlendMode;
+			_brushColor 	= BrushModel.instance.brushColor;
+			_brushOpacity 	= BrushModel.instance.brushOpacity;
+			_brushBlendmode = BrushModel.instance.brushBlendMode;
 			_alphaImage = initAlphaImage; //-- alpha image before shape, cause triggers init...
-			shape = ShapeFactory.getCircle(AppModel.instance.brushLinkSize, AppModel.instance.brushLinkColor);
+			shape = ShapeFactory.getCircle(BrushModel.instance.brushLinkSize, BrushModel.instance.brushLinkColor);
 
 			//-- add listeners to gui changing brush properties...
-			AppEventBus.instance.addEventListener(BrushEvent.SETTINGS_CHANGED, onSettingsChanged);
+			AppEventBus.instance.addEventListener(BrushEvent.SETTINGS_CHANGED, onBrushSettingsChanged);
 
-			//-- listeners for started/ended drawing - subject to change when refactor goes forward...
-			AppEventBus.instance.addEventListener(CanvasEvent.CANVAS_TOUCH_START, onCanvasTouchStart);
-			AppEventBus.instance.addEventListener(CanvasEvent.CANVAS_TOUCH_END, onCanvasTouchEnd);
+			//-- listeners for canvas stuff - started/ended drawing, settings changed...
+			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_START, onCanvasTouchStart);
+			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_END, onCanvasTouchEnd);
+			AppEventBus.instance.addEventListener(CanvasEvent.SETTINGS_CHANGED, onCanvasSettingsChanged);
 
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
@@ -69,7 +70,7 @@ package behavior
 		private function onAddedToStage(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			stage.addEventListener(Event.ENTER_FRAME, ticker); //-- listener to start ticking/updating brush...
+			stage.addEventListener(Event.ENTER_FRAME, ticker); //-- ticking/updating brush...
 		}
 
 		override public function init():void
@@ -98,7 +99,7 @@ package behavior
 
 			if(_isDrawing)
 			{
-				_canvas.lock();
+				_canvasBmpData.lock();
 
 				updateQuads();
 
@@ -117,14 +118,14 @@ package behavior
 						lines.graphics.lineTo(quad[3].x, quad[3].y);
 						lines.graphics.lineTo(quad[2].x, quad[2].y);
 						lines.graphics.lineTo(quad[0].x, quad[0].y);
-						_canvas.draw(lines);
+						_canvasBmpData.draw(lines);
 
 						for each(var p:Point in quad)
 						{
 							var dot:Shape = new Shape();
 							dot.graphics.beginFill(0xff0000, 1);
 							dot.graphics.drawCircle(p.x, p.y, 2);
-							_canvas.draw(dot);
+							_canvasBmpData.draw(dot);
 						}
 					}
 					else
@@ -133,11 +134,11 @@ package behavior
 						var shp:Shape = new Shape();
 						var distort:DistortImage = new DistortImage(quadImage.width, quadImage.height, SEGMENTS, SEGMENTS);
 						distort.setTransform(shp.graphics, _quadImages[i], quad[0], quad[1], quad[3], quad[2]);
-						_canvas.draw(shp, null, null, _brushBlendmode, null, true);
+						_canvasBmpData.draw(shp, null, null, _brushBlendmode, null, true);
 					}
 				}
 
-				_canvas.unlock();
+				_canvasBmpData.unlock();
 			}
 		}
 
@@ -179,22 +180,28 @@ package behavior
 			}
 		}
 
-		private function onSettingsChanged(e:BrushEvent):void
+		private function onBrushSettingsChanged(e:BrushEvent):void
 		{
-			_brushColor = AppModel.instance.brushColor;
-			_brushOpacity = AppModel.instance.brushOpacity;
-			_alphaImage = AlphaImages.getAll()[AppModel.instance.brushAlphaImage].bitmap;
-			_brushBlendmode = AppModel.instance.brushBlendMode;
-			_canvasSizeMultiplier = AppModel.instance.canvasMultiplier;
+			_brushColor = BrushModel.instance.brushColor;
+			_brushOpacity = BrushModel.instance.brushOpacity;
+			_alphaImage = AlphaImages.getAll()[BrushModel.instance.brushAlphaImage].bitmap;
+			_brushBlendmode = BrushModel.instance.brushBlendMode;
 			
 			//-- Inherited, lives in Chain...
-			numLinks = AppModel.instance.brushNumLinks;
-			elasticity = AppModel.instance.brushElasticity;
-			strength = AppModel.instance.brushStrength;
-			strengthDegradation = AppModel.instance.brushDegradation;
+			numLinks = BrushModel.instance.brushNumLinks;
+			elasticity = BrushModel.instance.brushElasticity;
+			strength = BrushModel.instance.brushStrength;
+			strengthDegradation = BrushModel.instance.brushDegradation;
 
 			if(e.shouldRegenerate)
 				generateQuadImages();
+		}
+
+		private function onCanvasSettingsChanged(e:CanvasEvent):void
+		{
+			//TODO: Mulitplier not really changed for now - maybe in the future...?
+			_canvasSizeMultiplier = CanvasModel.instance.multiplier;
+			generateQuadImages();
 		}
 
 		private function onCanvasTouchStart(e:CanvasEvent):void
@@ -208,10 +215,10 @@ package behavior
 			_isDrawing = false;
 		}
 
-		//-- TODO: Figure out later...
-		public function set canvas(value:BitmapData):void
-		{
-			_canvas = value;
-		}
+		//-- TODO: REMOVE!
+		// public function set canvas(value:BitmapData):void
+		// {
+		// 	_canvasBmpData = value;
+		// }
 	}
 }

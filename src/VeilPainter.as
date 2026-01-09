@@ -2,7 +2,7 @@ package
 {
 	import behavior.Brush;
 	import com.adobe.images.PNGEncoder;
-	import core.AppModel;
+	import core.BrushModel;
 	import data.AlphaImages;
 	import data.Constants;
 	import data.Strings;
@@ -28,11 +28,15 @@ package
 	import view.viewport.*;
 	import core.AppEventBus;
 	import events.CanvasEvent;
+	import core.AppModel;
+	import core.CanvasModel;
+	import view.Canvas;
 
 	[SWF(backgroundColor="#000000", frameRate="60", width="1024", height="768")]
 	public class VeilPainter extends Sprite
 	{
-		public var brush:Brush;
+		private var _canvas:Canvas;
+		private var _brush:Brush;
 		private var _bmp:Bitmap;
 		private var _bmpData:BitmapData;
 		private var _uiRoot:Sprite;
@@ -62,25 +66,28 @@ package
 
 			// Model inits - TODO: Implement prefs...
 			AppModel.instance.stageSize = new Point(stage.stageWidth, stage.stageHeight);
-			AppModel.instance.canvasMultiplier = Constants.CANVAS_MULTIPLIER_DEFAULT;
+
+			//-- Create and add Canvas...
+			_canvas = new Canvas();
+			addChild(_canvas);
 
 			//-- Init canvas
-			var bmpSize:Point = AppModel.instance.stageSize;
-			var canvasCol:uint = AppModel.instance.canvasColor;
-			_bmpData = new BitmapData(bmpSize.x, bmpSize.y, false, canvasCol);
-			_bmp = new Bitmap(_bmpData);
-			addChildAt(_bmp, 0);
+			// var bmpSize:Point = AppModel.instance.stageSize;
+			// var canvasCol:uint = CanvasModel.instance.color;
+			// _bmpData = new BitmapData(bmpSize.x, bmpSize.y, false, canvasCol);
+			// _bmp = new Bitmap(_bmpData);
+			// addChild(_bmp);
 
 			//-- Create Brush
 			var initAlphaImage:Bitmap = AlphaImages.getAll()[0].bitmap;
-			brush = new Brush(_bmpData, initAlphaImage); //TODO: Extract bmp/canvas ref from within brush...
-			addChildAt(brush, 1); // Above bitmap
+			_brush = new Brush(initAlphaImage); //TODO: Extract bmp/canvas ref from within brush...
+			addChild(_brush); // Above bitmap
 			
 			//-- GUI
 			var uiScale:int = UiScaleUtil.computeUiScale();
 			StyleSizer.ComponentScale(uiScale);
 			_gui = new Gui(this);
-			addChildAt(_gui, 2); // Above brush
+			addChild(_gui); // Above brush
 
 			//-- Layout Manager - NEEDS GUI!
 			_layoutManager = new LayoutManager(_gui, uiScale);
@@ -102,7 +109,8 @@ package
 		{
 			AppModel.instance.stageSize = new Point(e.screenW, e.screenH);
 			_layoutManager.refresh(true);
-			resetCanvas(); //-- TODO: Preserve image - rotate/transform into new bmpData...
+			// resetCanvas(); //-- TODO: Preserve image - rotate/transform into new bmpData...
+			AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.SETTINGS_CHANGED));
 		}
 
 		//-- TODO: Figure out where/who should own this....?
@@ -110,28 +118,14 @@ package
 		{
 			if (e.type == MouseEvent.MOUSE_DOWN && e.target == stage)
 			{
-				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.CANVAS_TOUCH_START));
+				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.TOUCH_START));
 			}
 			else
 			{
-				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.CANVAS_TOUCH_END));
+				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.TOUCH_END));
 			}
 		}
 
-		//-- TODO: Refactor canvas stuff...?
-		public function resetCanvas():void
-		{
-			trace("Reset canvas");
-//			_bmpData.dispose();
-			var bs:Point = new Point(AppModel.instance.stageSize.x, AppModel.instance.stageSize.y);
-
-			_bmpData = new BitmapData(bs.x, bs.y, false, AppModel.instance.canvasColor);
-			_bmp.bitmapData = _bmpData;
-			_bmp.scaleX = _bmp.scaleY = 1 / AppModel.instance.canvasMultiplier;
-
-			brush.canvas = _bmpData;
-			// brush.canvasSizeMultiplier = AppModel.instance.canvasMultiplier;
-		}
 
 		//-- TODO: Move to own class...
 		public function saveImage():void

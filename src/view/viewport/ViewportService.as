@@ -1,6 +1,5 @@
 package view.viewport
 {
-	import core.AppModel;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -8,6 +7,7 @@ package view.viewport
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import events.ViewportChangedEvent;
+	import core.AppModel;
 
 	public final class ViewportService extends EventDispatcher
 	{
