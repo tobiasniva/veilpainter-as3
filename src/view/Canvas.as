@@ -27,6 +27,8 @@ package view
 
 		private function init(e:Event = null):void
 		{
+			this.mouseChildren = this.mouseEnabled = false;
+
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 
 			AppEventBus.instance.addEventListener(CanvasEvent.SETTINGS_CHANGED, clearCanvas);

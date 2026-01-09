@@ -183,7 +183,9 @@ package view
 		}
 		protected function onSaveImageToDesktop(e:Event):void
 		{
-			_parent.saveImage();
+			trace("Saving disabled - to be refactored!");
+			//TODO: Refactor saving...
+			// _parent.saveImage();
 		}
 
 		//-- Brush-related

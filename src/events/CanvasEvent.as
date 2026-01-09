@@ -8,6 +8,7 @@ package events
         public static const TOUCH_END:String        = "canvasTouchEnd";
 
         public static const SETTINGS_CHANGED:String = "canvasSettingsChanged";
+        public static const BMPDATA_UPDATED:String   = "canvasBmpDataUpdated";
 
         public function CanvasEvent(type:String)
         {

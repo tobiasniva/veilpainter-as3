@@ -1,27 +1,18 @@
 package
 {
 	import behavior.Brush;
-	import com.adobe.images.PNGEncoder;
-	import core.BrushModel;
 	import data.AlphaImages;
-	import data.Constants;
 	import data.Strings;
 	import events.ViewportChangedEvent;
 	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.filesystem.File
 	import flash.geom.Point;
-	import flash.globalization.DateTimeFormatter;
-	import flash.utils.ByteArray;
 	import ui.StyleSizer
-	import utils.SaveImageWithDialog;
 	import utils.UiScaleUtil
 	import view.Gui;
 	import view.layout.*;
@@ -29,16 +20,14 @@ package
 	import core.AppEventBus;
 	import events.CanvasEvent;
 	import core.AppModel;
-	import core.CanvasModel;
 	import view.Canvas;
 
 	[SWF(backgroundColor="#000000", frameRate="60", width="1024", height="768")]
 	public class VeilPainter extends Sprite
 	{
+		// private var _bmpDataUsedBySaveToBeRemoved:BitmapData;
 		private var _canvas:Canvas;
 		private var _brush:Brush;
-		private var _bmp:Bitmap;
-		private var _bmpData:BitmapData;
 		private var _uiRoot:Sprite;
 		private var _gui:Gui;
 		private var _layoutManager:LayoutManager;
@@ -67,27 +56,20 @@ package
 			// Model inits - TODO: Implement prefs...
 			AppModel.instance.stageSize = new Point(stage.stageWidth, stage.stageHeight);
 
-			//-- Create and add Canvas...
+			//-- Create canvas...
 			_canvas = new Canvas();
 			addChild(_canvas);
 
-			//-- Init canvas
-			// var bmpSize:Point = AppModel.instance.stageSize;
-			// var canvasCol:uint = CanvasModel.instance.color;
-			// _bmpData = new BitmapData(bmpSize.x, bmpSize.y, false, canvasCol);
-			// _bmp = new Bitmap(_bmpData);
-			// addChild(_bmp);
-
-			//-- Create Brush
+			//-- Create brush
 			var initAlphaImage:Bitmap = AlphaImages.getAll()[0].bitmap;
-			_brush = new Brush(initAlphaImage); //TODO: Extract bmp/canvas ref from within brush...
-			addChild(_brush); // Above bitmap
+			_brush = new Brush(initAlphaImage);
+			addChild(_brush); // above canvas
 			
 			//-- GUI
 			var uiScale:int = UiScaleUtil.computeUiScale();
 			StyleSizer.ComponentScale(uiScale);
 			_gui = new Gui(this);
-			addChild(_gui); // Above brush
+			addChild(_gui); // above brush
 
 			//-- Layout Manager - NEEDS GUI!
 			_layoutManager = new LayoutManager(_gui, uiScale);
@@ -109,7 +91,8 @@ package
 		{
 			AppModel.instance.stageSize = new Point(e.screenW, e.screenH);
 			_layoutManager.refresh(true);
-			// resetCanvas(); //-- TODO: Preserve image - rotate/transform into new bmpData...
+			
+			//TODO: Consider transfer bitmap between portrait/landscape changes...
 			AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.SETTINGS_CHANGED));
 		}
 
@@ -128,11 +111,12 @@ package
 
 
 		//-- TODO: Move to own class...
+		/*
 		public function saveImage():void
 		{
 			trace("perm status: " + File.permissionStatus);
 			
-			var byteArray:ByteArray = PNGEncoder.encode(_bmpData);
+			var byteArray:ByteArray = PNGEncoder.encode(_bmpDataUsedBySaveToBeRemoved);
 			
 			var d:Date = new Date();
 			var dtf:DateTimeFormatter = new DateTimeFormatter("en-US");
@@ -152,5 +136,6 @@ package
 				}
 			);
 		}
+		*/
 	}
 }
