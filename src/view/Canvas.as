@@ -34,19 +34,20 @@ package view
 
 			//-- Mouse/touch to detect input for toggle stuff (e.g. drawing)
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			addEventListener(MouseEvent.MOUSE_UP, onMouseDown);
+			//NOTE! stage - to end touch also outside of screen (desktop)
+			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 
 		private function onMouseDown(e:MouseEvent):void
 		{
-			if (e.type == MouseEvent.MOUSE_DOWN && e.target == this) //NOTE! This...as in this Canvas - not stage anymore
-			{
-				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.TOUCH_START));
-			}
-			else
-			{
-				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.TOUCH_END));
-			}
+			// trace("touch start!");
+			AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.TOUCH_START));
+		}
+
+		private function onMouseUp(e:MouseEvent):void
+		{
+			// trace("touch end...");
+			AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.TOUCH_END));
 		}
 
 		private function clearCanvas(e:CanvasEvent = null):void
