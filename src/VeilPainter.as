@@ -81,10 +81,6 @@ package
 			var viewportService:ViewportService = new ViewportService(stage);
 			viewportService.addEventListener(ViewportChangedEvent.VIEWPORT_CHANGED, onViewportChanged);
 			viewportService.start();
-
-			//-- Mouse/touch to detect input for toggle stuff (e.g. drawing)
-			stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseDown);
 		}
 
 		private function onViewportChanged(e:ViewportChangedEvent):void
@@ -95,20 +91,6 @@ package
 			//TODO: Consider transfer bitmap between portrait/landscape changes...
 			AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.SETTINGS_CHANGED));
 		}
-
-		//-- TODO: Figure out where/who should own this....?
-		private function onMouseDown(e:MouseEvent):void
-		{
-			if (e.type == MouseEvent.MOUSE_DOWN && e.target == stage)
-			{
-				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.TOUCH_START));
-			}
-			else
-			{
-				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.TOUCH_END));
-			}
-		}
-
 
 		//-- TODO: Move to own class...
 		/*

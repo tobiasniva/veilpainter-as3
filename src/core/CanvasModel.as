@@ -23,10 +23,10 @@ package core {
 
         public function get color():uint { return _color; }
         public function set color(value:uint):void {
-            if (_color != value) {
+            // if (_color != value) {
                 _color = value;
                 AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.SETTINGS_CHANGED));
-            }
+            // }
         }
 
         public function get multiplier():int { return _multiplier; }

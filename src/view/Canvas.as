@@ -10,6 +10,7 @@ package view
 	import data.Constants;
 	import core.AppEventBus;
 	import events.CanvasEvent;
+	import flash.events.MouseEvent;
 
 	public class Canvas extends Sprite
 	{
@@ -27,12 +28,25 @@ package view
 
 		private function init(e:Event = null):void
 		{
-			this.mouseChildren = this.mouseEnabled = false;
-
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-
 			AppEventBus.instance.addEventListener(CanvasEvent.SETTINGS_CHANGED, clearCanvas);
 			CanvasModel.instance.multiplier = Constants.CANVAS_MULTIPLIER_DEFAULT;
+
+			//-- Mouse/touch to detect input for toggle stuff (e.g. drawing)
+			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+			addEventListener(MouseEvent.MOUSE_UP, onMouseDown);
+		}
+
+		private function onMouseDown(e:MouseEvent):void
+		{
+			if (e.type == MouseEvent.MOUSE_DOWN && e.target == this) //NOTE! This...as in this Canvas - not stage anymore
+			{
+				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.TOUCH_START));
+			}
+			else
+			{
+				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.TOUCH_END));
+			}
 		}
 
 		private function clearCanvas(e:CanvasEvent = null):void
