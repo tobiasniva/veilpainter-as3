@@ -4,7 +4,7 @@ package behavior
 	import core.AppEventBus;
 	import data.AlphaImages;
 	import events.BrushEvent;
-	import events.DrawEvent;
+	import events.CanvasEvent;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -60,8 +60,8 @@ package behavior
 			AppEventBus.instance.addEventListener(BrushEvent.SETTINGS_CHANGED, onSettingsChanged);
 
 			//-- listeners for started/ended drawing - subject to change when refactor goes forward...
-			AppEventBus.instance.addEventListener(DrawEvent.DRAW_STARTED, onDrawStarted);
-			AppEventBus.instance.addEventListener(DrawEvent.DRAW_ENDED, onDrawEnded);
+			AppEventBus.instance.addEventListener(CanvasEvent.CANVAS_TOUCH_START, onCanvasTouchStart);
+			AppEventBus.instance.addEventListener(CanvasEvent.CANVAS_TOUCH_END, onCanvasTouchEnd);
 
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
@@ -187,6 +187,7 @@ package behavior
 			_brushBlendmode = AppModel.instance.brushBlendMode;
 			_canvasSizeMultiplier = AppModel.instance.canvasMultiplier;
 			
+			//-- Inherited, lives in Chain...
 			numLinks = AppModel.instance.brushNumLinks;
 			elasticity = AppModel.instance.brushElasticity;
 			strength = AppModel.instance.brushStrength;
@@ -196,12 +197,13 @@ package behavior
 				generateQuadImages();
 		}
 
-		private function onDrawStarted(e:DrawEvent):void
+		private function onCanvasTouchStart(e:CanvasEvent):void
 		{
+			//-- TODO: Implement delayed drawing start - configured in settings?
 			_isDrawing = true;
 		}
 
-		private function onDrawEnded(e:DrawEvent):void
+		private function onCanvasTouchEnd(e:CanvasEvent):void
 		{
 			_isDrawing = false;
 		}

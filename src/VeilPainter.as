@@ -27,7 +27,7 @@ package
 	import view.layout.*;
 	import view.viewport.*;
 	import core.AppEventBus;
-	import events.DrawEvent;
+	import events.CanvasEvent;
 
 	[SWF(backgroundColor="#000000", frameRate="60", width="1024", height="768")]
 	public class VeilPainter extends Sprite
@@ -53,10 +53,10 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			stage.addEventListener(Event.RESIZE, init);
-			init(null);
+			init();
 		}
 
-		private function init(e:Event):void
+		private function init(e:Event = null):void
 		{
 			stage.removeEventListener(Event.RESIZE, init);
 
@@ -94,8 +94,8 @@ package
 			viewportService.start();
 
 			//-- Mouse/touch to detect input for toggle stuff (e.g. drawing)
-			stage.addEventListener(MouseEvent.MOUSE_DOWN, toggleDrawing);
-			stage.addEventListener(MouseEvent.MOUSE_UP, toggleDrawing);
+			stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseDown);
 		}
 
 		private function onViewportChanged(e:ViewportChangedEvent):void
@@ -106,15 +106,15 @@ package
 		}
 
 		//-- TODO: Figure out where/who should own this....?
-		private function toggleDrawing(e:MouseEvent):void
+		private function onMouseDown(e:MouseEvent):void
 		{
 			if (e.type == MouseEvent.MOUSE_DOWN && e.target == stage)
 			{
-				AppEventBus.instance.dispatchEvent(new DrawEvent(DrawEvent.DRAW_STARTED));
+				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.CANVAS_TOUCH_START));
 			}
 			else
 			{
-				AppEventBus.instance.dispatchEvent(new DrawEvent(DrawEvent.DRAW_ENDED));
+				AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.CANVAS_TOUCH_END));
 			}
 		}
 

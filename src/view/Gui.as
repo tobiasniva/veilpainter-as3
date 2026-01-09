@@ -19,7 +19,7 @@ package view
 	import view.layout.IGuiLayout;
 	import view.layout.LayoutMetrics;
 	import core.AppEventBus;
-	import events.DrawEvent;
+	import events.CanvasEvent;
 
 	public class Gui extends Sprite
 	{
@@ -56,8 +56,8 @@ package view
 
 			createComponents();
 
-			AppEventBus.instance.addEventListener(DrawEvent.DRAW_STARTED, onDrawStarted);
-			AppEventBus.instance.addEventListener(DrawEvent.DRAW_ENDED, onDrawEnded);
+			AppEventBus.instance.addEventListener(CanvasEvent.CANVAS_TOUCH_START, onDrawStarted);
+			AppEventBus.instance.addEventListener(CanvasEvent.CANVAS_TOUCH_END, onDrawEnded);
 		}
 
 		private function createComponents():void
@@ -162,13 +162,13 @@ package view
 		public function get btnSaveImage():PushButton { return _btnSaveImage; }
 
 		// --- Handlers...
-		private function onDrawStarted(e:DrawEvent):void
+		private function onDrawStarted(e:CanvasEvent):void
 		{
 			if(AppModel.instance.uiHideOnDraw)
 				this.visible = false;
 		}
 
-		private function onDrawEnded(e:DrawEvent):void
+		private function onDrawEnded(e:CanvasEvent):void
 		{
 			//TODO: Implement delay until ui shows again? config/setting in model?
 			this.visible = true;
