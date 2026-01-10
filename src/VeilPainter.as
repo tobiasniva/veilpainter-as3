@@ -10,7 +10,6 @@ package
 	import flash.events.Event;
 	import utils.UiScaleUtil
 	import view.Gui;
-	import view.layout.*;
 	import view.viewport.*;
 	import core.AppModel;
 	import view.Canvas;
@@ -18,12 +17,10 @@ package
 	[SWF(backgroundColor="#000000", frameRate="60", width="1024", height="768")]
 	public class VeilPainter extends Sprite
 	{
-		// private var _bmpDataUsedBySaveToBeRemoved:BitmapData;
 		private var _canvas:Canvas;
 		private var _brush:Brush;
-		private var _uiRoot:Sprite;
 		private var _gui:Gui;
-		private var _layoutManager:LayoutManager;
+		private var _viewportService:ViewportService;
 
 		public function VeilPainter()
 		{
@@ -63,16 +60,8 @@ package
 			_gui = new Gui();
 			addChild(_gui); // above brush
 
-			//-- Layout Manager - NEEDS GUI!
-			// _layoutManager = new LayoutManager(_gui, uiScale);
-			// _layoutManager.registerLayout(Strings.PHONE_PORTRAIT, new PhonePortraitLayout());
-			// _layoutManager.registerLayout(Strings.PHONE_LANDSCAPE, new PhoneLandscapeLayout());
-			// _layoutManager.refresh(true);
-
 			//-- Viewport resize/orientation listener - RELIES ON GUI BEING INITIALIZED!
-			var viewportService:ViewportService = new ViewportService(stage);
-			// viewportService.addEventListener(ViewportChangedEvent.VIEWPORT_CHANGED, onViewportChanged);
-			viewportService.start();
+			_viewportService = new ViewportService(stage);
 		}
 
 

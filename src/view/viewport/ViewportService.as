@@ -17,6 +17,7 @@ package view.viewport
 		public function ViewportService(stage:Stage)
 		{
 			_stage = stage;
+			start();
 		}
 
 		public function start(dispatchInitial:Boolean = true):void
@@ -26,12 +27,6 @@ package view.viewport
 
 			if (dispatchInitial)
 				updateAndDispatch(true);
-		}
-
-		public function stop():void
-		{
-			_stage.removeEventListener(Event.RESIZE, onMaybeChanged);
-			_stage.removeEventListener(StageOrientationEvent.ORIENTATION_CHANGE, onMaybeChanged);
 		}
 
 		private function onMaybeChanged(e:Event):void
@@ -50,11 +45,8 @@ package view.viewport
 			_lastW = w;
 			_lastH = h;
 
-			// Update model if you want centralized single source of truth
+			// Update stageSize in model = kicks off event flow for all others to react to...
 			AppModel.instance.stageSize = new Point(w, h);
-
-			// Dispatch event
-			// dispatchEvent(new ViewportChangedEvent(new Rectangle(0, 0, w, h)));
 		}
 	}
 }

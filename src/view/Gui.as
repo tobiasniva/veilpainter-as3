@@ -83,8 +83,8 @@ package view
 			createComponents();
 
 			//TODO: HACK - before we have refactored this layout-mess away...
-			var w:Number = AppModel.instance._stageSize.x;
-			var h:Number = AppModel.instance._stageSize.y;
+			var w:Number = AppModel.instance.stageSize.x;
+			var h:Number = AppModel.instance.stageSize.y;
 			var uiscale:Number = AppModel.instance.uiScale;
 			var lm:LayoutMetrics = new LayoutMetrics(w, h, uiscale);
 			applyLayout(lm, new PhonePortraitLayout);

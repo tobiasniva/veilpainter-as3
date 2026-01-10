@@ -61,7 +61,7 @@ package view
 
 		private function clearCanvas(e:CanvasEvent = null):void
 		{
-			var bmpSize:Point = AppModel.instance._stageSize;
+			var bmpSize:Point = AppModel.instance.stageSize;
 			var canvasCol:uint = CanvasModel.instance.color;
 
 			// Guard against invalid size (can happen during init/resizes)
@@ -95,14 +95,14 @@ package view
 		//-- CLEAN UP
 		private function onRemovedFromStage(e:Event):void
 		{
+			AppEventBus.instance.removeEventListener(CanvasEvent.SETTINGS_CHANGED, clearCanvas);
+    		AppEventBus.instance.removeEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
+
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 
 			if (stage)
 				stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-
-			AppEventBus.instance.removeEventListener(CanvasEvent.SETTINGS_CHANGED, clearCanvas);
-    		AppEventBus.instance.removeEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
 		}
 	}
 }
