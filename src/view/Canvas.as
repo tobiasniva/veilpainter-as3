@@ -36,9 +36,9 @@ package view
 			AppEventBus.instance.addEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
 			CanvasModel.instance.multiplier = Constants.CANVAS_MULTIPLIER_DEFAULT;
 
-			//-- Mouse/touch to detect input for toggle stuff (e.g. drawing)
+			// -- Mouse/touch to detect input for toggle stuff (e.g. drawing)
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			//NOTE! stage - to end touch also outside of screen (desktop)
+			// NOTE! stage - to end touch also outside of screen (desktop)
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 
@@ -62,41 +62,50 @@ package view
 		private function clearCanvas(e:CanvasEvent = null):void
 		{
 			var bmpSize:Point = AppModel.instance.stageSize;
-			var canvasCol:uint = CanvasModel.instance.color;
-
-			// Guard against invalid size (can happen during init/resizes)
-			if (bmpSize.x <= 0 || bmpSize.y <= 0)
+			if (!bmpSize)
 				return;
 
-			// Dispose previous...
+			// Sanitize to valid BitmapData ctor inputs
+			var w:int = Math.ceil(bmpSize.x); // ceil avoids 0 when 0.1..0.9
+			var h:int = Math.ceil(bmpSize.y);
+
+			// BitmapData requires >= 1
+			if (w < 1 || h < 1)
+				return;
+
+			// Defensive clamp (8191 is a common safe cap; adjust if you know your target supports 16383)
+			if (w > 8191)
+				w = 8191;
+			if (h > 8191)
+				h = 8191;
+
+			var canvasCol:uint = CanvasModel.instance.color;
+
 			if (_bmpData)
 			{
 				_bmpData.dispose();
 				_bmpData = null;
 			}
 
-			// Create new...
-			_bmpData = new BitmapData(bmpSize.x, bmpSize.y, false, canvasCol);
+			_bmpData = new BitmapData(w, h, false, canvasCol);
 			CanvasModel.instance.bitmapData = _bmpData;
 
-			// Create bitmap if needed - otherwise update existing...
 			if (_bmp == null)
 				_bmp = new Bitmap(_bmpData);
 			else
 				_bmp.bitmapData = _bmpData;
 
-			// Add to displaylist...
 			if (!contains(_bmp))
 				addChildAt(_bmp, 0);
 
 			trace("Canvas created - size: " + bmpSize + ", color: " + canvasCol);
 		}
 
-		//-- CLEAN UP
+		// -- CLEAN UP
 		private function onRemovedFromStage(e:Event):void
 		{
 			AppEventBus.instance.removeEventListener(CanvasEvent.SETTINGS_CHANGED, clearCanvas);
-    		AppEventBus.instance.removeEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
+			AppEventBus.instance.removeEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
 
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
