@@ -22,12 +22,12 @@ package view
 	import events.CanvasEvent;
 	import core.AppModel;
 	import core.CanvasModel;
+	import ui.StyleSizer;
+	import events.StageEvent;
+	import view.layout.PhonePortraitLayout;
 
 	public class Gui extends Sprite
 	{
-		private var _parent:VeilPainter;
-
-		// Components (same set as GuiBase)
 		private var _sldElasticity:HUISlider;
 		private var _sldStrength:HUISlider;
 		private var _sldStrengthDegradation:HUISlider;
@@ -47,19 +47,47 @@ package view
 		private var _btnClear:PushButton;
 		private var _btnSaveImage:PushButton;
 
-		public function Gui(parent:VeilPainter)
+		public function Gui()
 		{
 			super();
-
-			_parent = parent; //TODO: Refactor so not needed...
-
-			Style.setStyle(Style.DARK);
 			this.mouseEnabled = false;
+			if (stage)
+				init();
+			else
+				addEventListener(Event.ADDED_TO_STAGE, init);
+		}
+
+		private function init(e:Event = null):void
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+
+			AppEventBus.instance.addEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
+			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_START, onDrawStarted);
+			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_END, onDrawEnded);
+		}
+
+		private function onRemovedFromStage(e:Event):void
+		{
+			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+			AppEventBus.instance.removeEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
+			AppEventBus.instance.removeEventListener(CanvasEvent.TOUCH_START, onDrawStarted);
+			AppEventBus.instance.removeEventListener(CanvasEvent.TOUCH_END, onDrawEnded);
+		}
+
+		private function onStageSizeChanged(e:StageEvent):void
+		{
+			Style.setStyle(Style.DARK);
+			StyleSizer.ComponentScale(AppModel.instance.uiScale);
 
 			createComponents();
 
-			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_START, onDrawStarted);
-			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_END, onDrawEnded);
+			//TODO: HACK - before we have refactored this layout-mess away...
+			var w:Number = AppModel.instance._stageSize.x;
+			var h:Number = AppModel.instance._stageSize.y;
+			var uiscale:Number = AppModel.instance.uiScale;
+			var lm:LayoutMetrics = new LayoutMetrics(w, h, uiscale);
+			applyLayout(lm, new PhonePortraitLayout);
 		}
 
 		private function createComponents():void

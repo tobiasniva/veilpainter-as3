@@ -35,8 +35,8 @@ package view.layout
 		// whenever screen size or orientation changes...
 		public function refresh(force:Boolean = false):void
 		{
-			var screenW:int = AppModel.instance.stageSize.x;
-			var screenH:int = AppModel.instance.stageSize.y;
+			var screenW:int = AppModel.instance._stageSize.x;
+			var screenH:int = AppModel.instance._stageSize.y;
 
 			if (!force && screenW == _lastW && screenH == _lastH)
 				return;

@@ -11,6 +11,7 @@ package view
 	import core.AppEventBus;
 	import events.CanvasEvent;
 	import flash.events.MouseEvent;
+	import events.StageEvent;
 
 	public class Canvas extends Sprite
 	{
@@ -29,13 +30,21 @@ package view
 		private function init(e:Event = null):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
+			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+
 			AppEventBus.instance.addEventListener(CanvasEvent.SETTINGS_CHANGED, clearCanvas);
+			AppEventBus.instance.addEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
 			CanvasModel.instance.multiplier = Constants.CANVAS_MULTIPLIER_DEFAULT;
 
 			//-- Mouse/touch to detect input for toggle stuff (e.g. drawing)
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			//NOTE! stage - to end touch also outside of screen (desktop)
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		}
+
+		private function onStageSizeChanged(e:StageEvent):void
+		{
+			clearCanvas();
 		}
 
 		private function onMouseDown(e:MouseEvent):void
@@ -52,7 +61,7 @@ package view
 
 		private function clearCanvas(e:CanvasEvent = null):void
 		{
-			var bmpSize:Point = AppModel.instance.stageSize;
+			var bmpSize:Point = AppModel.instance._stageSize;
 			var canvasCol:uint = CanvasModel.instance.color;
 
 			// Guard against invalid size (can happen during init/resizes)
@@ -81,6 +90,19 @@ package view
 				addChildAt(_bmp, 0);
 
 			trace("Canvas created - size: " + bmpSize + ", color: " + canvasCol);
+		}
+
+		//-- CLEAN UP
+		private function onRemovedFromStage(e:Event):void
+		{
+			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+
+			if (stage)
+				stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+
+			AppEventBus.instance.removeEventListener(CanvasEvent.SETTINGS_CHANGED, clearCanvas);
+    		AppEventBus.instance.removeEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
 		}
 	}
 }

@@ -5,8 +5,6 @@ package view.viewport
 	import flash.events.EventDispatcher;
 	import flash.events.StageOrientationEvent;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import events.ViewportChangedEvent;
 	import core.AppModel;
 
 	public final class ViewportService extends EventDispatcher
@@ -56,7 +54,7 @@ package view.viewport
 			AppModel.instance.stageSize = new Point(w, h);
 
 			// Dispatch event
-			dispatchEvent(new ViewportChangedEvent(new Rectangle(0, 0, w, h)));
+			// dispatchEvent(new ViewportChangedEvent(new Rectangle(0, 0, w, h)));
 		}
 	}
 }

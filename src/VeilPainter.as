@@ -2,22 +2,16 @@ package
 {
 	import behavior.Brush;
 	import data.AlphaImages;
-	import data.Strings;
-	import events.ViewportChangedEvent;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import flash.geom.Point;
-	import ui.StyleSizer
 	import utils.UiScaleUtil
 	import view.Gui;
 	import view.layout.*;
 	import view.viewport.*;
-	import core.AppEventBus;
-	import events.CanvasEvent;
 	import core.AppModel;
 	import view.Canvas;
 
@@ -41,6 +35,7 @@ package
 		private function onAddedToStage(e:Event = null):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
@@ -53,7 +48,7 @@ package
 			stage.removeEventListener(Event.RESIZE, init);
 
 			// Model inits - TODO: Implement prefs...
-			AppModel.instance.stageSize = new Point(stage.stageWidth, stage.stageHeight);
+			AppModel.instance.uiScale = UiScaleUtil.computeUiScale(); //TODO: Where init...?
 
 			//-- Create canvas...
 			_canvas = new Canvas();
@@ -65,31 +60,21 @@ package
 			addChild(_brush); // above canvas
 			
 			//-- GUI
-			var uiScale:int = UiScaleUtil.computeUiScale();
-			StyleSizer.ComponentScale(uiScale);
-			_gui = new Gui(this);
+			_gui = new Gui();
 			addChild(_gui); // above brush
 
 			//-- Layout Manager - NEEDS GUI!
-			_layoutManager = new LayoutManager(_gui, uiScale);
-			_layoutManager.registerLayout(Strings.PHONE_PORTRAIT, new PhonePortraitLayout());
-			_layoutManager.registerLayout(Strings.PHONE_LANDSCAPE, new PhoneLandscapeLayout());
-			_layoutManager.refresh(true);
+			// _layoutManager = new LayoutManager(_gui, uiScale);
+			// _layoutManager.registerLayout(Strings.PHONE_PORTRAIT, new PhonePortraitLayout());
+			// _layoutManager.registerLayout(Strings.PHONE_LANDSCAPE, new PhoneLandscapeLayout());
+			// _layoutManager.refresh(true);
 
 			//-- Viewport resize/orientation listener - RELIES ON GUI BEING INITIALIZED!
 			var viewportService:ViewportService = new ViewportService(stage);
-			viewportService.addEventListener(ViewportChangedEvent.VIEWPORT_CHANGED, onViewportChanged);
+			// viewportService.addEventListener(ViewportChangedEvent.VIEWPORT_CHANGED, onViewportChanged);
 			viewportService.start();
 		}
 
-		private function onViewportChanged(e:ViewportChangedEvent):void
-		{
-			AppModel.instance.stageSize = new Point(e.screenW, e.screenH);
-			_layoutManager.refresh(true);
-			
-			//TODO: Consider transfer bitmap between portrait/landscape changes...
-			AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.SETTINGS_CHANGED));
-		}
 
 		//-- TODO: Move to own class...
 		/*
