@@ -20,7 +20,6 @@ package behavior
 	{
 		private static const SEGMENTS:int = 1; //-- Kind of a quality setting for the distortion of quad images...
 
-		// private var _canvasBmpData:BitmapData;
 		private var _canvasSizeMultiplier:int;
 		private var _alphaImage:Bitmap;
 		private var _brushColor:uint;
@@ -38,9 +37,8 @@ package behavior
 			_isDrawing = false;
 			_isInitialized = false;
 			_canvasSizeMultiplier = CanvasModel.instance.multiplier;
-			// _canvasBmpData = CanvasModel.instance.bitmapData;
 
-			//TODO: init these by triggering setters below...race condition?
+			//-- Init inherited chain values...
 			var numLinks:int = BrushModel.instance.brushNumLinks;
 			var elasticity:Number = BrushModel.instance.brushElasticity;
 			var strength:Number = BrushModel.instance.brushStrength;
@@ -98,9 +96,8 @@ package behavior
 
 			if(_isDrawing)
 			{
-				// _canvasBmpData.lock();
 				CanvasModel.instance.bitmapData.lock();
-
+				
 				updateQuads();
 
 				var totalQuads:int = _quads.length;
@@ -118,7 +115,7 @@ package behavior
 						lines.graphics.lineTo(quad[3].x, quad[3].y);
 						lines.graphics.lineTo(quad[2].x, quad[2].y);
 						lines.graphics.lineTo(quad[0].x, quad[0].y);
-						// _canvasBmpData.draw(lines);
+
 						CanvasModel.instance.bitmapData.draw(lines);
 
 						for each(var p:Point in quad)
@@ -126,7 +123,7 @@ package behavior
 							var dot:Shape = new Shape();
 							dot.graphics.beginFill(0xff0000, 1);
 							dot.graphics.drawCircle(p.x, p.y, 2);
-							// _canvasBmpData.draw(dot);
+
 							CanvasModel.instance.bitmapData.draw(dot);
 						}
 					}
@@ -136,16 +133,12 @@ package behavior
 						var shp:Shape = new Shape();
 						var distort:DistortImage = new DistortImage(quadImage.width, quadImage.height, SEGMENTS, SEGMENTS);
 						distort.setTransform(shp.graphics, _quadImages[i], quad[0], quad[1], quad[3], quad[2]);
-						// _canvasBmpData.draw(shp, null, null, _brushBlendmode, null, true);
+
 						CanvasModel.instance.bitmapData.draw(shp, null, null, _brushBlendmode, null, true);
 					}
 				}
 
-				// _canvasBmpData.unlock();
 				CanvasModel.instance.bitmapData.unlock();
-
-				//TODO: Hack for now - how to...?
-				// AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.BMPDATA_UPDATED));
 			}
 		}
 
@@ -191,7 +184,7 @@ package behavior
 		{
 			_brushColor = BrushModel.instance.brushColor;
 			_brushOpacity = BrushModel.instance.brushOpacity;
-			_alphaImage = AlphaImages.getAll()[BrushModel.instance.brushAlphaImage].bitmap;
+			_alphaImage = AlphaImages.getAll()[BrushModel.instance.brushAlphaImageIndex].bitmap;
 			_brushBlendmode = BrushModel.instance.brushBlendMode;
 			
 			//-- Inherited, lives in Chain...
@@ -206,7 +199,7 @@ package behavior
 
 		private function onCanvasSettingsChanged(e:CanvasEvent):void
 		{
-			//TODO: Mulitplier not really changed for now - maybe in the future...?
+			//TODO: Mulitplier not really changed for now - maybe support in future...?
 			_canvasSizeMultiplier = CanvasModel.instance.multiplier;
 			generateQuadImages();
 		}

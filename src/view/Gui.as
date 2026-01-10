@@ -226,7 +226,7 @@ package view
 
 		protected function onAlphaImageChanged(e:Event):void
 		{
-			BrushModel.instance.brushAlphaImage = _cmbAlphaImage.selectedIndex;
+			BrushModel.instance.brushAlphaImageIndex = _cmbAlphaImage.selectedIndex;
 		}
 
 		protected function onDebugChanged(e:Event):void

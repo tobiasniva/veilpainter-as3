@@ -76,7 +76,7 @@ package
 			_layoutManager.registerLayout(Strings.PHONE_LANDSCAPE, new PhoneLandscapeLayout());
 			_layoutManager.refresh(true);
 
-			//-- Viewport resize listener - RELIES ON GUI BEING INITIALIZED!
+			//-- Viewport resize/orientation listener - RELIES ON GUI BEING INITIALIZED!
 			var viewportService:ViewportService = new ViewportService(stage);
 			viewportService.addEventListener(ViewportChangedEvent.VIEWPORT_CHANGED, onViewportChanged);
 			viewportService.start();

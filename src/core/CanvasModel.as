@@ -17,7 +17,6 @@ package core {
         public function set bitmapData(value:BitmapData):void {
             if (_bitmapData != value) {
                 _bitmapData = value;
-                AppEventBus.instance.dispatchEvent(new CanvasEvent(CanvasEvent.BMPDATA_UPDATED));
             }
         }
 
