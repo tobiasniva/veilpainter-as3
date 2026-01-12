@@ -25,6 +25,7 @@ package view
 	import ui.StyleSizer;
 	import events.StageEvent;
 	import view.layout.PhonePortraitLayout;
+	import events.SaveEvent;
 
 	public class Gui extends Sprite
 	{
@@ -211,9 +212,7 @@ package view
 		}
 		protected function onSaveImageToDesktop(e:Event):void
 		{
-			trace("Saving disabled - to be refactored!");
-			//TODO: Refactor saving...
-			// _parent.saveImage();
+			AppEventBus.instance.dispatchEvent(new SaveEvent(SaveEvent.SAVE_REQUESTED));
 		}
 
 		//-- Brush-related

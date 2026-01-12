@@ -13,6 +13,7 @@ package
 	import core.AppModel;
 	import view.Canvas;
 	import services.ViewportService;
+	import services.SaveImageService;
 
 	[SWF(backgroundColor="#000000", frameRate="60", width="1024", height="768")]
 	public class VeilPainter extends Sprite
@@ -44,8 +45,9 @@ package
 		{
 			stage.removeEventListener(Event.RESIZE, init);
 
-			// Model inits - TODO: Implement prefs...
+			// Inits - TODO: Implement prefs...
 			AppModel.instance.uiScale = UiScaleUtil.computeUiScale(); //TODO: Where init...?
+			SaveImageService.init();
 
 			//-- Create canvas...
 			_canvas = new Canvas();
@@ -63,34 +65,5 @@ package
 			//-- Viewport resize/orientation listener - RELIES ON GUI BEING INITIALIZED!
 			_viewportService = new ViewportService(stage);
 		}
-
-
-		//-- TODO: Move to own class...
-		/*
-		public function saveImage():void
-		{
-			trace("perm status: " + File.permissionStatus);
-			
-			var byteArray:ByteArray = PNGEncoder.encode(_bmpDataUsedBySaveToBeRemoved);
-			
-			var d:Date = new Date();
-			var dtf:DateTimeFormatter = new DateTimeFormatter("en-US");
-			dtf.setDateTimePattern("yyyyMMdd_HHmmss");
-			var imgName:String = "veil_" + dtf.format(d) + ".png";
-
-			var parent:DisplayObjectContainer = this as DisplayObjectContainer;
-			SaveImageWithDialog.savePNG(
-				byteArray,
-				imgName,
-				function():void { trace("Saved: " + imgName); },
-				function():void { trace("User canceled"); },
-				function(err:String):void
-				{
-					trace("Save failed: " + err);
-					//TODO: implemtent popup with hint that saving to downloads folder might work
-				}
-			);
-		}
-		*/
 	}
 }
