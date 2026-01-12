@@ -10,9 +10,9 @@ package
 	import flash.events.Event;
 	import utils.UiScaleUtil
 	import view.Gui;
-	import view.viewport.*;
 	import core.AppModel;
 	import view.Canvas;
+	import services.ViewportService;
 
 	[SWF(backgroundColor="#000000", frameRate="60", width="1024", height="768")]
 	public class VeilPainter extends Sprite
