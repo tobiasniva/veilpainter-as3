@@ -66,7 +66,7 @@ package view
 			_sldStrengthDegradation.labelPrecision = 2;
 			_sldStrengthDegradation.tick = 0.01;
 
-			_lblAlphaImage = new Label(this, 0, 0, Strings.LBL_ALPHA_IMG);
+			// _lblAlphaImage = new Label(this, 0, 0, Strings.LBL_ALPHA_IMG);
 
 			_cmbAlphaImage = new ComboBox(this);
 			for each (var img:ImageWithLabel in AlphaImages.getAll())
@@ -83,8 +83,7 @@ package view
 			_sldOpacity.labelPrecision = 2;
 			_sldOpacity.tick = 0.01;
 
-			_lblNumLinks = new Label(this, 0, 0, Strings.LBL_NUM_LINKS);
-
+			// _lblNumLinks = new Label(this, 0, 0, Strings.LBL_NUM_LINKS);
 			_stpNumLinks = new NumericStepper(this);
 			_stpNumLinks.addEventListener(Event.CHANGE, onNumLinksChanged);
 			_stpNumLinks.step = Constants.NUM_LINKS_STEP;
@@ -94,7 +93,7 @@ package view
 
 			_chkDebug = new CheckBox(this, 0, 0, Strings.LBL_DEBUG, onDebugChanged);
 
-			_lblBlendModes = new Label(this, 0, 0, Strings.LBL_BLENDMODE);
+			// _lblBlendModes = new Label(this, 0, 0, Strings.LBL_BLENDMODE);
 			var blendModesAll:Array = BlendModes.getAll();
 			_cmbBlendMode = new ComboBox(this, 0, 0, "", blendModesAll);
 			_cmbBlendMode.numVisibleItems = blendModesAll.length;

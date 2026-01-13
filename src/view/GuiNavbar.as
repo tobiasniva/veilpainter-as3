@@ -14,6 +14,7 @@ package view
 	{
 		private var _btnBrushSettings:PushButton;
 		private var _btnCanvasSettings:PushButton;
+		private var _btnSettings:PushButton;
 		private var _btnClear:PushButton;
 		private var _btnSaveImage:PushButton;
 
@@ -26,6 +27,7 @@ package view
         {
 			_btnBrushSettings = new PushButton(this, 0, 0, Strings.LBL_BRUSH, onBrushSettings);
 			_btnCanvasSettings = new PushButton(this, 0, 0, Strings.LBL_CANVAS, onCanvasSettings);
+			_btnSettings = new PushButton(this, 0, 0, Strings.LBL_SETTINGS, onSettings);
 			_btnClear = new PushButton(this, 0, 0, Strings.LBL_CLEAR, onClearCanvas);
 			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);
 		}
@@ -47,7 +49,11 @@ package view
 			_btnCanvasSettings.y = gridSize;
 			_btnCanvasSettings.width = btnIconSquareWidth;
 
-			_btnClear.x = _btnCanvasSettings.x + btnIconSquareWidth + gridSize;
+			_btnSettings.x = _btnCanvasSettings.x + btnIconSquareWidth + gridSize;
+			_btnSettings.y = gridSize;
+			_btnSettings.width = btnIconSquareWidth;
+
+			_btnClear.x = _btnSettings.x + btnIconSquareWidth + gridSize;
 			_btnClear.y = gridSize;
 			_btnClear.width = btnIconSquareWidth;
 
@@ -58,12 +64,17 @@ package view
 
 		private function onBrushSettings(e:Event):void
 		{
-			trace("Open BRUSH gui!");
+			trace("Open BRUSH!");
 		}
 
 		private function onCanvasSettings(e:Event):void
 		{
-			trace("Open CANVAS gui!");
+			trace("Open CANVAS!");
+		}
+
+		private function onSettings(e:Event):void
+		{
+			trace("Open COMMON APP SETTINGS!");
 		}
 
 		private function onClearCanvas(e:Event):void

@@ -11,7 +11,7 @@ package view
 	public class Gui extends GuiBase
 	{
 		private var _navbar:GuiNavbar;
-		private var _brushPanel:GuiBrushSettings;
+		private var _brushSettings:GuiBrushSettings;
 
 		public function Gui()
 		{
@@ -52,11 +52,11 @@ package view
 			// Clean up old containers - consider making a container class to manage this better...
 			if (_navbar && _navbar.parent)
 				_navbar.parent.removeChild(_navbar);
-			if (_brushPanel && _brushPanel.parent)
-				_brushPanel.parent.removeChild(_brushPanel);
+			if (_brushSettings && _brushSettings.parent)
+				_brushSettings.parent.removeChild(_brushSettings);
 
 			_navbar = null;
-			_brushPanel = null;
+			_brushSettings = null;
 
 			// TODO: Pass in to gui/views, or let then ref it?
 			Style.setStyle(Style.DARK);
@@ -65,8 +65,8 @@ package view
 			_navbar = new GuiNavbar();
 			addChild(_navbar);
 
-			_brushPanel = new GuiBrushSettings();
-			addChild(_brushPanel);
+			_brushSettings = new GuiBrushSettings();
+			addChild(_brushSettings);
 		}
 
 		private function onStageSizeChanged(e:StageEvent):void
@@ -90,9 +90,9 @@ package view
 			_navbar.x = xpos;
 			_navbar.y = navBarY;
 
-			_brushPanel.layout(width, height - navbarHeight, gridSize);
-			_brushPanel.x = xpos;
-			_brushPanel.y = 0; //TODO: Consider hugged towards navbar at bottom...?
+			_brushSettings.layout(width, height - navbarHeight, gridSize);
+			_brushSettings.x = xpos;
+			_brushSettings.y = 0; //TODO: Consider hugged towards navbar at bottom...?
 		}
 
 		// --- Handlers...
