@@ -8,10 +8,11 @@ package view
 	import core.AppModel;
 	import ui.StyleSizer;
 	import events.StageEvent;
+	import data.Constants;
 
 	public class Gui extends Sprite
 	{
-		private var _navbar:Sprite;
+		private var _navbar:GuiNavbar;
 		private var _panel:Sprite;
 		private var _stageWidth:int;
 		private var _stageHeight:int;
@@ -36,6 +37,7 @@ package view
 			AppEventBus.instance.addEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
 			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_START, onDrawStarted);
 			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_END, onDrawEnded);
+			AppEventBus.instance.addEventListener(StageEvent.UI_SCALE_CHANGED, onUiScaleChanged);
 		}
 
 		private function onRemovedFromStage(e:Event):void
@@ -44,19 +46,28 @@ package view
 			AppEventBus.instance.removeEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
 			AppEventBus.instance.removeEventListener(CanvasEvent.TOUCH_START, onDrawStarted);
 			AppEventBus.instance.removeEventListener(CanvasEvent.TOUCH_END, onDrawEnded);
+			AppEventBus.instance.removeEventListener(StageEvent.UI_SCALE_CHANGED, onUiScaleChanged);
+		}
+
+		private function onUiScaleChanged(e:StageEvent):void
+		{
+			createContainers();
 		}
 
 		private function onStageSizeChanged(e:StageEvent):void
 		{
-			//TODO: Pass in to gui/views, or let then ref it?
-			Style.setStyle(Style.DARK);
-			StyleSizer.ComponentScale(AppModel.instance.uiScale);
-			positionContainers();
+			layout();
 		}
 
 		private function createContainers():void
 		{
-			_navbar = new Sprite();
+			//TODO: Clean up old containers...
+
+			//TODO: Pass in to gui/views, or let then ref it?
+			Style.setStyle(Style.DARK);
+			StyleSizer.ComponentScale(AppModel.instance.uiScale);
+
+			_navbar = new GuiNavbar();
 			_navbar.mouseEnabled = false;
 			addChild(_navbar);
 
@@ -65,29 +76,27 @@ package view
 			addChild(_panel);
 		}
 
-		private function positionContainers():void
+		private function layout():void
 		{
-			var navbarHeight:Number = AppModel.instance.uiScale * 30; // 30 - height px of button 
+			var padding:Number = Constants.UI_MAGIC_SIZE_NUMBER;
+			var navbarHeight:Number = AppModel.instance.uiScale * padding + (padding * 2);
+
 			var screenWidth:Number = AppModel.instance.stageSize.x;
 			var navBarY:Number = AppModel.instance.stageSize.y - navbarHeight;
 			var panelHeight:Number = AppModel.instance.stageSize.y - navbarHeight;
 
-			//TODO: Temp for visualization
-			_navbar.graphics.clear();
-			_navbar.graphics.lineStyle(1, 0xff0000);
-			_navbar.graphics.beginFill(0xff0000, 0.1);
-			_navbar.graphics.drawRect(0, 0, screenWidth - 1, navbarHeight - 1);
-			_navbar.graphics.endFill();
+			_navbar.layout(screenWidth, navbarHeight, padding);
+			_navbar.x = 0;
+			_navbar.y = navBarY;
 
+			//-- TEMP
 			_panel.graphics.clear();
 			_panel.graphics.lineStyle(1, 0x00ff00);
-			_panel.graphics.beginFill(0x00ff00, 0.1);
+			_panel.graphics.beginFill(0x00ff00, 0.05);
 			_panel.graphics.drawRect(0, 0, screenWidth - 1, panelHeight - 1);
 			_panel.graphics.endFill();
 			//--
 
-			_navbar.x = 0;
-			_navbar.y = navBarY;
 			_panel.x = 0;
 			_panel.y = 0;
 		}

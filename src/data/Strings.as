@@ -16,8 +16,8 @@ package data
 		public static const LBL_BLENDMODE:String            = "Blendmode";
 		
 		public static const LBL_DEBUG:String                = "Debug";
-		public static const LBL_CLEAR:String                = "Clear";
-		public static const LBL_SAVE:String                 = "Save";
+		public static const LBL_CLEAR:String                = "Clr";
+		public static const LBL_SAVE:String                 = "Sav";
 
 
 		public static const PHONE_PORTRAIT:String           = "phone_portrait";

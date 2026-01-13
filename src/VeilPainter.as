@@ -47,6 +47,7 @@ package
 
 			// Inits - TODO: Implement prefs...
 			AppModel.instance.uiScale = UiScaleUtil.computeUiScale(); //TODO: Where init...?
+			// AppModel.instance.uiScale = 1;
 			SaveImageService.init();
 
 			//-- Create canvas...
