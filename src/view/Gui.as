@@ -2,7 +2,6 @@ package view
 {
 	import com.bit101.components.Style;
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import core.AppEventBus;
 	import events.CanvasEvent;
 	import core.AppModel;
@@ -10,43 +9,38 @@ package view
 	import events.StageEvent;
 	import data.Constants;
 
-	public class Gui extends Sprite
+	public class Gui extends GuiBase
 	{
 		private var _navbar:GuiNavbar;
-		private var _panel:Sprite;
-		private var _stageWidth:int;
-		private var _stageHeight:int;
-		
+		private var _brushPanel:GuiBrushPanel;
 
 		public function Gui()
 		{
 			super();
-			this.mouseEnabled = false;
-			if (stage)
-				init();
-			else
-				addEventListener(Event.ADDED_TO_STAGE, init);
-
-			createContainers();
 		}
 
-		private function init(e:Event = null):void
+		override protected function onAddedToStage():void
 		{
-			removeEventListener(Event.ADDED_TO_STAGE, init);
-			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			AppEventBus.instance.addEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
 			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_START, onDrawStarted);
 			AppEventBus.instance.addEventListener(CanvasEvent.TOUCH_END, onDrawEnded);
 			AppEventBus.instance.addEventListener(StageEvent.UI_SCALE_CHANGED, onUiScaleChanged);
+
+			// init creation - not really needed,since will be called on resize anyway?
+			onStageSizeChanged(null); 
 		}
 
-		private function onRemovedFromStage(e:Event):void
+		override protected function onRemovedFromStage():void
 		{
-			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			AppEventBus.instance.removeEventListener(StageEvent.STAGE_SIZE_CHANGED, onStageSizeChanged);
 			AppEventBus.instance.removeEventListener(CanvasEvent.TOUCH_START, onDrawStarted);
 			AppEventBus.instance.removeEventListener(CanvasEvent.TOUCH_END, onDrawEnded);
 			AppEventBus.instance.removeEventListener(StageEvent.UI_SCALE_CHANGED, onUiScaleChanged);
+		}
+
+		override protected function onInit():void
+		{
+			createContainers();
 		}
 
 		private function onUiScaleChanged(e:StageEvent):void
@@ -54,63 +48,60 @@ package view
 			createContainers();
 		}
 
-		private function onStageSizeChanged(e:StageEvent):void
-		{
-			layout();
-		}
-
 		private function createContainers():void
 		{
-			//TODO: Clean up old containers...
+			// Clean up old containers - consider making a container class to manage this better...
+			if (_navbar && _navbar.parent)
+				_navbar.parent.removeChild(_navbar);
+			if (_brushPanel && _brushPanel.parent)
+				_brushPanel.parent.removeChild(_brushPanel);
 
-			//TODO: Pass in to gui/views, or let then ref it?
+			_navbar = null;
+			_brushPanel = null;
+
+			// TODO: Pass in to gui/views, or let then ref it?
 			Style.setStyle(Style.DARK);
 			StyleSizer.ComponentScale(AppModel.instance.uiScale);
 
 			_navbar = new GuiNavbar();
-			_navbar.mouseEnabled = false;
 			addChild(_navbar);
 
-			_panel = new Sprite();
-			_panel.mouseEnabled = false;
-			addChild(_panel);
+			_brushPanel = new GuiBrushPanel();
+			addChild(_brushPanel);
 		}
 
-		private function layout():void
+		private function onStageSizeChanged(e:StageEvent):void
 		{
+			// -- Prepare layout...
 			var padding:Number = Constants.UI_MAGIC_SIZE_NUMBER;
 			var navbarHeight:Number = AppModel.instance.uiScale * padding + (padding * 2);
 
-			var screenWidth:Number = AppModel.instance.stageSize.x;
+			var width:Number = AppModel.instance.stageSize.x;
+			var height:Number = AppModel.instance.stageSize.y;
+
 			var navBarY:Number = AppModel.instance.stageSize.y - navbarHeight;
 			var panelHeight:Number = AppModel.instance.stageSize.y - navbarHeight;
 
-			_navbar.layout(screenWidth, navbarHeight, padding);
+			//TODO: Positioning centered on larger screens like tablet landscape etc...?
+			_navbar.layout(width, navbarHeight, padding);
 			_navbar.x = 0;
 			_navbar.y = navBarY;
 
-			//-- TEMP
-			_panel.graphics.clear();
-			_panel.graphics.lineStyle(1, 0x00ff00);
-			_panel.graphics.beginFill(0x00ff00, 0.05);
-			_panel.graphics.drawRect(0, 0, screenWidth - 1, panelHeight - 1);
-			_panel.graphics.endFill();
-			//--
-
-			_panel.x = 0;
-			_panel.y = 0;
+			_brushPanel.layout(width, height - navbarHeight, padding);
+			_brushPanel.x = 0;
+			_brushPanel.y = 0; //TODO: Consider hugged towards navbar at bottom...?
 		}
 
 		// --- Handlers...
 		private function onDrawStarted(e:CanvasEvent):void
 		{
-			if(AppModel.instance.uiHideOnDraw)
+			if (AppModel.instance.uiHideOnDraw)
 				this.visible = false;
 		}
 
 		private function onDrawEnded(e:CanvasEvent):void
 		{
-			//TODO: Implement delay until ui shows again? config/setting in model?
+			// TODO: Implement delay until ui shows again? config/setting in model?
 			this.visible = true;
 		}
 	}

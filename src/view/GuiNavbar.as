@@ -4,16 +4,14 @@ package view
 	import com.bit101.components.PushButton;
 	import data.Constants;
 	import data.Strings;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import core.AppEventBus;
 	import core.CanvasModel;
 	import events.SaveEvent;
 	import core.AppModel;
 
-	public class GuiNavbar extends Sprite
+	public class GuiNavbar extends GuiBase implements ILayout
 	{
-		// private var _stpSizeMultiplier:NumericStepper;
 		private var _colorPickerBG:ColorChooser;
 		private var _btnClear:PushButton;
 		private var _btnSaveImage:PushButton;
@@ -21,30 +19,10 @@ package view
 		public function GuiNavbar()
 		{
 			super();
-			this.mouseEnabled = false;
-			if (stage)
-				init();
-			else
-				addEventListener(Event.ADDED_TO_STAGE, init);
-
-			createComponents();
 		}
 
-		private function init(e:Event = null):void
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, init);
-		}
-
-		private function createComponents():void
-		{
-			//TODO: Should move to canvas-settings anyway...
-			// _stpSizeMultiplier = new NumericStepper(this, 0, 0, onResetCanvas);
-			// _stpSizeMultiplier.minimum = 1;
-			// _stpSizeMultiplier.value = Constants.CANVAS_MULTIPLIER_DEFAULT;
-			// _stpSizeMultiplier.maximum = 4;
-			// _stpSizeMultiplier.width = 52;
-			// _stpSizeMultiplier.enabled = false;
-
+		override protected function onInit():void
+        {
 			//TODO: Should also move to canvas-settings...
 			_colorPickerBG = new ColorChooser(this, 0, 0, Constants.CANVAS_COLOR_DEFAULT, onResetCanvas);
 			_colorPickerBG.popupAlign = ColorChooser.TOP_LEFT;
@@ -58,10 +36,10 @@ package view
 		{
 			debugBounds(w, h);
 
+			//TODO: Remove - will be obsolete with IconButton...
 			var btnIconSquareWidth:int = Constants.UI_MAGIC_SIZE_NUMBER * AppModel.instance.uiScale;
-			trace(btnIconSquareWidth);
 
-			//TODO: Layout properly - scale and position based on uiScale...
+			//-- Position and scaling...
 			_btnClear.x = padding;
 			_btnClear.y = padding;
 			_btnClear.width = btnIconSquareWidth;
@@ -74,9 +52,9 @@ package view
 			_colorPickerBG.y = padding;
 		}
 
+		//-- Temp for debug visualization
 		private function debugBounds(w:int, h:int):void
 		{
-			//-- Temp for debug visualization
 			this.graphics.clear();
 			this.graphics.lineStyle(1, 0xff0000);
 			this.graphics.beginFill(0xff0000, 0.05);
@@ -84,7 +62,7 @@ package view
 			this.graphics.endFill();
 		}
 
-		//TODO: Figure out after canvas is refactored...
+		//TODO: Figure out after canvas-gui is added...
 		private function onResetCanvas(e:Event):void
 		{
 			CanvasModel.instance.color = _colorPickerBG.value;

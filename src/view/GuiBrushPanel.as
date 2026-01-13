@@ -8,26 +8,15 @@ package view
 	import com.bit101.components.Label;
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
-	import com.bit101.components.Style;
 	import core.BrushModel;
 	import data.AlphaImages;
 	import data.BlendModes;
 	import data.Constants;
 	import data.Strings;
-	import flash.display.Sprite;
 	import flash.events.Event;
-	import view.layout.IGuiLayout;
-	import view.layout.LayoutMetrics;
-	import core.AppEventBus;
-	import events.CanvasEvent;
 	import core.AppModel;
-	import core.CanvasModel;
-	import ui.StyleSizer;
-	import events.StageEvent;
-	import view.layout.PhonePortraitLayout;
-	import events.SaveEvent;
 
-	public class GuiBrushPanel extends Sprite
+	public class GuiBrushPanel extends GuiBase implements ILayout
 	{
 		private var _sldElasticity:HUISlider;
 		private var _sldStrength:HUISlider;
@@ -51,22 +40,10 @@ package view
 		public function GuiBrushPanel()
 		{
 			super();
-			this.mouseEnabled = false;
-			if (stage)
-				init();
-			else
-				addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
-		private function init(e:Event = null):void
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, init);
-		}
-
-		private function createComponents():void
-		{
-			//TODO: Position everything in a grid-system, based on stageSize and uiScale...
-
+		override protected function onInit():void
+        {
 			_sldElasticity = new HUISlider(this);
 			_sldElasticity.label = Strings.LBL_ELASTICITY;
 			_sldElasticity.addEventListener(Event.CHANGE, onElasticityChanged);
@@ -125,6 +102,23 @@ package view
 
 			_colorPicker = new ColorChooser(this, 0, 0, Constants.BRUSH_COLOR_DEFAULT, onColorChanged);
 			_colorPicker.usePopup = true;
+		}
+
+		public function layout(w:int, h:int, padding:int):void
+		{
+			debugBounds(w, h);
+			//-- 
+			trace("padding: " + padding)
+		}
+
+		//-- Temp for debug visualization
+		private function debugBounds(w:int, h:int):void
+		{
+			this.graphics.clear();
+			this.graphics.lineStyle(1, 0x00ff00);
+			this.graphics.beginFill(0x00ff00, 0.05);
+			this.graphics.drawRect(0, 0, w - 1, h - 1);
+			this.graphics.endFill();
 		}
 
 		//-- Brush settings handlers...
