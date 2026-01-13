@@ -4,6 +4,6 @@ package view
 
 	public interface ILayout
 	{
-		function layout(width:int, height:int, padding:int):void;
+		function layout(width:int, height:int, gridSize:int):void;
 	}
 }

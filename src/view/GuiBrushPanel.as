@@ -15,6 +15,7 @@ package view
 	import data.Strings;
 	import flash.events.Event;
 	import core.AppModel;
+	import utils.BoundsFactory;
 
 	public class GuiBrushPanel extends GuiBase implements ILayout
 	{
@@ -102,24 +103,62 @@ package view
 
 			_colorPicker = new ColorChooser(this, 0, 0, Constants.BRUSH_COLOR_DEFAULT, onColorChanged);
 			_colorPicker.usePopup = true;
+			_colorPicker.popupAlign = ColorChooser.BOTTOM_RIGHT;
 		}
 
-		public function layout(w:int, h:int, padding:int):void
+		public function layout(w:int, h:int, gridSize:int):void
 		{
-			debugBounds(w, h);
-			//-- 
-			trace("padding: " + padding)
+			if(AppModel.instance.debugBounds)
+				BoundsFactory.drawBounds(this, w, h, 0x00ff00);
+
+			trace("gridSize: " + gridSize)
+			var uiscale:int = AppModel.instance.uiScale;
+
+			var yOff:int = AppModel.instance.uiScale * gridSize;
+			var margin:int = gridSize * 2; // margin from left/top...
+			var halfX:int = gridSize * 16;
+			var halfW:int = gridSize * 13;
+			var fullSldW:int = gridSize * 33 + (gridSize / uiscale);
+
+
+			//-- 1st row
+			_cmbBlendMode.x = margin;
+			_cmbBlendMode.y = margin;
+			_cmbBlendMode.width = halfW;
+
+			_colorPicker.x = w - (_colorPicker.width + margin + (uiscale * 5)); // Hack to line colorbox up...
+			_colorPicker.y = margin;
+
+			// 2nd row
+			_cmbAlphaImage.x = margin;
+			_cmbAlphaImage.y = margin + yOff;
+			_cmbAlphaImage.width = halfW;
+
+			_stpNumLinks.x = w - _stpNumLinks.width - margin;
+			_stpNumLinks.y = margin + yOff;
+
+			// 3rd row
+			_sldOpacity.x = gridSize;
+			_sldOpacity.y = margin + yOff * 2;
+			_sldOpacity.width = gridSize * 22;
+
+			_chkDebug.x = w - _chkDebug.width - margin;
+			_chkDebug.y = margin + yOff * 2 + (gridSize / 2);
+
+			// ESD-sliders
+			_sldElasticity.x = gridSize;
+			_sldElasticity.y = yOff * 4;
+			_sldElasticity.width = fullSldW;
+
+			_sldStrength.x = gridSize;
+			_sldStrength.y = yOff * 5;
+			_sldStrength.width = fullSldW;
+
+			_sldStrengthDegradation.x = gridSize;
+			_sldStrengthDegradation.y = yOff * 6;
+			_sldStrengthDegradation.width = fullSldW;
 		}
 
-		//-- Temp for debug visualization
-		private function debugBounds(w:int, h:int):void
-		{
-			this.graphics.clear();
-			this.graphics.lineStyle(1, 0x00ff00);
-			this.graphics.beginFill(0x00ff00, 0.05);
-			this.graphics.drawRect(0, 0, w - 1, h - 1);
-			this.graphics.endFill();
-		}
 
 		//-- Brush settings handlers...
 		protected function onNumLinksChanged(e:Event):void

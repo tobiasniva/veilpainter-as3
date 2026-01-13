@@ -9,6 +9,7 @@ package view
 	import core.CanvasModel;
 	import events.SaveEvent;
 	import core.AppModel;
+	import utils.BoundsFactory;
 
 	public class GuiNavbar extends GuiBase implements ILayout
 	{
@@ -32,34 +33,25 @@ package view
 			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);
 		}
 
-		public function layout(w:int, h:int, padding:int):void
+		public function layout(w:int, h:int, gridSize:int):void
 		{
-			debugBounds(w, h);
+			if(AppModel.instance.debugBounds)
+				BoundsFactory.drawBounds(this, w, h, 0xff0000);
 
 			//TODO: Remove - will be obsolete with IconButton...
 			var btnIconSquareWidth:int = Constants.UI_MAGIC_SIZE_NUMBER * AppModel.instance.uiScale;
 
 			//-- Position and scaling...
-			_btnClear.x = padding;
-			_btnClear.y = padding;
+			_btnClear.x = gridSize;
+			_btnClear.y = gridSize;
 			_btnClear.width = btnIconSquareWidth;
 
-			_btnSaveImage.x = _btnClear.x + _btnClear.width + padding;
-			_btnSaveImage.y = padding;
+			_btnSaveImage.x = _btnClear.x + _btnClear.width + gridSize;
+			_btnSaveImage.y = gridSize;
 			_btnSaveImage.width = btnIconSquareWidth;
 
-			_colorPickerBG.x = _btnSaveImage.x + _btnSaveImage.width + padding;
-			_colorPickerBG.y = padding;
-		}
-
-		//-- Temp for debug visualization
-		private function debugBounds(w:int, h:int):void
-		{
-			this.graphics.clear();
-			this.graphics.lineStyle(1, 0xff0000);
-			this.graphics.beginFill(0xff0000, 0.05);
-			this.graphics.drawRect(0, 0, w - 1, h - 1);
-			this.graphics.endFill();
+			_colorPickerBG.x = _btnSaveImage.x + _btnSaveImage.width + gridSize;
+			_colorPickerBG.y = gridSize;
 		}
 
 		//TODO: Figure out after canvas-gui is added...

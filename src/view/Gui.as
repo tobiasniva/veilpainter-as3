@@ -73,22 +73,26 @@ package view
 		private function onStageSizeChanged(e:StageEvent):void
 		{
 			// -- Prepare layout...
-			var padding:Number = Constants.UI_MAGIC_SIZE_NUMBER;
-			var navbarHeight:Number = AppModel.instance.uiScale * padding + (padding * 2);
-
 			var width:Number = AppModel.instance.stageSize.x;
 			var height:Number = AppModel.instance.stageSize.y;
+
+			//-- Cap width to 768?
+			width = Math.min(width, Constants.UI_MAX_WIDTH);
+			var xpos:int = (AppModel.instance.stageSize.x - width) / 2; // center horizontally...
+			var gridSize:int = width / 32; // Figure out good grid size...
+
+			var navbarHeight:Number = AppModel.instance.uiScale * Constants.UI_MAGIC_SIZE_NUMBER + (gridSize * 2);
 
 			var navBarY:Number = AppModel.instance.stageSize.y - navbarHeight;
 			var panelHeight:Number = AppModel.instance.stageSize.y - navbarHeight;
 
 			//TODO: Positioning centered on larger screens like tablet landscape etc...?
-			_navbar.layout(width, navbarHeight, padding);
-			_navbar.x = 0;
+			_navbar.layout(width, navbarHeight, gridSize);
+			_navbar.x = xpos;
 			_navbar.y = navBarY;
 
-			_brushPanel.layout(width, height - navbarHeight, padding);
-			_brushPanel.x = 0;
+			_brushPanel.layout(width, height - navbarHeight, gridSize);
+			_brushPanel.x = xpos;
 			_brushPanel.y = 0; //TODO: Consider hugged towards navbar at bottom...?
 		}
 

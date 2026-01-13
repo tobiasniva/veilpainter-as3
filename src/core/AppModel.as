@@ -11,12 +11,13 @@ package core {
         private static var _instance:AppModel;
 
         //-- App wise
-        private var _stageSize:Point             = new Point(0, 0);
-        private var _uiScale:Number              = Constants.UI_SCALE_DEFAULT;
+        private var _stageSize:Point            = new Point(0, 0);
+        private var _uiScale:Number             = Constants.UI_SCALE_DEFAULT;
 
         //-- configs
         public var debugDraw:Boolean            = false;
-        public var uiHideOnDraw:Boolean          = Constants.UI_HIDE_ON_DRAW_DEFAULT;
+        public var debugBounds:Boolean          = false;
+        public var uiHideOnDraw:Boolean         = Constants.UI_HIDE_ON_DRAW_DEFAULT;
 
 
         //-- AppModel getters/setters with event dispatch
