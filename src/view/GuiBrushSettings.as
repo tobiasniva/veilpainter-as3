@@ -17,7 +17,7 @@ package view
 	import core.AppModel;
 	import utils.BoundsFactory;
 
-	public class GuiBrushPanel extends GuiBase implements ILayout
+	public class GuiBrushSettings extends GuiBase implements ILayout
 	{
 		private var _sldElasticity:HUISlider;
 		private var _sldStrength:HUISlider;
@@ -38,7 +38,7 @@ package view
 		private var _btnClear:PushButton;
 		private var _btnSaveImage:PushButton;
 
-		public function GuiBrushPanel()
+		public function GuiBrushSettings()
 		{
 			super();
 		}

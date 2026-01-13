@@ -1,18 +1,8 @@
 package view
 {
-	import behavior.ImageWithLabel;
-	import com.bit101.components.CheckBox;
 	import com.bit101.components.ColorChooser;
-	import com.bit101.components.ComboBox;
-	import com.bit101.components.HUISlider;
-	import com.bit101.components.Label;
 	import com.bit101.components.NumericStepper;
-	import com.bit101.components.PushButton;
-	import core.BrushModel;
-	import data.AlphaImages;
-	import data.BlendModes;
 	import data.Constants;
-	import data.Strings;
 	import flash.events.Event;
 	import core.AppModel;
 	import utils.BoundsFactory;
@@ -55,7 +45,7 @@ package view
 			var fullSldW:int = gridSize * 33 + (gridSize / uiscale);
 
 			//TODO: position components...
-			
+
 		}
 
 

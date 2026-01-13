@@ -1,7 +1,6 @@
 package view
 {
 	import com.bit101.components.Style;
-	import flash.display.Sprite;
 	import core.AppEventBus;
 	import events.CanvasEvent;
 	import core.AppModel;
@@ -12,7 +11,7 @@ package view
 	public class Gui extends GuiBase
 	{
 		private var _navbar:GuiNavbar;
-		private var _brushPanel:GuiBrushPanel;
+		private var _brushPanel:GuiBrushSettings;
 
 		public function Gui()
 		{
@@ -66,7 +65,7 @@ package view
 			_navbar = new GuiNavbar();
 			addChild(_navbar);
 
-			_brushPanel = new GuiBrushPanel();
+			_brushPanel = new GuiBrushSettings();
 			addChild(_brushPanel);
 		}
 
