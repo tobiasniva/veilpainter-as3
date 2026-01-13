@@ -16,6 +16,9 @@ package data
 		public static const LBL_BLENDMODE:String            = "Blendmode";
 		
 		public static const LBL_DEBUG:String                = "Debug";
+
+		public static const LBL_BRUSH:String                = "Br";
+		public static const LBL_CANVAS:String               = "Cnv";
 		public static const LBL_CLEAR:String                = "Clr";
 		public static const LBL_SAVE:String                 = "Sav";
 

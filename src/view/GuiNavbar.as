@@ -1,6 +1,5 @@
 package view
 {
-	import com.bit101.components.ColorChooser;
 	import com.bit101.components.PushButton;
 	import data.Constants;
 	import data.Strings;
@@ -13,7 +12,8 @@ package view
 
 	public class GuiNavbar extends GuiBase implements ILayout
 	{
-		private var _colorPickerBG:ColorChooser;
+		private var _btnBrushSettings:PushButton;
+		private var _btnCanvasSettings:PushButton;
 		private var _btnClear:PushButton;
 		private var _btnSaveImage:PushButton;
 
@@ -24,12 +24,9 @@ package view
 
 		override protected function onInit():void
         {
-			//TODO: Should also move to canvas-settings...
-			_colorPickerBG = new ColorChooser(this, 0, 0, Constants.CANVAS_COLOR_DEFAULT, onResetCanvas);
-			_colorPickerBG.popupAlign = ColorChooser.TOP_LEFT;
-			_colorPickerBG.usePopup = true;
-
-			_btnClear = new PushButton(this, 0, 0, Strings.LBL_CLEAR, onResetCanvas);
+			_btnBrushSettings = new PushButton(this, 0, 0, Strings.LBL_BRUSH, onBrushSettings);
+			_btnCanvasSettings = new PushButton(this, 0, 0, Strings.LBL_CANVAS, onCanvasSettings);
+			_btnClear = new PushButton(this, 0, 0, Strings.LBL_CLEAR, onClearCanvas);
 			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);
 		}
 
@@ -42,22 +39,38 @@ package view
 			var btnIconSquareWidth:int = Constants.UI_MAGIC_SIZE_NUMBER * AppModel.instance.uiScale;
 
 			//-- Position and scaling...
-			_btnClear.x = gridSize;
+			_btnBrushSettings.x = gridSize;
+			_btnBrushSettings.y = gridSize;
+			_btnBrushSettings.width = btnIconSquareWidth;
+			
+			_btnCanvasSettings.x = _btnBrushSettings.x + btnIconSquareWidth + gridSize;
+			_btnCanvasSettings.y = gridSize;
+			_btnCanvasSettings.width = btnIconSquareWidth;
+
+			_btnClear.x = _btnCanvasSettings.x + btnIconSquareWidth + gridSize;
 			_btnClear.y = gridSize;
 			_btnClear.width = btnIconSquareWidth;
 
-			_btnSaveImage.x = _btnClear.x + _btnClear.width + gridSize;
+			_btnSaveImage.x = _btnClear.x + btnIconSquareWidth + gridSize;
 			_btnSaveImage.y = gridSize;
 			_btnSaveImage.width = btnIconSquareWidth;
-
-			_colorPickerBG.x = _btnSaveImage.x + _btnSaveImage.width + gridSize;
-			_colorPickerBG.y = gridSize;
 		}
 
-		//TODO: Figure out after canvas-gui is added...
-		private function onResetCanvas(e:Event):void
+		private function onBrushSettings(e:Event):void
 		{
-			CanvasModel.instance.color = _colorPickerBG.value;
+			trace("Open BRUSH gui!");
+		}
+
+		private function onCanvasSettings(e:Event):void
+		{
+			trace("Open CANVAS gui!");
+		}
+
+		private function onClearCanvas(e:Event):void
+		{
+			//-- Hack just to trigger event to reset canvas...
+			var col:uint = CanvasModel.instance.color;
+			CanvasModel.instance.color = col;
 		}
 
 		private function onSaveImageToDesktop(e:Event):void
