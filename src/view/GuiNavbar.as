@@ -35,7 +35,7 @@ package view
 		public function layout(w:int, h:int, gridSize:int):void
 		{
 			if(AppModel.instance.debugBounds)
-				BoundsFactory.drawBounds(this, w, h, 0xff0000);
+				BoundsFactory.drawBounds(this, w, h, 0xff0000, 0.0);
 
 			//TODO: Remove - will be obsolete with IconButton...
 			var btnIconSquareWidth:int = Constants.UI_MAGIC_SIZE_NUMBER * AppModel.instance.uiScale;

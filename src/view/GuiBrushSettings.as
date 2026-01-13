@@ -108,7 +108,7 @@ package view
 		public function layout(w:int, h:int, gridSize:int):void
 		{
 			if(AppModel.instance.debugBounds)
-				BoundsFactory.drawBounds(this, w, h, 0x00ff00);
+				BoundsFactory.drawBounds(this, w, h, 0x00ff00, 0.0);
 
 			trace("gridSize: " + gridSize)
 			var uiscale:int = AppModel.instance.uiScale;
