@@ -98,7 +98,7 @@ package view
 			if (!contains(_bmp))
 				addChildAt(_bmp, 0);
 
-			trace("Canvas created - size: " + bmpSize + ", color: " + canvasCol);
+			// trace("Canvas created - size: " + bmpSize + ", color: " + canvasCol);
 		}
 
 		// -- CLEAN UP
