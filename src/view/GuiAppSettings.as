@@ -8,12 +8,15 @@ package view
 	import com.bit101.components.ColorChooser;
 	import core.BrushModel;
 	import data.Constants;
+	import com.bit101.components.CheckBox;
+	import data.Strings;
 
 	public class GuiAppSettings extends GuiBase implements ILayout
 	{
 		private var _stpUiScale:NumericStepper;
 		private var _stpChainLinkSize:NumericStepper;
 		private var _colorpickerChainLink:ColorChooser;
+		private var _chkDebugBounds:CheckBox;
 
 		public function GuiAppSettings()
 		{
@@ -42,6 +45,9 @@ package view
 			_stpChainLinkSize.minimum = Constants.CHAIN_LINK_SIZE_MIN;
 			_stpChainLinkSize.value = BrushModel.instance.brushLinkSize;
 			_stpChainLinkSize.maximum = Constants.CHAIN_LINK_SIZE_MAX;
+
+			_chkDebugBounds = new CheckBox(this, 0, 0, Strings.LBL_DEBUG_BOUNDS, onDebugBoundsChanged);
+			_chkDebugBounds.selected = AppModel.instance.debugBounds;
 		}
 
 		public function layout(w:int, h:int, gridSize:int):void
@@ -64,6 +70,11 @@ package view
 
 			_stpUiScale.x = gridSize;
 			_stpUiScale.y = yOff;
+
+			yOff += gridSize * uiscale;
+
+			_chkDebugBounds.x = w - _chkDebugBounds.width - gridSize;
+			_chkDebugBounds.y = yOff;
 		}
 
 		// -- App settings handlers...
@@ -85,6 +96,11 @@ package view
 		private function onChainLinkColorChanged(event:Event):void
 		{
 			BrushModel.instance.brushLinkColor = _colorpickerChainLink.value;
+		}
+
+		private function onDebugBoundsChanged(event:Event):void
+		{
+			AppModel.instance.debugBounds = _chkDebugBounds.selected;
 		}
 	}
 }

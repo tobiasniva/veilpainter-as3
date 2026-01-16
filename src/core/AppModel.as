@@ -15,12 +15,28 @@ package core {
         private var _uiScale:Number             = Constants.UI_SCALE_DEFAULT;
 
         //-- configs
-        public var debugDraw:Boolean            = false;
-        public var debugBounds:Boolean          = false;
-        public var uiHideOnDraw:Boolean         = Constants.UI_HIDE_ON_DRAW_DEFAULT;
+        private var _debugDraw:Boolean          = false;
+        private var _debugBounds:Boolean        = Constants.UI_DEBUG_BOUNDS_DEFAULT;
 
+        public var uiHideOnDraw:Boolean         = Constants.UI_HIDE_ON_DRAW_DEFAULT; //TODO: Implement getter/setter...
 
         //-- AppModel getters/setters with event dispatch
+
+        public function get debugDraw():Boolean { return _debugDraw; }
+        public function set debugDraw(value:Boolean):void
+        {
+        	_debugDraw = value;
+        }
+
+
+        public function get debugBounds():Boolean {	return _debugBounds; }
+        public function set debugBounds(value:Boolean):void {
+            if (_debugBounds != value) {
+        	    _debugBounds = value;
+                AppEventBus.instance.dispatchEvent(new StageEvent(StageEvent.UI_SCALE_CHANGED));
+            }
+        }
+
         public function get stageSize():Point { return _stageSize; }
         public function set stageSize(value:Point):void {
             if (_stageSize != value) {
