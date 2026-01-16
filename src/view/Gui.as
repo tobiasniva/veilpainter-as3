@@ -36,15 +36,18 @@ package view
 
 		override protected function onInit():void
 		{
+			trace("Gui::onInit");
 			createContainers();
 		}
 
 		private function onUiScaleChanged(e:StageEvent):void
 		{
+			trace("Gui::onUiScaleChanged");
 			createContainers();
+			onStageSizeChanged();
 		}
 
-		private function onStageSizeChanged(e:StageEvent):void
+		private function onStageSizeChanged(e:StageEvent = null):void
 		{
 			trace("Gui::onStageSizeChanged: " + AppModel.instance.stageSize);
 
@@ -55,29 +58,6 @@ package view
 			var gridSize:int = width / 24; // Figure out good grid size...
 
 			layout(width, height, gridSize);
-		}
-
-		private function createContainers():void
-		{
-			trace("Gui::createGuis");
-
-			// Clean up old containers - consider making a container class to manage this better...
-			if (_navbar && _navbar.parent)
-				_navbar.parent.removeChild(_navbar);
-			if (_brushSettings && _brushSettings.parent)
-				_brushSettings.parent.removeChild(_brushSettings);
-
-			_navbar = null;
-			_brushSettings = null;
-
-			Style.setStyle(Style.DARK);
-			StyleSizer.ComponentScale(AppModel.instance.uiScale);
-
-			_navbar = new GuiNavbar();
-			addChild(_navbar);
-
-			_brushSettings = new GuiBrushSettings();
-			addChild(_brushSettings);
 		}
 
 		public function layout(width:int, height:int, gridSize:int):void
@@ -103,6 +83,29 @@ package view
 			_brushSettings.layout(width, height - navbarHeight, gridSize);
 			_brushSettings.x = xpos;
 			_brushSettings.y = 0;
+		}
+
+		private function createContainers():void
+		{
+			trace("Gui::createContainers");
+
+			// Clean up old containers - consider making a container class to manage this better...
+			if (_navbar && _navbar.parent)
+				_navbar.parent.removeChild(_navbar);
+			if (_brushSettings && _brushSettings.parent)
+				_brushSettings.parent.removeChild(_brushSettings);
+
+			_navbar = null;
+			_brushSettings = null;
+
+			Style.setStyle(Style.DARK);
+			StyleSizer.ComponentScale(AppModel.instance.uiScale);
+
+			_navbar = new GuiNavbar();
+			addChild(_navbar);
+
+			_brushSettings = new GuiBrushSettings();
+			addChild(_brushSettings);
 		}
 
 		// --- Handlers...
