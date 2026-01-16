@@ -34,7 +34,7 @@ package view
 		public function layout(w:int, h:int, gridSize:int):void
 		{
 			if(AppModel.instance.debugBounds)
-				BoundsFactory.drawBounds(this, w, h, 0x0000ff);
+				BoundsFactory.drawBounds(this, w, h, 0x0000ff, 0.0);
 
 			var uiscale:int = AppModel.instance.uiScale;
 

@@ -15,7 +15,8 @@ package core {
         private var _uiScale:Number             = Constants.UI_SCALE_DEFAULT;
 
         //-- configs
-        private var _debugDraw:Boolean          = false;
+        private var _debugDraw:Boolean          = false; //TODO: Figure out where supposed to live - if more bruhes etc?
+        
         private var _debugBounds:Boolean        = Constants.UI_DEBUG_BOUNDS_DEFAULT;
 
         public var uiHideOnDraw:Boolean         = Constants.UI_HIDE_ON_DRAW_DEFAULT; //TODO: Implement getter/setter...

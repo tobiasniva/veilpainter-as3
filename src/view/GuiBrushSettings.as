@@ -28,7 +28,7 @@ package view
 		private var _cmbAlphaImage:ComboBox;
 		private var _cmbBlendMode:ComboBox;
 		private var _colorPicker:ColorChooser;
-		private var _chkDebug:CheckBox;
+		private var _chkDebugDraw:CheckBox;
 
 		private var _lblAlphaImage:Label;
 		private var _lblNumLinks:Label;
@@ -89,7 +89,8 @@ package view
 			_stpNumLinks.value = Constants.NUM_LINKS_DEFAULT;
 			_stpNumLinks.maximum = Constants.NUM_LINKS_MAX;
 
-			_chkDebug = new CheckBox(this, 0, 0, Strings.LBL_DEBUG, onDebugChanged);
+			_chkDebugDraw = new CheckBox(this, 0, 0, Strings.LBL_DEBUG, onDebugChanged);
+			_chkDebugDraw.selected = AppModel.instance.debugDraw;
 
 			// _lblBlendModes = new Label(this, 0, 0, Strings.LBL_BLENDMODE);
 			var blendModesAll:Array = BlendModes.getAll();
@@ -143,8 +144,8 @@ package view
 			_sldOpacity.y = yOff;
 			_sldOpacity.width = gridSize * 18;
 
-			_chkDebug.x = w - _chkDebug.width - gridSize;
-			_chkDebug.y = yOff + (gridSize / 2)  * (uiscale / 4); // Hack to line up when ui-scaled...
+			_chkDebugDraw.x = w - _chkDebugDraw.width - gridSize;
+			_chkDebugDraw.y = yOff + (gridSize / 2)  * (uiscale / 4); // Hack to line up when ui-scaled...
 
 			yOff += gridSize * uiscale; // incr yOff
 
@@ -210,7 +211,7 @@ package view
 
 		protected function onDebugChanged(e:Event):void
 		{
-			AppModel.instance.debugDraw = _chkDebug.selected;
+			AppModel.instance.debugDraw = _chkDebugDraw.selected;
 		}
 	}
 }

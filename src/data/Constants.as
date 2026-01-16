@@ -13,9 +13,9 @@ package data
 		public static const UI_SCALE_DEFAULT:int     		= 3; // For phones and tablets for now...
 		public static const UI_MAGIC_SIZE_NUMBER:int		= 20; // Height px of button, used here and there...
 		public static const UI_MAX_WIDTH:int				= 768; // Max width of UI panel
-		
+
 		public static const UI_HIDE_ON_DRAW_DEFAULT:Boolean = true;
-		public static const UI_DEBUG_BOUNDS_DEFAULT:Boolean = true;
+		public static const UI_DEBUG_BOUNDS_DEFAULT:Boolean = false;
 		
 		public static const CANVAS_MULTIPLIER_DEFAULT:int   = 1; // regarding scale of bitmap vs screen size
 		public static const CANVAS_COLOR_DEFAULT:uint       = 0x222222;

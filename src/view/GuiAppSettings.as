@@ -71,10 +71,10 @@ package view
 			_stpUiScale.x = gridSize;
 			_stpUiScale.y = yOff;
 
-			yOff += gridSize * uiscale;
-
 			_chkDebugBounds.x = w - _chkDebugBounds.width - gridSize;
 			_chkDebugBounds.y = yOff;
+
+			// yOff += gridSize * uiscale;
 		}
 
 		// -- App settings handlers...

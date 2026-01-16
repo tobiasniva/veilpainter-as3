@@ -8,9 +8,7 @@ package
 	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import utils.UiScaleUtil
 	import view.Gui;
-	import core.AppModel;
 	import view.Canvas;
 	import services.ViewportService;
 	import services.SaveImageService;
@@ -46,9 +44,7 @@ package
 			stage.removeEventListener(Event.RESIZE, init);
 
 			// Inits - TODO: Implement prefs...
-			// AppModel.instance.uiScale = UiScaleUtil.computeUiScale(); //TODO: Where init...?
-			// AppModel.instance.uiScale = 3;
-			// AppModel.instance.debugBounds = true;
+			// AppModel.instance.uiScale = UiScaleUtil.computeUiScale(); //TODO: Where init...? Save in prefs, and skip...?
 			SaveImageService.init();
 
 			//-- Create canvas...
