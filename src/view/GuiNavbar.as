@@ -9,6 +9,7 @@ package view
 	import events.SaveEvent;
 	import core.AppModel;
 	import utils.BoundsFactory;
+	import events.UIEvent;
 
 	public class GuiNavbar extends GuiBase implements ILayout
 	{
@@ -45,7 +46,7 @@ package view
 		public function layout(w:int, h:int, gridSize:int):void
 		{
 			if (AppModel.instance.debugBounds)
-				BoundsFactory.drawBounds(this, w, h, 0xff0000, 0.0);
+				BoundsFactory.drawBounds(this, w, h, 0xff0000, 0.0); // red
 
 			// -- Position and scaling...
 			_btnBrushSettings.x = gridSize;
@@ -77,26 +78,19 @@ package view
 		private function onBrushSettings(e:Event):void
 		{
 			trace("Open BRUSH!");
+			AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_BRUSH_SETTINGS));
 		}
 
 		private function onCanvasSettings(e:Event):void
 		{
 			trace("Open CANVAS!");
+			AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_CANVAS_SETTINGS));
 		}
 
 		private function onSettings(e:Event):void
 		{
-			trace("Open COMMON APP SETTINGS!");
-			// TODO: Temp uiscale testing...
-			if (AppModel.instance.uiScale == 4)
-			{
-				AppModel.instance.uiScale = 3;
-			}
-			else
-			{
-
-				AppModel.instance.uiScale = 4;
-			}
+			trace("Open APP SETTINGS!");
+			AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_APP_SETTINGS));
 		}
 
 		private function onClearCanvas(e:Event):void
@@ -104,6 +98,9 @@ package view
 			// -- Hack just to trigger event to reset canvas...
 			var col:uint = CanvasModel.instance.color;
 			CanvasModel.instance.color = col;
+
+			// -- Temp use to hide active gui...
+			AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.HIDE_ACTIVE));
 		}
 
 		private function onSaveImageToDesktop(e:Event):void

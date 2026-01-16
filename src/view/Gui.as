@@ -11,7 +11,7 @@ package view
 	public class Gui extends GuiBase implements ILayout
 	{
 		private var _navbar:GuiNavbar;
-		private var _brushSettings:GuiBrushSettings;
+		private var _container:GuiContainer;
 
 		public function Gui()
 		{
@@ -65,14 +65,9 @@ package view
 			trace("Gui::layout: w=" + width + " h=" + height + " gridSize=" + gridSize);
 
 			// TODO: Figure out if we want left/center/right alignment configurable...
-			// var xpos:int = 0; // left align...
 			var xpos:int = (AppModel.instance.stageSize.x - width) / 2; // center...
-			// var xpos:int = AppModel.instance.stageSize.x - width; // right align...
-
 			var navbarHeight:Number = _navbar.btnSize + (gridSize * 2);
-
 			var navBarY:Number = AppModel.instance.stageSize.y - navbarHeight;
-			var panelHeight:Number = AppModel.instance.stageSize.y - navbarHeight;
 
 			// TODO: Positioning - left/center/right, but always bottom?
 			_navbar.layout(width, navbarHeight, gridSize);
@@ -80,23 +75,23 @@ package view
 			_navbar.y = navBarY;
 
 			// TODO: Positioning - left/center/right, top/bottom? (bottom huggging navbar...)
-			_brushSettings.layout(width, height - navbarHeight, gridSize);
-			_brushSettings.x = xpos;
-			_brushSettings.y = 0;
+			_container.layout(width, height - navbarHeight, gridSize);
+			_container.x = xpos;
+			_container.y = 0;
 		}
 
 		private function createContainers():void
 		{
 			trace("Gui::createContainers");
 
-			// Clean up old containers - consider making a container class to manage this better...
+			// Clean up old containers...
 			if (_navbar && _navbar.parent)
 				_navbar.parent.removeChild(_navbar);
-			if (_brushSettings && _brushSettings.parent)
-				_brushSettings.parent.removeChild(_brushSettings);
+			if (_container && _container.parent)
+				_container.parent.removeChild(_container);
 
 			_navbar = null;
-			_brushSettings = null;
+			_container = null;
 
 			Style.setStyle(Style.DARK);
 			StyleSizer.ComponentScale(AppModel.instance.uiScale);
@@ -104,8 +99,8 @@ package view
 			_navbar = new GuiNavbar();
 			addChild(_navbar);
 
-			_brushSettings = new GuiBrushSettings();
-			addChild(_brushSettings);
+			_container = new GuiContainer();
+			addChild(_container);
 		}
 
 		// --- Handlers...
