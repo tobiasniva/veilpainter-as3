@@ -10,8 +10,8 @@ package view
 
 	public class GuiCanvasSettings extends GuiBase implements ILayout
 	{
-		private var _colorPickerBG:ColorChooser;
 		private var _stpSizeMultiplier:NumericStepper;
+		private var _colorPickerBG:ColorChooser;
 
 		public function GuiCanvasSettings()
 		{
@@ -26,8 +26,8 @@ package view
 			_stpSizeMultiplier.value = 1;
 			_stpSizeMultiplier.maximum = 4;
 
-			_colorPickerBG = new ColorChooser(this, 0, 0, Constants.CANVAS_COLOR_DEFAULT, onResetCanvas);
-			_colorPickerBG.popupAlign = ColorChooser.TOP_LEFT;
+			_colorPickerBG = new ColorChooser(this, 0, 0, CanvasModel.instance.color, onCanvasColorChanged);
+			_colorPickerBG.popupAlign = ColorChooser.BOTTOM_RIGHT;
 			_colorPickerBG.usePopup = true;
 		}
 
@@ -38,14 +38,13 @@ package view
 
 			var uiscale:int = AppModel.instance.uiScale;
 
-			var yOff:int = AppModel.instance.uiScale * gridSize;
-			var margin:int = gridSize * 2; // margin from left/top...
-			var halfX:int = gridSize * 16;
-			var halfW:int = gridSize * 13;
-			var fullSldW:int = gridSize * 33 + (gridSize / uiscale);
-
 			//TODO: position components...
+			_stpSizeMultiplier.x = gridSize;
+			_stpSizeMultiplier.y = gridSize;
+			_stpSizeMultiplier.enabled = false; // Disabled for now...
 
+			_colorPickerBG.x = w - (_colorPickerBG.width + gridSize + (uiscale * 5)); // Hack to line colorbox up...
+			_colorPickerBG.y = gridSize;
 		}
 
 
@@ -55,7 +54,7 @@ package view
 			CanvasModel.instance.multiplier = _stpSizeMultiplier.value;
 		}
 
-		private function onResetCanvas(e:Event):void
+		private function onCanvasColorChanged(e:Event):void
 		{
 			CanvasModel.instance.color = _colorPickerBG.value;
 		}

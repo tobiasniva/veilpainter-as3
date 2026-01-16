@@ -1,7 +1,6 @@
 package core {
 
     import data.Constants;
-    import flash.geom.Point;
     import events.BrushEvent;
 
     public class BrushModel
@@ -14,13 +13,14 @@ package core {
         private var _brushAlphaImageIndex:int   = 0;
         private var _brushBlendMode:String      = Constants.BRUSH_BLENDMODE_DEFAULT;
         private var _brushBlendModeIndex:int    = Constants.BRUSH_BLENDMODE_INDEX;
-        private var _brushLinkColor:uint        = Constants.CHAIN_LINK_COLOR;
-        private var _brushLinkSize:int          = Constants.CHAIN_LINK_SIZE;
         private var _brushNumLinks:int          = Constants.NUM_LINKS_DEFAULT;
         private var _brushElasticity:Number     = Constants.ELASTICITY_DEFAULT;
         private var _brushStrength:Number       = Constants.STRENGTH_DEFAULT;
         private var _brushDegradation:Number    = Constants.DEGRADATION_DEFAULT;
 
+        //TODO: Do these belong here? Other brushes use them?
+        private var _brushLinkColor:uint        = Constants.CHAIN_LINK_COLOR;
+        private var _brushLinkSize:int          = Constants.CHAIN_LINK_SIZE;
 
         //-- Brush getters/setters with event dispatch
         public function get brushColor():uint { return _brushColor; }

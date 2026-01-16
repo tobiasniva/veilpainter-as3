@@ -4,11 +4,16 @@ package view
 	import flash.events.Event;
 	import core.AppModel;
 	import utils.BoundsFactory;
-	import core.CanvasModel;
+	import flash.utils.setTimeout;
+	import com.bit101.components.ColorChooser;
+	import core.BrushModel;
+	import data.Constants;
 
 	public class GuiAppSettings extends GuiBase implements ILayout
 	{
 		private var _stpUiScale:NumericStepper;
+		private var _stpChainLinkSize:NumericStepper;
+		private var _colorpickerChainLink:ColorChooser;
 
 		public function GuiAppSettings()
 		{
@@ -16,33 +21,70 @@ package view
 		}
 
 		override protected function onInit():void
-        {
-			//-- components...
-			_stpUiScale = new NumericStepper(this, 0, 0, onUiScaleChanged);
+		{
+			// -- components...
+
+			//TODO: Label?
+			_stpUiScale = new NumericStepper(this);
+			_stpUiScale.addEventListener(Event.CHANGE, onUiScaleChanged);
+			_stpUiScale.step = 1;
+			_stpUiScale.minimum = 1;
+			_stpUiScale.value = AppModel.instance.uiScale;
+			_stpUiScale.maximum = 4;
+
+			_colorpickerChainLink = new ColorChooser(this, 0, 0, BrushModel.instance.brushLinkColor, onChainLinkColorChanged);
+			_colorpickerChainLink.usePopup = true;
+			_colorpickerChainLink.popupAlign = ColorChooser.BOTTOM_RIGHT;
+
+			_stpChainLinkSize = new NumericStepper(this);
+			_stpChainLinkSize.addEventListener(Event.CHANGE, onChainLinkSizeChanged);
+			_stpChainLinkSize.step = 2;
+			_stpChainLinkSize.minimum = Constants.CHAIN_LINK_SIZE_MIN;
+			_stpChainLinkSize.value = BrushModel.instance.brushLinkSize;
+			_stpChainLinkSize.maximum = Constants.CHAIN_LINK_SIZE_MAX;
 		}
 
 		public function layout(w:int, h:int, gridSize:int):void
 		{
-			if(AppModel.instance.debugBounds)
+			if (AppModel.instance.debugBounds)
 				BoundsFactory.drawBounds(this, w, h, 0x00ffff, 0.0); // cyan
 
 			var uiscale:int = AppModel.instance.uiScale;
 
-			var yOff:int = AppModel.instance.uiScale * gridSize;
-			var margin:int = gridSize * 2; // margin from left/top...
-			var halfX:int = gridSize * 16;
-			var halfW:int = gridSize * 13;
-			var fullSldW:int = gridSize * 33 + (gridSize / uiscale);
+			var yOff:int = gridSize;
 
-			//TODO: position components...
+			// TODO: position components...
+			_stpChainLinkSize.x = gridSize;
+			_stpChainLinkSize.y = gridSize;
 
+			_colorpickerChainLink.x = w - (_colorpickerChainLink.width + gridSize + (uiscale * 5)); // Hack to line colorbox up...
+			_colorpickerChainLink.y = yOff;
+
+			yOff += gridSize * uiscale; // incr yOff
+
+			_stpUiScale.x = gridSize;
+			_stpUiScale.y = yOff;
 		}
 
-
-		//-- App settings handlers...
+		// -- App settings handlers...
 		private function onUiScaleChanged(e:Event):void
 		{
-			AppModel.instance.uiScale = _stpUiScale.value;
+			trace("uiscale: " + _stpUiScale.value);
+
+			setTimeout(function():void
+				{
+					AppModel.instance.uiScale = _stpUiScale.value;
+				}, 150);
+		}
+
+		private function onChainLinkSizeChanged(event:Event):void
+		{
+			BrushModel.instance.brushLinkSize = _stpChainLinkSize.value;
+		}
+
+		private function onChainLinkColorChanged(event:Event):void
+		{
+			BrushModel.instance.brushLinkColor = _colorpickerChainLink.value;
 		}
 	}
 }

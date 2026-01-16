@@ -77,19 +77,16 @@ package view
 
 		private function onBrushSettings(e:Event):void
 		{
-			trace("Open BRUSH!");
 			AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_BRUSH_SETTINGS));
 		}
 
 		private function onCanvasSettings(e:Event):void
 		{
-			trace("Open CANVAS!");
 			AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_CANVAS_SETTINGS));
 		}
 
 		private function onSettings(e:Event):void
 		{
-			trace("Open APP SETTINGS!");
 			AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_APP_SETTINGS));
 		}
 

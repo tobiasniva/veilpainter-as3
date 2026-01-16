@@ -1,7 +1,5 @@
 package view
 {
-	import core.AppModel;
-	import utils.BoundsFactory;
 	import core.AppEventBus;
 	import events.UIEvent;
 
@@ -52,9 +50,7 @@ package view
 			}
 
 			addChild(_activeGui);
-			
-			//-- Layout directly...
-			ILayout(_activeGui).layout(_lastWidth, _lastHeight, _lastGridSize);
+			ILayout(_activeGui).layout(_lastWidth, _lastHeight, _lastGridSize); //-- Layout directly...
 		}
 
 		private function onRemoveActive(event:Object):void

@@ -28,8 +28,6 @@ package view
 		private var _cmbAlphaImage:ComboBox;
 		private var _cmbBlendMode:ComboBox;
 		private var _colorPicker:ColorChooser;
-		private var _colorPickerBG:ColorChooser;
-		private var _stpSizeMultiplier:NumericStepper;
 		private var _chkDebug:CheckBox;
 
 		private var _lblAlphaImage:Label;
@@ -100,7 +98,7 @@ package view
 			_cmbBlendMode.selectedIndex = Constants.BRUSH_BLENDMODE_INDEX;
 			_cmbBlendMode.addEventListener(Event.SELECT, onBlendModeChanged);
 
-			_colorPicker = new ColorChooser(this, 0, 0, Constants.BRUSH_COLOR_DEFAULT, onColorChanged);
+			_colorPicker = new ColorChooser(this, 0, 0, BrushModel.instance.brushColor, onColorChanged);
 			_colorPicker.usePopup = true;
 			_colorPicker.popupAlign = ColorChooser.BOTTOM_RIGHT;
 		}
@@ -110,7 +108,6 @@ package view
 			if(AppModel.instance.debugBounds)
 				BoundsFactory.drawBounds(this, w, h, 0x00ff00, 0.0); // green
 
-			trace("gridSize: " + gridSize)
 			var uiscale:int = AppModel.instance.uiScale;
 
 			var yOff:int = gridSize;

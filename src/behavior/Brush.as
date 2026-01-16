@@ -192,6 +192,7 @@ package behavior
 			elasticity = BrushModel.instance.brushElasticity;
 			strength = BrushModel.instance.brushStrength;
 			strengthDegradation = BrushModel.instance.brushDegradation;
+			shape = ShapeFactory.getCircle(BrushModel.instance.brushLinkSize, BrushModel.instance.brushLinkColor);
 
 			if(e.shouldRegenerate)
 				generateQuadImages();
