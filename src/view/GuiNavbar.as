@@ -19,6 +19,7 @@ package view
 		private var _btnClear:PushButton;
 		private var _btnSaveImage:PushButton;
 
+		//-- public for outside layout use...
 		public function get btnSize():int
 		{
 			return _btnSize;
@@ -31,6 +32,7 @@ package view
 
 		override protected function onInit():void
 		{
+			//-- We make navbar icon buttons slightly larger than normal ui elements...
 			_btnSize = (Constants.UI_MAGIC_SIZE_NUMBER * 1.5) * AppModel.instance.uiScale;
 
 			_btnBrushSettings = new PushButton(this, 0, 0, Strings.LBL_BRUSH, onBrushSettings);

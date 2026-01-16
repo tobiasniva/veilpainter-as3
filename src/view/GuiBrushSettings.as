@@ -113,48 +113,59 @@ package view
 			trace("gridSize: " + gridSize)
 			var uiscale:int = AppModel.instance.uiScale;
 
-			var yOff:int = AppModel.instance.uiScale * gridSize;
-			var margin:int = gridSize * 2; // margin from left/top...
-			var halfX:int = gridSize * 16;
+			var yOff:int = gridSize;
+			var halfX:int = gridSize * 12;
 			var halfW:int = gridSize * 13;
-			var fullSldW:int = gridSize * 33 + (gridSize / uiscale);
+			var fullSldW:int = (gridSize - 2 + uiscale) * 23.5; // Hack, since slider width are wonky when scaled (label sizes fuck up?)
 
 
 			//-- 1st row
-			_cmbBlendMode.x = margin;
-			_cmbBlendMode.y = margin;
+			_cmbBlendMode.x = gridSize;
+			_cmbBlendMode.y = gridSize;
 			_cmbBlendMode.width = halfW;
 
-			_colorPicker.x = w - (_colorPicker.width + margin + (uiscale * 5)); // Hack to line colorbox up...
-			_colorPicker.y = margin;
+			// _colorPicker.width = gridSize * 6;
+			_colorPicker.x = w - (_colorPicker.width + gridSize + (uiscale * 5)); // Hack to line colorbox up...
+			_colorPicker.y = gridSize;
+
+			yOff += gridSize * uiscale; // incr yOff
 
 			// 2nd row
-			_cmbAlphaImage.x = margin;
-			_cmbAlphaImage.y = margin + yOff;
+			_cmbAlphaImage.x = gridSize;
+			_cmbAlphaImage.y = yOff;
 			_cmbAlphaImage.width = halfW;
 
-			_stpNumLinks.x = w - _stpNumLinks.width - margin;
-			_stpNumLinks.y = margin + yOff;
+			_stpNumLinks.width = gridSize * 6.5;
+			_stpNumLinks.x = w - _stpNumLinks.width - gridSize;
+			_stpNumLinks.y = yOff;
+
+			yOff += gridSize * uiscale; // incr yOff
 
 			// 3rd row
 			_sldOpacity.x = gridSize;
-			_sldOpacity.y = margin + yOff * 2;
-			_sldOpacity.width = gridSize * 22;
+			_sldOpacity.y = yOff;
+			_sldOpacity.width = gridSize * 18;
 
-			_chkDebug.x = w - _chkDebug.width - margin;
-			_chkDebug.y = margin + yOff * 2 + (gridSize / 2);
+			_chkDebug.x = w - _chkDebug.width - gridSize;
+			_chkDebug.y = yOff + (gridSize / 2)  * (uiscale / 4); // Hack to line up when ui-scaled...
+
+			yOff += gridSize * uiscale; // incr yOff
 
 			// ESD-sliders
 			_sldElasticity.x = gridSize;
-			_sldElasticity.y = yOff * 4;
+			_sldElasticity.y = yOff;
 			_sldElasticity.width = fullSldW;
 
+			yOff += gridSize * uiscale; // incr yOff
+
 			_sldStrength.x = gridSize;
-			_sldStrength.y = yOff * 5;
+			_sldStrength.y = yOff;
 			_sldStrength.width = fullSldW;
 
+			yOff += gridSize * uiscale; // incr yOff
+
 			_sldStrengthDegradation.x = gridSize;
-			_sldStrengthDegradation.y = yOff * 6;
+			_sldStrengthDegradation.y = yOff;
 			_sldStrengthDegradation.width = fullSldW;
 		}
 
