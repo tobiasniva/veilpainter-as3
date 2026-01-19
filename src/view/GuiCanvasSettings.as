@@ -2,7 +2,6 @@ package view
 {
 	import com.bit101.components.ColorChooser;
 	import com.bit101.components.NumericStepper;
-	import data.Constants;
 	import flash.events.Event;
 	import core.AppModel;
 	import utils.BoundsFactory;
@@ -23,7 +22,7 @@ package view
 			_stpSizeMultiplier = new NumericStepper(this);
 			_stpSizeMultiplier.addEventListener(Event.CHANGE, onSizeMultiplierChanged);
 			_stpSizeMultiplier.minimum = 1;
-			_stpSizeMultiplier.value = 1;
+			_stpSizeMultiplier.value = CanvasModel.instance.multiplier;
 			_stpSizeMultiplier.maximum = 4;
 
 			_colorPickerBG = new ColorChooser(this, 0, 0, CanvasModel.instance.color, onCanvasColorChanged);

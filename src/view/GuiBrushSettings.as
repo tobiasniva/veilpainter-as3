@@ -93,7 +93,7 @@ package view
 			_chkDebugDraw.selected = AppModel.instance.debugDraw;
 
 			// _lblBlendModes = new Label(this, 0, 0, Strings.LBL_BLENDMODE);
-			var blendModesAll:Array = BlendModes.getAll();
+			var blendModesAll:Array = BlendModes.getAll(); //TODO: According to AppModel-settings Compact/Standard/Extended...
 			_cmbBlendMode = new ComboBox(this, 0, 0, "", blendModesAll);
 			_cmbBlendMode.numVisibleItems = blendModesAll.length;
 			_cmbBlendMode.selectedIndex = BrushModel.instance.brushBlendModeIndex;
@@ -201,6 +201,7 @@ package view
 
 		protected function onBlendModeChanged(e:Event):void
 		{
+			//TODO: Refactor so that not both needed to handle this state - see comment in model...
 			BrushModel.instance.brushBlendModeIndex = _cmbBlendMode.selectedIndex;
 			BrushModel.instance.brushBlendMode = String(_cmbBlendMode.selectedItem);
 		}

@@ -43,7 +43,9 @@ package
 		{
 			stage.removeEventListener(Event.RESIZE, init);
 
-			// Inits - TODO: Implement prefs...
+			// -- Inits...
+			// -- TODO: Implement prefs...
+			
 			// AppModel.instance.uiScale = UiScaleUtil.computeUiScale(); //TODO: Where init...? Save in prefs, and skip...?
 			SaveImageService.init();
 

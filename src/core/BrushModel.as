@@ -11,8 +11,8 @@ package core {
         private var _brushColor:uint            = Constants.BRUSH_COLOR_DEFAULT;
         private var _brushOpacity:Number        = Constants.BRUSH_OPACITY_DEFAULT;
         private var _brushAlphaImageIndex:int   = 0;
-        private var _brushBlendMode:String      = Constants.BRUSH_BLENDMODE_DEFAULT;
-        private var _brushBlendModeIndex:int    = Constants.BRUSH_BLENDMODE_INDEX;
+        private var _brushBlendMode:String      = Constants.BRUSH_BLENDMODE_DEFAULT;    //TODO: Figure out how to only have one value for blendmode (index OR string)
+        private var _brushBlendModeIndex:int    = Constants.BRUSH_BLENDMODE_INDEX;      //TODO: ...see above...
         private var _brushNumLinks:int          = Constants.NUM_LINKS_DEFAULT;
         private var _brushElasticity:Number     = Constants.ELASTICITY_DEFAULT;
         private var _brushStrength:Number       = Constants.STRENGTH_DEFAULT;
