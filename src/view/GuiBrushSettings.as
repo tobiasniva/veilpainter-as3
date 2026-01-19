@@ -46,21 +46,21 @@ package view
 			_sldElasticity = new HUISlider(this);
 			_sldElasticity.label = Strings.LBL_ELASTICITY;
 			_sldElasticity.addEventListener(Event.CHANGE, onElasticityChanged);
-			_sldElasticity.setSliderParams(Constants.ELASTICITY_MIN, Constants.ELASTICITY_MAX, Constants.ELASTICITY_DEFAULT);
+			_sldElasticity.setSliderParams(Constants.ELASTICITY_MIN, Constants.ELASTICITY_MAX, BrushModel.instance.brushElasticity);
 			_sldElasticity.labelPrecision = 2;
 			_sldElasticity.tick = 0.01;
 
 			_sldStrength = new HUISlider(this);
 			_sldStrength.label = Strings.LBL_STRENGTH;
 			_sldStrength.addEventListener(Event.CHANGE, onStrengthChanged);
-			_sldStrength.setSliderParams(Constants.STRENGTH_MIN, Constants.STRENGTH_MAX, Constants.STRENGTH_DEFAULT);
+			_sldStrength.setSliderParams(Constants.STRENGTH_MIN, Constants.STRENGTH_MAX, BrushModel.instance.brushStrength);
 			_sldStrength.labelPrecision = 3;
 			_sldStrength.tick = 0.001;
 
 			_sldStrengthDegradation = new HUISlider(this);
 			_sldStrengthDegradation.label = Strings.LBL_STRENGTH_DEGR;
 			_sldStrengthDegradation.addEventListener(Event.CHANGE, onStrengthDegradationChanged);
-			_sldStrengthDegradation.setSliderParams(Constants.DEGRADATION_MIN, Constants.DEGRADATION_MAX, Constants.DEGRADATION_DEFAULT);
+			_sldStrengthDegradation.setSliderParams(Constants.DEGRADATION_MIN, Constants.DEGRADATION_MAX, BrushModel.instance.brushDegradation);
 			_sldStrengthDegradation.labelPrecision = 2;
 			_sldStrengthDegradation.tick = 0.01;
 
@@ -71,13 +71,13 @@ package view
 			{
 				_cmbAlphaImage.addItem(img.label);
 			}
-			_cmbAlphaImage.selectedIndex = 0;
+			_cmbAlphaImage.selectedIndex = BrushModel.instance.brushAlphaImageIndex;
 			_cmbAlphaImage.numVisibleItems = AlphaImages.getAll().length;
 			_cmbAlphaImage.addEventListener(Event.SELECT, onAlphaImageChanged);
 
 			_sldOpacity = new HUISlider(this);
 			_sldOpacity.addEventListener(Event.CHANGE, onOpacityChanged);
-			_sldOpacity.setSliderParams(0, 1, Constants.BRUSH_OPACITY_DEFAULT);
+			_sldOpacity.setSliderParams(0, 1, BrushModel.instance.brushOpacity);
 			_sldOpacity.labelPrecision = 2;
 			_sldOpacity.tick = 0.01;
 
@@ -86,7 +86,7 @@ package view
 			_stpNumLinks.addEventListener(Event.CHANGE, onNumLinksChanged);
 			_stpNumLinks.step = Constants.NUM_LINKS_STEP;
 			_stpNumLinks.minimum = Constants.NUM_LINKS_MIN;
-			_stpNumLinks.value = Constants.NUM_LINKS_DEFAULT;
+			_stpNumLinks.value = BrushModel.instance.brushNumLinks;
 			_stpNumLinks.maximum = Constants.NUM_LINKS_MAX;
 
 			_chkDebugDraw = new CheckBox(this, 0, 0, Strings.LBL_DEBUG, onDebugChanged);
@@ -96,7 +96,7 @@ package view
 			var blendModesAll:Array = BlendModes.getAll();
 			_cmbBlendMode = new ComboBox(this, 0, 0, "", blendModesAll);
 			_cmbBlendMode.numVisibleItems = blendModesAll.length;
-			_cmbBlendMode.selectedIndex = Constants.BRUSH_BLENDMODE_INDEX;
+			_cmbBlendMode.selectedIndex = BrushModel.instance.brushBlendModeIndex;
 			_cmbBlendMode.addEventListener(Event.SELECT, onBlendModeChanged);
 
 			_colorPicker = new ColorChooser(this, 0, 0, BrushModel.instance.brushColor, onColorChanged);
@@ -201,6 +201,7 @@ package view
 
 		protected function onBlendModeChanged(e:Event):void
 		{
+			BrushModel.instance.brushBlendModeIndex = _cmbBlendMode.selectedIndex;
 			BrushModel.instance.brushBlendMode = String(_cmbBlendMode.selectedItem);
 		}
 
