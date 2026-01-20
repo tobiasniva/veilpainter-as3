@@ -37,9 +37,9 @@ package view
 			// -- We make navbar icon buttons slightly larger than normal ui elements...
 			_btnSize = (Constants.UI_MAGIC_SIZE_NUMBER * 1.5) * AppModel.instance.uiScale;
 
-			_btnBrushSettings = new PushButton(this, 0, 0, Strings.LBL_BRUSH);
-			_btnCanvasSettings = new PushButton(this, 0, 0, Strings.LBL_CANVAS);
-			_btnAppSettings = new PushButton(this, 0, 0, Strings.LBL_SETTINGS);
+			_btnBrushSettings = new PushButton(this, 0, 0, Strings.LBL_BRUSH, onBrushSettings);
+			_btnCanvasSettings = new PushButton(this, 0, 0, Strings.LBL_CANVAS, onCanvasSettings);
+			_btnAppSettings = new PushButton(this, 0, 0, Strings.LBL_SETTINGS, onAppSettings);
 			_btnClear = new PushButton(this, 0, 0, Strings.LBL_CLEAR, onClearCanvas);
 			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);
 
@@ -47,11 +47,6 @@ package view
 			_btnBrushSettings.toggle = true;
 			_btnCanvasSettings.toggle = true;
 			_btnAppSettings.toggle = true;
-
-			//-- specific listeners, passing button indices here...to support state in model etc...
-			_btnBrushSettings.addEventListener(MouseEvent.CLICK, function(e:*):void { onShowSettings(SettingsViewActive.BRUSH); });
-			_btnCanvasSettings.addEventListener(MouseEvent.CLICK, function(e:*):void { onShowSettings(SettingsViewActive.CANVAS); });
-			_btnAppSettings.addEventListener(MouseEvent.CLICK, function(e:*):void { onShowSettings(SettingsViewActive.APP); });
 		}
 
 		public function layout(w:int, h:int, gridSize:int):void
@@ -101,6 +96,21 @@ package view
 			_btnBrushSettings.selected = (AppModel.instance.uiActiveSettingView == SettingsViewActive.BRUSH);
 			_btnCanvasSettings.selected = (AppModel.instance.uiActiveSettingView == SettingsViewActive.CANVAS);
 			_btnAppSettings.selected = (AppModel.instance.uiActiveSettingView == SettingsViewActive.APP);
+		}
+
+		private function onBrushSettings(e:Event):void
+		{
+			onShowSettings(SettingsViewActive.BRUSH);
+		}
+
+		private function onCanvasSettings(e:Event):void
+		{
+			onShowSettings(SettingsViewActive.CANVAS);
+		}
+
+		private function onAppSettings(e:Event):void
+		{
+			onShowSettings(SettingsViewActive.APP);
 		}
 
 		private function onClearCanvas(e:Event):void
