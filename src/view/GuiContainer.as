@@ -2,6 +2,8 @@ package view
 {
 	import core.AppEventBus;
 	import events.UIEvent;
+	import core.AppModel;
+	import data.SettingsViewActive;
 
 	public class GuiContainer extends GuiBase implements ILayout
 	{
@@ -17,18 +19,12 @@ package view
 
 		override protected function onAddedToStage():void
 		{
-			AppEventBus.instance.addEventListener(UIEvent.SHOW_BRUSH_SETTINGS, onShowSettings);
-			AppEventBus.instance.addEventListener(UIEvent.SHOW_CANVAS_SETTINGS, onShowSettings);
-			AppEventBus.instance.addEventListener(UIEvent.SHOW_APP_SETTINGS, onShowSettings);
-			AppEventBus.instance.addEventListener(UIEvent.HIDE_ACTIVE, onRemoveActive);
+			AppEventBus.instance.addEventListener(UIEvent.SELECTED_SETTINGS_INDEX_CHANGED, onShowSettings);
 		}
 
 		override protected function onRemovedFromStage():void
 		{
-			AppEventBus.instance.removeEventListener(UIEvent.SHOW_BRUSH_SETTINGS, onShowSettings);
-			AppEventBus.instance.removeEventListener(UIEvent.SHOW_CANVAS_SETTINGS, onShowSettings);
-			AppEventBus.instance.removeEventListener(UIEvent.SHOW_APP_SETTINGS, onShowSettings);
-			AppEventBus.instance.removeEventListener(UIEvent.HIDE_ACTIVE, onRemoveActive);
+			AppEventBus.instance.removeEventListener(UIEvent.SELECTED_SETTINGS_INDEX_CHANGED, onShowSettings);
 		}
 
 		private function onShowSettings(e:UIEvent):void
@@ -37,20 +33,29 @@ package view
 
 			removeActiveGui();
 
-			_activeGui = new GuiBrushSettings();
+			_activeGui = null;
 
-			switch(e.type)
+			switch(AppModel.instance.uiActiveSettingView)
 			{
-				case UIEvent.SHOW_CANVAS_SETTINGS:
+				case SettingsViewActive.BRUSH:
+					_activeGui = new GuiBrushSettings();
+					break;
+				case SettingsViewActive.CANVAS:
 					_activeGui = new GuiCanvasSettings();
 					break;
-				case UIEvent.SHOW_APP_SETTINGS:
+				case SettingsViewActive.APP:
 					_activeGui = new GuiAppSettings();
+					break;
+				case SettingsViewActive.NONE:
+					_activeGui = null;
 					break;
 			}
 
-			addChild(_activeGui);
-			ILayout(_activeGui).layout(_lastWidth, _lastHeight, _lastGridSize); //-- Layout directly...
+			if(_activeGui != null)
+			{
+				addChild(_activeGui);
+				ILayout(_activeGui).layout(_lastWidth, _lastHeight, _lastGridSize); //-- Layout directly...
+			}
 		}
 
 		private function onRemoveActive(event:Object):void

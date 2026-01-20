@@ -9,14 +9,14 @@ package view
 	import events.SaveEvent;
 	import core.AppModel;
 	import utils.BoundsFactory;
-	import events.UIEvent;
 	import flash.events.MouseEvent;
+	import data.SettingsViewActive;
 
 	public class GuiNavbar extends GuiBase implements ILayout
 	{
 		private var _btnBrushSettings:PushButton;
 		private var _btnCanvasSettings:PushButton;
-		private var _btnSettings:PushButton;
+		private var _btnAppSettings:PushButton;
 		private var _btnClear:PushButton;
 		private var _btnSaveImage:PushButton;
 
@@ -39,27 +39,19 @@ package view
 
 			_btnBrushSettings = new PushButton(this, 0, 0, Strings.LBL_BRUSH);
 			_btnCanvasSettings = new PushButton(this, 0, 0, Strings.LBL_CANVAS);
-			_btnSettings = new PushButton(this, 0, 0, Strings.LBL_SETTINGS);
+			_btnAppSettings = new PushButton(this, 0, 0, Strings.LBL_SETTINGS);
 			_btnClear = new PushButton(this, 0, 0, Strings.LBL_CLEAR, onClearCanvas);
 			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);
 
 			// -- support toggle state in buttons
 			_btnBrushSettings.toggle = true;
 			_btnCanvasSettings.toggle = true;
-			_btnSettings.toggle = true;
+			_btnAppSettings.toggle = true;
 
-			_btnBrushSettings.addEventListener(MouseEvent.CLICK, function(e:*):void
-				{
-					onSelect(0);
-				});
-			_btnCanvasSettings.addEventListener(MouseEvent.CLICK, function(e:*):void
-				{
-					onSelect(1);
-				});
-			_btnSettings.addEventListener(MouseEvent.CLICK, function(e:*):void
-				{
-					onSelect(2);
-				});
+			//-- specific listeners, passing button indices here...to support state in model etc...
+			_btnBrushSettings.addEventListener(MouseEvent.CLICK, function(e:*):void { onShowSettings(SettingsViewActive.BRUSH); });
+			_btnCanvasSettings.addEventListener(MouseEvent.CLICK, function(e:*):void { onShowSettings(SettingsViewActive.CANVAS); });
+			_btnAppSettings.addEventListener(MouseEvent.CLICK, function(e:*):void { onShowSettings(SettingsViewActive.APP); });
 		}
 
 		public function layout(w:int, h:int, gridSize:int):void
@@ -78,12 +70,12 @@ package view
 			_btnCanvasSettings.width = _btnSize;
 			_btnCanvasSettings.height = _btnSize;
 
-			_btnSettings.x = _btnCanvasSettings.x + _btnSize + gridSize;
-			_btnSettings.y = gridSize;
-			_btnSettings.width = _btnSize;
-			_btnSettings.height = _btnSize;
+			_btnAppSettings.x = _btnCanvasSettings.x + _btnSize + gridSize;
+			_btnAppSettings.y = gridSize;
+			_btnAppSettings.width = _btnSize;
+			_btnAppSettings.height = _btnSize;
 
-			_btnClear.x = _btnSettings.x + _btnSize + gridSize;
+			_btnClear.x = _btnAppSettings.x + _btnSize + gridSize;
 			_btnClear.y = gridSize;
 			_btnClear.width = _btnSize;
 			_btnClear.height = _btnSize;
@@ -92,47 +84,23 @@ package view
 			_btnSaveImage.y = gridSize;
 			_btnSaveImage.width = _btnSize;
 			_btnSaveImage.height = _btnSize;
+
+			updateButtonStates();
 		}
 
-		private function buttonStateFromModel():void
+		private function onShowSettings(index:int):void
 		{
-			_btnBrushSettings.selected = (AppModel.instance.uiSelectedSettingIndex == 0);
-			_btnCanvasSettings.selected = (AppModel.instance.uiSelectedSettingIndex == 1);
-			_btnSettings.selected = (AppModel.instance.uiSelectedSettingIndex == 2);
+			var activeView:int = index;
+			index == AppModel.instance.uiActiveSettingView ? activeView = SettingsViewActive.NONE : activeView = index;
+			AppModel.instance.uiActiveSettingView = activeView;
+			updateButtonStates();
 		}
 
-		private function onSelect(index:int):void
+		private function updateButtonStates():void
 		{
-			var actualIndex:int = index;
-
-			index == AppModel.instance.uiSelectedSettingIndex ? actualIndex = -1 : actualIndex = index;
-
-			AppModel.instance.uiSelectedSettingIndex = actualIndex;
-			buttonStateFromModel();
-			showSettings(actualIndex);
-		}
-
-		private function showSettings(index:int):void
-		{
-			switch (index)
-			{
-				case 0:
-					AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_BRUSH_SETTINGS));
-					break;
-
-				case 1:
-				AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_CANVAS_SETTINGS));
-					break;
-
-				case 2:
-					AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_APP_SETTINGS));
-					break;
-
-				default:
-					AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.HIDE_ACTIVE));
-					break;
-
-			};
+			_btnBrushSettings.selected = (AppModel.instance.uiActiveSettingView == SettingsViewActive.BRUSH);
+			_btnCanvasSettings.selected = (AppModel.instance.uiActiveSettingView == SettingsViewActive.CANVAS);
+			_btnAppSettings.selected = (AppModel.instance.uiActiveSettingView == SettingsViewActive.APP);
 		}
 
 		private function onClearCanvas(e:Event):void

@@ -3,6 +3,8 @@ package core {
     import data.Constants;
     import flash.geom.Point;
     import events.StageEvent;
+    import events.UIEvent;
+    import data.SettingsViewActive;
 
     public class AppModel
     {
@@ -13,14 +15,7 @@ package core {
         //-- App wise
         private var _stageSize:Point            = new Point(0, 0);
         private var _uiScale:Number             = Constants.UI_SCALE_DEFAULT;
-
-        private var _uiSelectedSettingIndex:int = -1;   //TODO: Make enum? 
-
-        public function get uiSelectedSettingIndex():int { return _uiSelectedSettingIndex; }
-        public function set uiSelectedSettingIndex(value:int):void
-        {
-        	_uiSelectedSettingIndex = value;
-        } 
+        private var _uiActiveSettingsView:int   = SettingsViewActive.NONE;
 
         //-- configs
         private var _debugDraw:Boolean          = false; //TODO: Figure out where supposed to live - if more bruhes etc?
@@ -29,13 +24,18 @@ package core {
         public var uiHideOnDraw:Boolean         = Constants.UI_HIDE_ON_DRAW_DEFAULT; //TODO: Implement getter/setter...
 
         //-- AppModel getters/setters with event dispatch
+        public function get uiActiveSettingView():int { return _uiActiveSettingsView; }
+        public function set uiActiveSettingView(value:int):void
+        {
+        	_uiActiveSettingsView = value;
+            AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SELECTED_SETTINGS_INDEX_CHANGED));
+        } 
 
         public function get debugDraw():Boolean { return _debugDraw; }
         public function set debugDraw(value:Boolean):void
         {
         	_debugDraw = value;
         }
-
 
         public function get debugBounds():Boolean {	return _debugBounds; }
         public function set debugBounds(value:Boolean):void {

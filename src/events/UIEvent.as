@@ -4,11 +4,8 @@ package events
 
     public class UIEvent extends Event
     {
-        public static const SHOW_BRUSH_SETTINGS:String = "showBrushSettings";
-        public static const SHOW_CANVAS_SETTINGS:String = "showCanvasSettings";
-        public static const SHOW_APP_SETTINGS:String = "showAppSettings";
+        public static const SELECTED_SETTINGS_INDEX_CHANGED:String = "selectedSettingsIndexChanged";
 
-        public static const HIDE_ACTIVE:String = "hideActiveSettings";
 
         public function UIEvent(type:String)
         {
