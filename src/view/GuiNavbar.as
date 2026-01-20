@@ -10,10 +10,10 @@ package view
 	import core.AppModel;
 	import utils.BoundsFactory;
 	import events.UIEvent;
+	import flash.events.MouseEvent;
 
 	public class GuiNavbar extends GuiBase implements ILayout
 	{
-		private var _btnSize:int;
 		private var _btnBrushSettings:PushButton;
 		private var _btnCanvasSettings:PushButton;
 		private var _btnSettings:PushButton;
@@ -21,6 +21,7 @@ package view
 		private var _btnSaveImage:PushButton;
 
 		// -- public for outside layout use...
+		private var _btnSize:int;
 		public function get btnSize():int
 		{
 			return _btnSize;
@@ -36,11 +37,29 @@ package view
 			// -- We make navbar icon buttons slightly larger than normal ui elements...
 			_btnSize = (Constants.UI_MAGIC_SIZE_NUMBER * 1.5) * AppModel.instance.uiScale;
 
-			_btnBrushSettings = new PushButton(this, 0, 0, Strings.LBL_BRUSH, onBrushSettings);
-			_btnCanvasSettings = new PushButton(this, 0, 0, Strings.LBL_CANVAS, onCanvasSettings);
-			_btnSettings = new PushButton(this, 0, 0, Strings.LBL_SETTINGS, onSettings);
+			_btnBrushSettings = new PushButton(this, 0, 0, Strings.LBL_BRUSH);
+			_btnCanvasSettings = new PushButton(this, 0, 0, Strings.LBL_CANVAS);
+			_btnSettings = new PushButton(this, 0, 0, Strings.LBL_SETTINGS);
 			_btnClear = new PushButton(this, 0, 0, Strings.LBL_CLEAR, onClearCanvas);
 			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);
+
+			// -- support toggle state in buttons
+			_btnBrushSettings.toggle = true;
+			_btnCanvasSettings.toggle = true;
+			_btnSettings.toggle = true;
+
+			_btnBrushSettings.addEventListener(MouseEvent.CLICK, function(e:*):void
+				{
+					onSelect(0);
+				});
+			_btnCanvasSettings.addEventListener(MouseEvent.CLICK, function(e:*):void
+				{
+					onSelect(1);
+				});
+			_btnSettings.addEventListener(MouseEvent.CLICK, function(e:*):void
+				{
+					onSelect(2);
+				});
 		}
 
 		public function layout(w:int, h:int, gridSize:int):void
@@ -75,19 +94,45 @@ package view
 			_btnSaveImage.height = _btnSize;
 		}
 
-		private function onBrushSettings(e:Event):void
+		private function buttonStateFromModel():void
 		{
-			AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_BRUSH_SETTINGS));
+			_btnBrushSettings.selected = (AppModel.instance.uiSelectedSettingIndex == 0);
+			_btnCanvasSettings.selected = (AppModel.instance.uiSelectedSettingIndex == 1);
+			_btnSettings.selected = (AppModel.instance.uiSelectedSettingIndex == 2);
 		}
 
-		private function onCanvasSettings(e:Event):void
+		private function onSelect(index:int):void
 		{
-			AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_CANVAS_SETTINGS));
+			var actualIndex:int = index;
+
+			index == AppModel.instance.uiSelectedSettingIndex ? actualIndex = -1 : actualIndex = index;
+
+			AppModel.instance.uiSelectedSettingIndex = actualIndex;
+			buttonStateFromModel();
+			showSettings(actualIndex);
 		}
 
-		private function onSettings(e:Event):void
+		private function showSettings(index:int):void
 		{
-			AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_APP_SETTINGS));
+			switch (index)
+			{
+				case 0:
+					AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_BRUSH_SETTINGS));
+					break;
+
+				case 1:
+				AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_CANVAS_SETTINGS));
+					break;
+
+				case 2:
+					AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.SHOW_APP_SETTINGS));
+					break;
+
+				default:
+					AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.HIDE_ACTIVE));
+					break;
+
+			};
 		}
 
 		private function onClearCanvas(e:Event):void
@@ -95,9 +140,6 @@ package view
 			// -- Hack just to trigger event to reset canvas...
 			var col:uint = CanvasModel.instance.color;
 			CanvasModel.instance.color = col;
-
-			// -- Temp use to hide active gui...
-			AppEventBus.instance.dispatchEvent(new UIEvent(UIEvent.HIDE_ACTIVE));
 		}
 
 		private function onSaveImageToDesktop(e:Event):void

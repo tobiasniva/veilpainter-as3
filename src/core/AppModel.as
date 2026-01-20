@@ -14,6 +14,14 @@ package core {
         private var _stageSize:Point            = new Point(0, 0);
         private var _uiScale:Number             = Constants.UI_SCALE_DEFAULT;
 
+        private var _uiSelectedSettingIndex:int = -1;   //TODO: Make enum? 
+
+        public function get uiSelectedSettingIndex():int { return _uiSelectedSettingIndex; }
+        public function set uiSelectedSettingIndex(value:int):void
+        {
+        	_uiSelectedSettingIndex = value;
+        } 
+
         //-- configs
         private var _debugDraw:Boolean          = false; //TODO: Figure out where supposed to live - if more bruhes etc?
         private var _debugBounds:Boolean        = Constants.UI_DEBUG_BOUNDS_DEFAULT;
