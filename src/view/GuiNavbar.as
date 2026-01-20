@@ -9,7 +9,6 @@ package view
 	import events.SaveEvent;
 	import core.AppModel;
 	import utils.BoundsFactory;
-	import flash.events.MouseEvent;
 	import data.SettingsViewActive;
 
 	public class GuiNavbar extends GuiBase implements ILayout

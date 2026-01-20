@@ -6,6 +6,7 @@ package view
 	import events.StageEvent;
 	import data.Constants;
 	import ui.StyleSizer;
+	import data.AlignHorizontal;
 
 	public class Gui extends GuiBase implements ILayout
 	{
@@ -35,21 +36,17 @@ package view
 
 		override protected function onInit():void
 		{
-			trace("Gui::onInit");
 			createContainers();
 		}
 
 		private function onUiScaleChanged(e:StageEvent):void
 		{
-			trace("Gui::onUiScaleChanged");
 			createContainers();
 			onStageSizeChanged();
 		}
 
 		private function onStageSizeChanged(e:StageEvent = null):void
 		{
-			trace("Gui::onStageSizeChanged: " + AppModel.instance.stageSize);
-
 			var width:Number = AppModel.instance.stageSize.x;
 			width = Math.min(width, Constants.UI_MAX_WIDTH); // We cap gui-container widths...
 
@@ -61,22 +58,31 @@ package view
 
 		public function layout(width:int, height:int, gridSize:int):void
 		{
-			trace("Gui::layout: w=" + width + " h=" + height + " gridSize=" + gridSize);
-
-			// TODO: Figure out if we want left/center/right alignment configurable...
-			var xpos:int = (AppModel.instance.stageSize.x - width) / 2; // center...
+			var xpos:int = alignedX(AppModel.instance.stageSize.x, width, AppModel.instance.uiAlignH);
 			var navbarHeight:Number = _navbar.btnSize + (gridSize * 2);
 			var navBarY:Number = AppModel.instance.stageSize.y - navbarHeight;
 
-			// TODO: Positioning - left/center/right, but always bottom?
 			_navbar.layout(width, navbarHeight, gridSize);
 			_navbar.x = xpos;
 			_navbar.y = navBarY;
 
-			// TODO: Positioning - left/center/right, top/bottom? (bottom huggging navbar...)
 			_container.layout(width, height - navbarHeight, gridSize);
 			_container.x = xpos;
 			_container.y = 0;
+		}
+
+		private function alignedX(stageW:int, blockW:int, alignH:int):int
+		{
+			switch (alignH)
+			{
+				case AlignHorizontal.LEFT:
+					return 0;
+				case AlignHorizontal.RIGHT:
+					return stageW - blockW;
+				case AlignHorizontal.CENTER:
+				default:
+					return (stageW - blockW) / 2;
+			}
 		}
 
 		private function createContainers():void
