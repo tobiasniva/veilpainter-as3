@@ -22,6 +22,15 @@
     {
       "type": "swf",
       "request": "launch",
+      "name": "Tablet Landscape GUI",
+      "preLaunchTask": "TNA-Desktop_compile_copy_assets",
+      "screensize": "2048x1280:2048x1232",
+      "screenDPI": 320,
+      "versionPlatform": "AND"
+    },
+    {
+      "type": "swf",
+      "request": "launch",
       "name": "Desktop GUI",
       "preLaunchTask": "TNA-Desktop_compile_copy_assets",
       "screensize": "1920x1080:1920x1040",

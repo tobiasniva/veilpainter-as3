@@ -12,6 +12,7 @@ package
 	import view.Canvas;
 	import services.ViewportService;
 	import services.SaveImageService;
+	import com.bit101.components.Style;
 
 	[SWF(backgroundColor="#000000", frameRate="60", width="1024", height="768")]
 	public class VeilPainter extends Sprite
@@ -46,6 +47,7 @@ package
 			// -- Inits...
 			// -- TODO: Implement prefs...
 			
+			Style.setStyle(Style.DARK); //TODO: Figure out if we even want this configurable...
 			// AppModel.instance.uiScale = UiScaleUtil.computeUiScale(); //TODO: Where init...? Save in prefs, and skip...?
 			SaveImageService.init();
 
@@ -54,7 +56,7 @@ package
 			addChild(_canvas);
 
 			//-- Create brush
-			var initAlphaImage:Bitmap = AlphaImages.getAll()[0].bitmap;
+			var initAlphaImage:Bitmap = AlphaImages.getAll()[0].bitmap; //TODO: Nicer solution...
 			_brush = new Brush(initAlphaImage);
 			addChild(_brush); // above canvas
 			
@@ -62,7 +64,7 @@ package
 			_gui = new Gui();
 			addChild(_gui); // above brush
 
-			//-- Viewport resize/orientation listener - RELIES ON GUI BEING INITIALIZED!
+			//-- Viewport resize/orientation listener - relies on gui being initialized...?
 			_viewportService = new ViewportService(stage);
 		}
 	}

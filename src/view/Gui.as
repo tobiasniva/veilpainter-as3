@@ -1,12 +1,11 @@
 package view
 {
-	import com.bit101.components.Style;
 	import core.AppEventBus;
 	import events.CanvasEvent;
 	import core.AppModel;
-	import ui.StyleSizer;
 	import events.StageEvent;
 	import data.Constants;
+	import ui.StyleSizer;
 
 	public class Gui extends GuiBase implements ILayout
 	{
@@ -93,7 +92,6 @@ package view
 			_navbar = null;
 			_container = null;
 
-			Style.setStyle(Style.DARK);
 			StyleSizer.ComponentScale(AppModel.instance.uiScale);
 
 			_navbar = new GuiNavbar();

@@ -24,10 +24,11 @@ package data
 		public static const LBL_CLEAR:String                = "Clr";
 		public static const LBL_SAVE:String                 = "Sav";
 
+		public static const LBL_LEFT:String                 = "Left";
+		public static const LBL_CENTER:String				= "Center";
+		public static const LBL_RIGHT:String                = "Right";
 
-		public static const PHONE_PORTRAIT:String           = "phone_portrait";
-		public static const PHONE_LANDSCAPE:String          = "phone_landscape";
-		public static const TABLET_PORTRAIT:String          = "tablet_portrait";
-		public static const TABLET_LANDSCAPE:String         = "tablet_landscape";
+		public static const LBL_TOP:String               	= "Top";
+		public static const LBL_BOTTOM:String               = "Bottom";
 	}
 }

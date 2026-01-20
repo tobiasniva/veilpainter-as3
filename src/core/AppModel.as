@@ -16,6 +16,9 @@ package core {
         private var _stageSize:Point            = new Point(0, 0);
         private var _uiScale:Number             = Constants.UI_SCALE_DEFAULT;
         private var _uiActiveSettingsView:int   = SettingsViewActive.NONE;
+        private var _uiAlignH:int = Constants.UI_ALIGN_H_DEFAULT;
+        private var _uiAlignV:int = Constants.UI_ALIGN_V_DEFAULT;
+
 
         //-- configs
         private var _debugDraw:Boolean          = false; //TODO: Figure out where supposed to live - if more bruhes etc?
@@ -24,6 +27,20 @@ package core {
         public var uiHideOnDraw:Boolean         = Constants.UI_HIDE_ON_DRAW_DEFAULT; //TODO: Implement getter/setter...
 
         //-- AppModel getters/setters with event dispatch
+        public function get uiAlignV():int { return _uiAlignV; }
+        public function set uiAlignV(value:int):void
+        {
+        	_uiAlignV = value;
+            AppEventBus.instance.dispatchEvent(new StageEvent(StageEvent.STAGE_SIZE_CHANGED));
+        }
+
+        public function get uiAlignH():int { return _uiAlignH; }
+        public function set uiAlignH(value:int):void
+        {
+        	_uiAlignH = value;
+            AppEventBus.instance.dispatchEvent(new StageEvent(StageEvent.STAGE_SIZE_CHANGED));
+        }
+
         public function get uiActiveSettingView():int { return _uiActiveSettingsView; }
         public function set uiActiveSettingView(value:int):void
         {
