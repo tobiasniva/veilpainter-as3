@@ -1,95 +1,97 @@
 package view
 {
-	import core.AppEventBus;
-	import events.UIEvent;
-	import core.AppModel;
-	import data.SettingsViewActive;
+    import core.AppEventBus;
+    import core.AppModel;
+    import data.SettingsViewActive;
+    import events.UIEvent;
 
-	public class GuiContainer extends GuiBase implements ILayout
-	{
-		private var _activeGui:GuiBase;
-		private var _lastWidth:int;
-		private var _lastHeight:int;
-		private var _lastGridSize:int;
+    public class GuiContainer extends GuiBase implements ILayout
+    {
+        private var _activeGui:GuiBase;
 
-		public function GuiContainer()
-		{
-			super();
-		}
+        // last known layout inputs (used when view changes)
+        private var _w:int = 0;
+        private var _h:int = 0;
+        private var _grid:int = 0;
+        private var _hasLayout:Boolean = false;
 
-		override protected function onAddedToStage():void
-		{
-			AppEventBus.instance.addEventListener(UIEvent.SELECTED_SETTINGS_INDEX_CHANGED, onShowSettings);
-		}
+        public function GuiContainer()
+        {
+            super();
+        }
 
-		override protected function onRemovedFromStage():void
-		{
-			AppEventBus.instance.removeEventListener(UIEvent.SELECTED_SETTINGS_INDEX_CHANGED, onShowSettings);
-		}
+        override protected function onAddedToStage():void
+        {
+            AppEventBus.instance.addEventListener(UIEvent.SELECTED_SETTINGS_INDEX_CHANGED, onActiveViewChanged);
 
-		private function onShowSettings(e:UIEvent):void
-		{
-			trace("GuiContainer::onShowSettings");
+            // Ensure we reflect current model state when added
+            setActiveView(AppModel.instance.uiActiveSettingView);
+        }
 
-			removeActiveGui();
+        override protected function onRemovedFromStage():void
+        {
+            AppEventBus.instance.removeEventListener(UIEvent.SELECTED_SETTINGS_INDEX_CHANGED, onActiveViewChanged);
+        }
 
-			_activeGui = null;
+        private function onActiveViewChanged(e:UIEvent):void
+        {
+            setActiveView(AppModel.instance.uiActiveSettingView);
+        }
 
-			switch(AppModel.instance.uiActiveSettingView)
-			{
-				case SettingsViewActive.BRUSH:
-					_activeGui = new GuiBrushSettings();
-					break;
-				case SettingsViewActive.CANVAS:
-					_activeGui = new GuiCanvasSettings();
-					break;
-				case SettingsViewActive.APP:
-					_activeGui = new GuiAppSettings();
-					break;
-				case SettingsViewActive.NONE:
-					_activeGui = null;
-					break;
-			}
+        private function setActiveView(viewId:int):void
+        {
+            var next:GuiBase = createView(viewId);
 
-			if(_activeGui != null)
-			{
-				addChild(_activeGui);
-				ILayout(_activeGui).layout(_lastWidth, _lastHeight, _lastGridSize); //-- Layout directly...
-			}
-		}
+            //-- If later decide to cache...?
+            if (next === _activeGui) return;
 
-		private function onRemoveActive(event:Object):void
-		{
-			trace("GuiContainer::onRemoveActive");
-			removeActiveGui();
-		}
+            swapActive(next);
+            applyLayoutIfPossible();
+        }
 
-		public function layout(w:int, h:int, gridSize:int):void
-		{
-			trace("GuiContainer::layout: w=" + width + " h=" + height + " gridSize=" + gridSize);
+        private function createView(viewId:int):GuiBase
+        {
+            switch(viewId)
+            {
+                case SettingsViewActive.BRUSH:  return new GuiBrushSettings();
+                case SettingsViewActive.CANVAS: return new GuiCanvasSettings();
+                case SettingsViewActive.APP:    return new GuiAppSettings();
+                case SettingsViewActive.NONE:
+                default:
+                    return null;
+            }
+        }
 
-			// if (AppModel.instance.debugBounds)
-			// 	BoundsFactory.drawBounds(this, w, h, 0xff00ff, 0.0);
+        private function swapActive(next:GuiBase):void
+        {
+            if (_activeGui && contains(_activeGui))
+                removeChild(_activeGui);
 
-			// -- Update local values, needed for when showing/layouting a gui "later"...
-			_lastWidth = w;
-			_lastHeight = h;
-			_lastGridSize = gridSize;
+            _activeGui = next;
 
-			if (_activeGui != null && "layout" in _activeGui)
-			{
-				ILayout(_activeGui).layout(w, h, gridSize);
-			}
-		}
+            if (_activeGui)
+                addChild(_activeGui);
+        }
 
-		private function removeActiveGui():void
-		{
-			if (_activeGui != null)
-			{
-				if (contains(_activeGui))
-					removeChild(_activeGui);
-				_activeGui = null;
-			}
-		}
-	}
+        public function layout(w:int, h:int, gridSize:int):void
+        {
+            _w = w;
+            _h = h;
+            _grid = gridSize;
+            _hasLayout = true;
+
+            applyLayoutIfPossible();
+        }
+
+        private function applyLayoutIfPossible():void
+        {
+            if (!_hasLayout) return;
+            if (!_activeGui) return;
+
+            // No need for `"layout" in _activeGui` if you control these classes and
+            // expect them to implement ILayout. If not all do, keep the check.
+            if (_activeGui is ILayout)
+                ILayout(_activeGui).layout(_w, _h, _grid);
+        }
+    }
 }
