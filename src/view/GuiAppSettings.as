@@ -25,8 +25,9 @@ package view
 		private var _cmbAlignH:ComboBox;
 		private var _cmbAlignV:ComboBox;
 
-		private var _btnIconTEMP:IconPushButton;
 		private var _sldTEMP:LabeledHSlider;
+		private var _btnIconDbg:IconPushButton;
+		private var _btnPreset:IconPushButton;
 
 		private var _panel:GuiPanel;
 
@@ -82,9 +83,12 @@ package view
 			_sldTEMP.value = 0.45;
 			_sldTEMP.tick = 0.05;
 
-			_btnIconTEMP = new IconPushButton(this);
-			_btnIconTEMP.icon = IconImages.iconTest();
-			_btnIconTEMP.iconPosition = IconPushButton.ICON_ONLY;
+			_btnIconDbg = new IconPushButton(this);
+			_btnIconDbg.icon = IconImages.iconTest();
+
+			_btnPreset = new IconPushButton(this);
+			_btnPreset.icon = IconImages.iconPreset();
+
 			//--
 
 			_panel = new GuiPanel();
@@ -132,9 +136,13 @@ package view
 			_sldTEMP.y = yOff;
 			_sldTEMP.width = gridSize * 10;
 
-			_btnIconTEMP.width = _btnIconTEMP.height;
-			_btnIconTEMP.x = w - _btnIconTEMP.width - gridSize;
-			_btnIconTEMP.y = yOff;
+			_btnIconDbg.width = _btnIconDbg.height;
+			_btnIconDbg.x = w - _btnIconDbg.width - gridSize;
+			_btnIconDbg.y = yOff;
+
+			_btnPreset.width = _btnPreset.height;
+			_btnPreset.x = _btnIconDbg.x - _btnIconDbg.width - gridSize;
+			_btnPreset.y = yOff;
 			//--
 
 			var panelH:int = yOff + _cmbAlignV.height + gridSize;
