@@ -15,9 +15,9 @@ package core {
         //-- App wise
         private var _stageSize:Point            = new Point(0, 0);
         private var _uiScale:Number             = Constants.UI_SCALE_DEFAULT;
-        private var _uiActiveSettingsView:int   = SettingsViewActive.APP;
-        private var _uiAlignH:int = Constants.UI_ALIGN_H_DEFAULT;
-        private var _uiAlignV:int = Constants.UI_ALIGN_V_DEFAULT;
+        private var _uiActiveSettingsView:int   = Constants.UI_ACTIVE_VIEW_DEFAULT;
+        private var _uiAlignH:int               = Constants.UI_ALIGN_H_DEFAULT;
+        private var _uiAlignV:int               = Constants.UI_ALIGN_V_DEFAULT;
 
 
         //-- configs

@@ -4,7 +4,6 @@ package view
 	import com.bit101.components.CheckBox;
 	import com.bit101.components.ColorChooser;
 	import com.bit101.components.ComboBox;
-	import com.bit101.components.HUISlider;
 	import com.bit101.components.Label;
 	import com.bit101.components.NumericStepper;
 	import com.bit101.components.PushButton;
@@ -15,14 +14,14 @@ package view
 	import data.Strings;
 	import flash.events.Event;
 	import core.AppModel;
-	import utils.BoundsFactory;
+	import ui.components.LabeledHSlider;
 
 	public class GuiBrushSettings extends GuiBase implements ILayout
 	{
-		private var _sldElasticity:HUISlider;
-		private var _sldStrength:HUISlider;
-		private var _sldStrengthDegradation:HUISlider;
-		private var _sldOpacity:HUISlider;
+		private var _sldElasticity:LabeledHSlider;
+		private var _sldStrength:LabeledHSlider;
+		private var _sldStrengthDegradation:LabeledHSlider;
+		private var _sldOpacity:LabeledHSlider;
 
 		private var _stpNumLinks:NumericStepper;
 		private var _cmbAlphaImage:ComboBox;
@@ -45,21 +44,21 @@ package view
 
 		override protected function onInit():void
         {
-			_sldElasticity = new HUISlider(this);
+			_sldElasticity = new LabeledHSlider(this);
 			_sldElasticity.label = Strings.LBL_ELASTICITY;
 			_sldElasticity.addEventListener(Event.CHANGE, onElasticityChanged);
 			_sldElasticity.setSliderParams(Constants.ELASTICITY_MIN, Constants.ELASTICITY_MAX, BrushModel.instance.brushElasticity);
 			_sldElasticity.labelPrecision = 2;
 			_sldElasticity.tick = 0.01;
 
-			_sldStrength = new HUISlider(this);
+			_sldStrength = new LabeledHSlider(this);
 			_sldStrength.label = Strings.LBL_STRENGTH;
 			_sldStrength.addEventListener(Event.CHANGE, onStrengthChanged);
 			_sldStrength.setSliderParams(Constants.STRENGTH_MIN, Constants.STRENGTH_MAX, BrushModel.instance.brushStrength);
 			_sldStrength.labelPrecision = 3;
 			_sldStrength.tick = 0.001;
 
-			_sldStrengthDegradation = new HUISlider(this);
+			_sldStrengthDegradation = new LabeledHSlider(this);
 			_sldStrengthDegradation.label = Strings.LBL_STRENGTH_DEGR;
 			_sldStrengthDegradation.addEventListener(Event.CHANGE, onStrengthDegradationChanged);
 			_sldStrengthDegradation.setSliderParams(Constants.DEGRADATION_MIN, Constants.DEGRADATION_MAX, BrushModel.instance.brushDegradation);
@@ -67,7 +66,6 @@ package view
 			_sldStrengthDegradation.tick = 0.01;
 
 			// _lblAlphaImage = new Label(this, 0, 0, Strings.LBL_ALPHA_IMG);
-
 			_cmbAlphaImage = new ComboBox(this);
 			for each (var img:ImageWithLabel in AlphaImages.getAll())
 			{
@@ -77,7 +75,8 @@ package view
 			_cmbAlphaImage.numVisibleItems = AlphaImages.getAll().length;
 			_cmbAlphaImage.addEventListener(Event.SELECT, onAlphaImageChanged);
 
-			_sldOpacity = new HUISlider(this);
+			_sldOpacity = new LabeledHSlider(this);
+			_sldOpacity.label = Strings.LBL_OPACITY;
 			_sldOpacity.addEventListener(Event.CHANGE, onOpacityChanged);
 			_sldOpacity.setSliderParams(0, 1, BrushModel.instance.brushOpacity);
 			_sldOpacity.labelPrecision = 2;
@@ -116,8 +115,7 @@ package view
 			var yOff:int = gridSize;
 			var halfX:int = gridSize * 12;
 			var halfW:int = gridSize * 13;
-			var fullSldW:int = (gridSize - 2 + uiscale) * 23.5; // Hack, since slider width are wonky when scaled (label sizes fuck up?)
-
+			var fullSldW:int = gridSize * 22;
 
 			//-- 1st row
 			_cmbBlendMode.x = gridSize;
@@ -144,7 +142,7 @@ package view
 			// 3rd row
 			_sldOpacity.x = gridSize;
 			_sldOpacity.y = yOff;
-			_sldOpacity.width = gridSize * 18;
+			_sldOpacity.width = halfW;
 
 			_chkDebugDraw.x = w - _chkDebugDraw.width - gridSize;
 			_chkDebugDraw.y = yOff + (gridSize / 2)  * (uiscale / 4); // Hack to line up when ui-scaled...

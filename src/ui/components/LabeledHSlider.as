@@ -7,9 +7,12 @@ package ui.components
     import flash.display.DisplayObjectContainer;
     import flash.events.Event;
     import flash.text.TextField;
+    import data.Constants;
 
     public class LabeledHSlider extends Component
     {
+        private const TEXT_FUDGE:Number = 6; // Small safety margin because TextField metrics can be tight.
+
         private var _slider:HSlider;
         private var _nameLabel:Label;
         private var _valueLabel:Label;
@@ -17,11 +20,8 @@ package ui.components
         private var _nameText:String = "";
         private var _precision:int = 2;
 
-        private var _paddingLeft:Number = 10;
+        private var _paddingLeft:Number = 16;
         private var _paddingRight:Number = 10;
-
-        // Small safety margin because TextField metrics can be tight.
-        private const TEXT_FUDGE:Number = 6;
 
         public function LabeledHSlider(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0,
                                        nameText:String = "", defaultValue:Number = 0, callback:Function = null)
@@ -36,6 +36,9 @@ package ui.components
 
             _nameLabel = new Label(this, 0, 0, _nameText);
             _valueLabel = new Label(this, 0, 0, "");
+
+            _nameLabel.alpha = Constants.UI_SLIDER_LABEL_ALPHA;
+            _valueLabel.alpha = Constants.UI_SLIDER_LABEL_ALPHA;
 
             // Do not block drag
             _nameLabel.mouseEnabled = _nameLabel.mouseChildren = false;
@@ -64,14 +67,24 @@ package ui.components
         public function get labelPrecision():int { return _precision; }
         public function set labelPrecision(v:int):void { _precision = v; updateValueTextAndPosition(); }
 
-        public function get nameText():String { return _nameText; }
-        public function set nameText(v:String):void { _nameText = v; _nameLabel.text = v; invalidate(); }
+        public function get label():String { return _nameText; }
+        public function set label(v:String):void { _nameText = v; _nameLabel.text = v; invalidate(); }
 
         public function get paddingLeft():Number { return _paddingLeft; }
         public function set paddingLeft(v:Number):void { _paddingLeft = v; invalidate(); }
 
         public function get paddingRight():Number { return _paddingRight; }
         public function set paddingRight(v:Number):void { _paddingRight = v; invalidate(); }
+
+        public function get tick():Number { return _slider.tick; }
+        public function set tick(v:Number):void { _slider.tick = v; }
+
+        public function setSliderParams(min:Number, max:Number, value:Number):void
+        {
+            _slider.setSliderParams(min, max, value);
+            updateValueTextAndPosition();
+            dispatchEvent(new Event(Event.CHANGE));
+        }
 
         override public function setSize(w:Number, h:Number):void
         {

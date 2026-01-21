@@ -7,9 +7,10 @@ package data
 	 */
 	public class Strings
 	{
-		public static const LBL_ELASTICITY:String           = "E";  //Elasticity
-		public static const LBL_STRENGTH:String             = "S";  //Strength
-		public static const LBL_STRENGTH_DEGR:String        = "D";  //Strength degr
+		public static const LBL_ELASTICITY:String           = "Elastic";	//Elasticity
+		public static const LBL_STRENGTH:String             = "Stiff";  	//Strength
+		public static const LBL_STRENGTH_DEGR:String        = "Damp";  		//Strength degr
+		public static const LBL_OPACITY:String        		= "Opac";		//Opacity
 		
 		public static const LBL_ALPHA_IMG:String            = "Alpha img";
 		public static const LBL_NUM_LINKS:String            = "Num links";

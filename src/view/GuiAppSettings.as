@@ -76,15 +76,16 @@ package view
 			_cmbAlignV.addEventListener(Event.SELECT, onAlignVerticalChanged);
 
 			//TODO: TEMPS!
-			_btnIconTEMP = new IconPushButton(this);
-			_btnIconTEMP.icon = IconImages.iconTest();
-			_btnIconTEMP.iconPosition = IconPushButton.ICON_ONLY;
-
 			_sldTEMP = new LabeledHSlider(this, 0, 0, "Test", 0.0, onTempSliderChanged);
 			_sldTEMP.minimum = 0.05;
 			_sldTEMP.maximum = 0.95;
 			_sldTEMP.value = 0.45;
+			_sldTEMP.tick = 0.05;
 
+			_btnIconTEMP = new IconPushButton(this);
+			_btnIconTEMP.icon = IconImages.iconTest();
+			_btnIconTEMP.iconPosition = IconPushButton.ICON_ONLY;
+			//--
 
 			_panel = new GuiPanel();
 			addChildAt(_panel, 0);
@@ -134,7 +135,7 @@ package view
 			_btnIconTEMP.width = _btnIconTEMP.height;
 			_btnIconTEMP.x = w - _btnIconTEMP.width - gridSize;
 			_btnIconTEMP.y = yOff;
-
+			//--
 
 			var panelH:int = yOff + _cmbAlignV.height + gridSize;
 
