@@ -16,4 +16,4 @@ _gfx/
 *.air
 *.ipa
 *.apk
-art/gui-grid.psd
+# art/gui-grid.psd

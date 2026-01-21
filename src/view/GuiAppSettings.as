@@ -12,8 +12,9 @@ package view
 	import com.bit101.components.ComboBox;
 	import data.AlignHorizontal;
 	import data.AlignVertical;
-	import ui.IconPushButton;
+	import ui.components.IconPushButton;
 	import data.IconImages;
+	import ui.components.LabeledHSlider;
 
 	public class GuiAppSettings extends GuiBase implements ILayout
 	{
@@ -23,7 +24,9 @@ package view
 		private var _chkDebugBounds:CheckBox;
 		private var _cmbAlignH:ComboBox;
 		private var _cmbAlignV:ComboBox;
-		private var _btnWithIcon:IconPushButton;
+
+		private var _btnIconTEMP:IconPushButton;
+		private var _sldTEMP:LabeledHSlider;
 
 		private var _panel:GuiPanel;
 
@@ -72,9 +75,16 @@ package view
 			_cmbAlignV.numVisibleItems = 2;
 			_cmbAlignV.addEventListener(Event.SELECT, onAlignVerticalChanged);
 
-			_btnWithIcon = new IconPushButton(this);
-			_btnWithIcon.icon = IconImages.iconTest();
-			_btnWithIcon.iconPosition = IconPushButton.ICON_ONLY;
+			//TODO: TEMPS!
+			_btnIconTEMP = new IconPushButton(this);
+			_btnIconTEMP.icon = IconImages.iconTest();
+			_btnIconTEMP.iconPosition = IconPushButton.ICON_ONLY;
+
+			_sldTEMP = new LabeledHSlider(this, 0, 0, "Namn", 0.0, onTempSliderChanged);
+			// _sldTEMP.minimum = 0.05;
+			// _sldTEMP.maximum = 0.95;
+			// _sldTEMP.value = 0.45;
+			// _sldTEMP.tick = 0.05;
 
 			_panel = new GuiPanel();
 			addChildAt(_panel, 0);
@@ -117,9 +127,15 @@ package view
 			//TODO: TEMP IconPushButton tests!
 			yOff += gridSize * uiscale; // incr yOff
 
-			_btnWithIcon.x = gridSize * 13;
-			_btnWithIcon.y = yOff;
-			_btnWithIcon.width = gridSize * 2;
+			_sldTEMP.x = gridSize;
+			_sldTEMP.y = yOff;
+			_sldTEMP.width = gridSize * 10;
+			// _sldTEMP.setSize(gridSize * 10, _sldTEMP.height);
+
+			_btnIconTEMP.width = _btnIconTEMP.height;
+			_btnIconTEMP.x = w - _btnIconTEMP.width - gridSize;
+			_btnIconTEMP.y = yOff;
+
 
 			var panelH:int = yOff + _cmbAlignV.height + gridSize;
 
@@ -127,6 +143,12 @@ package view
 				_panel.drawDebug(w, panelH);
 			else
 				_panel.draw( w, panelH);
+		}
+
+		// TODO: Temp stuff - remove...
+		private function onTempSliderChanged(e:Event):void
+		{
+			trace("tmp sld: " +  _sldTEMP.value);
 		}
 
 		// -- App settings handlers...

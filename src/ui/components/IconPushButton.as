@@ -1,4 +1,4 @@
-package ui
+package ui.components
 {
     import flash.display.DisplayObject;
     import flash.display.DisplayObjectContainer;
@@ -8,6 +8,7 @@ package ui
 
     import com.bit101.components.PushButton;
     import com.bit101.components.Style;
+    import ui.StyleSizer;
 
     /**
      * IconPushButton
