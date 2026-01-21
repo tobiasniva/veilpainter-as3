@@ -12,7 +12,8 @@ package view
 	import com.bit101.components.ComboBox;
 	import data.AlignHorizontal;
 	import data.AlignVertical;
-	import flash.display.Sprite;
+	import ui.IconPushButton;
+	import data.IconImages;
 
 	public class GuiAppSettings extends GuiBase implements ILayout
 	{
@@ -22,6 +23,7 @@ package view
 		private var _chkDebugBounds:CheckBox;
 		private var _cmbAlignH:ComboBox;
 		private var _cmbAlignV:ComboBox;
+		private var _btnWithIcon:IconPushButton;
 
 		private var _panel:GuiPanel;
 
@@ -70,6 +72,10 @@ package view
 			_cmbAlignV.numVisibleItems = 2;
 			_cmbAlignV.addEventListener(Event.SELECT, onAlignVerticalChanged);
 
+			_btnWithIcon = new IconPushButton(this);
+			_btnWithIcon.icon = IconImages.iconTest();
+			_btnWithIcon.iconPosition = IconPushButton.ICON_ONLY;
+
 			_panel = new GuiPanel();
 			addChildAt(_panel, 0);
 		}
@@ -107,6 +113,13 @@ package view
 			_cmbAlignV.x = w - halfW - gridSize;
 			_cmbAlignV.y = yOff;
 			_cmbAlignV.width = halfW;
+
+			//TODO: TEMP IconPushButton tests!
+			yOff += gridSize * uiscale; // incr yOff
+
+			_btnWithIcon.x = gridSize * 13;
+			_btnWithIcon.y = yOff;
+			_btnWithIcon.width = gridSize * 2;
 
 			var panelH:int = yOff + _cmbAlignV.height + gridSize;
 
