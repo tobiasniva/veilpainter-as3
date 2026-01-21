@@ -4,13 +4,14 @@ package view
 	import com.bit101.components.NumericStepper;
 	import flash.events.Event;
 	import core.AppModel;
-	import utils.BoundsFactory;
 	import core.CanvasModel;
+	import com.bit101.components.Panel;
 
 	public class GuiCanvasSettings extends GuiBase implements ILayout
 	{
 		private var _stpSizeMultiplier:NumericStepper;
 		private var _colorPickerBG:ColorChooser;
+		private var _panel:Panel;
 
 		public function GuiCanvasSettings()
 		{
@@ -28,13 +29,16 @@ package view
 			_colorPickerBG = new ColorChooser(this, 0, 0, CanvasModel.instance.color, onCanvasColorChanged);
 			_colorPickerBG.popupAlign = ColorChooser.BOTTOM_RIGHT;
 			_colorPickerBG.usePopup = true;
+
+			// _panel = new Panel(this, 0, 0);
+			// _panel.alpha = 0.5;
+			// _panel.mouseEnabled = false;
+			// _panel.mouseChildren = false;
+			// addChildAt(_panel, 0);
 		}
 
 		public function layout(w:int, h:int, gridSize:int):void
 		{
-			if(AppModel.instance.debugBounds)
-				BoundsFactory.drawBounds(this, w, h, 0x0000ff, 0.0);
-
 			var uiscale:int = AppModel.instance.uiScale;
 
 			//TODO: position components...
@@ -44,8 +48,10 @@ package view
 
 			_colorPickerBG.x = w - (_colorPickerBG.width + gridSize + (uiscale * 5)); // Hack to line colorbox up...
 			_colorPickerBG.y = gridSize;
-		}
 
+			// _panel.setSize(w, _colorPickerBG.height + (gridSize * 2));
+			// this.scrollRect = new Rectangle(0, 0, w, _panel.height); //NOTE: Safeguard to give correct height to outside...
+		}
 
 		//-- Canvas settings handlers...
 		private function onSizeMultiplierChanged(e:Event):void

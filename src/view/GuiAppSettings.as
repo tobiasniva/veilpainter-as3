@@ -3,7 +3,6 @@ package view
 	import com.bit101.components.NumericStepper;
 	import flash.events.Event;
 	import core.AppModel;
-	import utils.BoundsFactory;
 	import flash.utils.setTimeout;
 	import com.bit101.components.ColorChooser;
 	import core.BrushModel;
@@ -13,6 +12,7 @@ package view
 	import com.bit101.components.ComboBox;
 	import data.AlignHorizontal;
 	import data.AlignVertical;
+	import flash.display.Sprite;
 
 	public class GuiAppSettings extends GuiBase implements ILayout
 	{
@@ -23,6 +23,8 @@ package view
 		private var _cmbAlignH:ComboBox;
 		private var _cmbAlignV:ComboBox;
 
+		private var _panel:GuiPanel;
+
 		public function GuiAppSettings()
 		{
 			super();
@@ -32,7 +34,7 @@ package view
 		{
 			// -- components...
 
-			//TODO: Label?
+			// TODO: Label?
 			_stpUiScale = new NumericStepper(this);
 			_stpUiScale.addEventListener(Event.CHANGE, onUiScaleChanged);
 			_stpUiScale.step = 1;
@@ -55,25 +57,28 @@ package view
 			_chkDebugBounds.selected = AppModel.instance.debugBounds;
 
 			_cmbAlignH = new ComboBox(this);
-			_cmbAlignH.addItem({label: Strings.LBL_LEFT, value: AlignHorizontal.LEFT });
-			_cmbAlignH.addItem({label: Strings.LBL_CENTER, value: AlignHorizontal.CENTER });
-			_cmbAlignH.addItem({label: Strings.LBL_RIGHT, value: AlignHorizontal.RIGHT });
+			_cmbAlignH.addItem({label: Strings.LBL_LEFT, value: AlignHorizontal.LEFT});
+			_cmbAlignH.addItem({label: Strings.LBL_CENTER, value: AlignHorizontal.CENTER});
+			_cmbAlignH.addItem({label: Strings.LBL_RIGHT, value: AlignHorizontal.RIGHT});
 			_cmbAlignH.selectedIndex = AppModel.instance.uiAlignH;
 			_cmbAlignH.numVisibleItems = 3;
 			_cmbAlignH.addEventListener(Event.SELECT, onAlignHorizontalChanged);
 
 			_cmbAlignV = new ComboBox(this);
-			_cmbAlignV.addItem({label: Strings.LBL_TOP, value: AlignVertical.TOP });
-			_cmbAlignV.addItem({label: Strings.LBL_BOTTOM, value: AlignVertical.BOTTOM });
+			_cmbAlignV.addItem({label: Strings.LBL_TOP, value: AlignVertical.TOP});
+			_cmbAlignV.addItem({label: Strings.LBL_BOTTOM, value: AlignVertical.BOTTOM});
 			_cmbAlignV.selectedIndex = AppModel.instance.uiAlignV;
 			_cmbAlignV.numVisibleItems = 2;
 			_cmbAlignV.addEventListener(Event.SELECT, onAlignVerticalChanged);
+
+			_panel = new GuiPanel();
+			addChildAt(_panel, 0);
 		}
 
 		public function layout(w:int, h:int, gridSize:int):void
 		{
-			if (AppModel.instance.debugBounds)
-				BoundsFactory.drawBounds(this, w, h, 0x00ffff, 0.0); // cyan
+			// if (AppModel.instance.debugBounds)
+			// BoundsFactory.drawBounds(this, w, h, 0x00ffff, 0.0); // cyan
 
 			var uiscale:int = AppModel.instance.uiScale;
 
@@ -101,12 +106,19 @@ package view
 
 			_cmbAlignV.x = w - _cmbAlignV.width - gridSize;
 			_cmbAlignV.y = yOff;
+
+			var panelH:int = yOff + _cmbAlignV.height + gridSize;
+
+			if (AppModel.instance.debugBounds)
+				_panel.drawDebug(w, panelH);
+			else
+				_panel.draw( w, panelH);
 		}
 
 		// -- App settings handlers...
 		private function onUiScaleChanged(e:Event):void
 		{
-			//TODO: Hack to avoid racing when views are removed before re-added...
+			// TODO: Hack to avoid racing when views are removed before re-added...
 			setTimeout(function():void
 				{
 					AppModel.instance.uiScale = _stpUiScale.value;

@@ -87,8 +87,6 @@ package view
 
 		private function createContainers():void
 		{
-			trace("Gui::createContainers");
-
 			// Clean up old containers...
 			if (_navbar && _navbar.parent)
 				_navbar.parent.removeChild(_navbar);

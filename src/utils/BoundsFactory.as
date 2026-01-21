@@ -1,6 +1,5 @@
 package utils
 {
-	import flash.display.Shape;
 	import flash.display.Sprite;
 
 	public class BoundsFactory

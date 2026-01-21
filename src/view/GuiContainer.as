@@ -4,12 +4,11 @@ package view
     import core.AppModel;
     import data.SettingsViewActive;
     import events.UIEvent;
+    import data.AlignVertical;
 
     public class GuiContainer extends GuiBase implements ILayout
     {
         private var _activeGui:GuiBase;
-
-        // last known layout inputs (used when view changes)
         private var _w:int = 0;
         private var _h:int = 0;
         private var _grid:int = 0;
@@ -23,8 +22,6 @@ package view
         override protected function onAddedToStage():void
         {
             AppEventBus.instance.addEventListener(UIEvent.SELECTED_SETTINGS_INDEX_CHANGED, onActiveViewChanged);
-
-            // Ensure we reflect current model state when added
             setActiveView(AppModel.instance.uiActiveSettingView);
         }
 
@@ -42,8 +39,9 @@ package view
         {
             var next:GuiBase = createView(viewId);
 
-            //-- If later decide to cache...?
-            if (next === _activeGui) return;
+            // -- If later decide to cache...?
+            if (next === _activeGui)
+                return;
 
             swapActive(next);
             applyLayoutIfPossible();
@@ -51,11 +49,14 @@ package view
 
         private function createView(viewId:int):GuiBase
         {
-            switch(viewId)
+            switch (viewId)
             {
-                case SettingsViewActive.BRUSH:  return new GuiBrushSettings();
-                case SettingsViewActive.CANVAS: return new GuiCanvasSettings();
-                case SettingsViewActive.APP:    return new GuiAppSettings();
+                case SettingsViewActive.BRUSH:
+                    return new GuiBrushSettings();
+                case SettingsViewActive.CANVAS:
+                    return new GuiCanvasSettings();
+                case SettingsViewActive.APP:
+                    return new GuiAppSettings();
                 case SettingsViewActive.NONE:
                 default:
                     return null;
@@ -85,13 +86,20 @@ package view
 
         private function applyLayoutIfPossible():void
         {
-            if (!_hasLayout) return;
-            if (!_activeGui) return;
+            if (!_hasLayout)
+                return;
+            if (!_activeGui)
+                return;
 
-            // No need for `"layout" in _activeGui` if you control these classes and
-            // expect them to implement ILayout. If not all do, keep the check.
             if (_activeGui is ILayout)
                 ILayout(_activeGui).layout(_w, _h, _grid);
+
+            // After layout, view has height - align vertically...
+            var guiH:int = int(_activeGui.height);
+
+            _activeGui.y = (AppModel.instance.uiAlignV == AlignVertical.TOP) ? 0 : (_h - guiH);
+            trace("GuiContainer height _h: " + _h);
+            trace("height of view to add: " + guiH);
         }
     }
 }

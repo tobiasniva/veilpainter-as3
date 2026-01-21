@@ -18,6 +18,7 @@ package view
 		private var _btnAppSettings:PushButton;
 		private var _btnClear:PushButton;
 		private var _btnSaveImage:PushButton;
+		private var _panel:GuiPanel;
 
 		// -- public for outside layout use...
 		private var _btnSize:int;
@@ -46,14 +47,14 @@ package view
 			_btnBrushSettings.toggle = true;
 			_btnCanvasSettings.toggle = true;
 			_btnAppSettings.toggle = true;
+
+			_panel = new GuiPanel();
+			addChildAt(_panel, 0);
 		}
 
 		public function layout(w:int, h:int, gridSize:int):void
 		{
-			if (AppModel.instance.debugBounds)
-				BoundsFactory.drawBounds(this, w, h, 0xff0000, 0.0); // red
-
-			// -- Position and scaling...
+			// -- Position/scale components...
 			_btnBrushSettings.x = gridSize;
 			_btnBrushSettings.y = gridSize;
 			_btnBrushSettings.width = _btnSize;
@@ -80,6 +81,8 @@ package view
 			_btnSaveImage.height = _btnSize;
 
 			updateButtonStates();
+
+			_panel.renderDebugOnly(AppModel.instance.debugBounds, w, h);
 		}
 
 		private function onShowSettings(index:int):void
