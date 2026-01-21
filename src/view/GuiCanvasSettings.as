@@ -44,6 +44,7 @@ package view
 		{
 			var uiscale:int = AppModel.instance.uiScale;
 			var yOff:int = gridSize;
+			var halfW:int = gridSize * 10;
 
 			//TODO: position components...
 			_stpSizeMultiplier.x = gridSize;
@@ -59,6 +60,7 @@ package view
 
 			_btnClear.x = gridSize;
 			_btnClear.y = yOff;
+			_btnClear.width = halfW;
 
 			var panelH:int = yOff + _btnClear.height + gridSize;
 

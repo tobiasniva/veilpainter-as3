@@ -79,6 +79,7 @@ package view
 			var uiscale:int = AppModel.instance.uiScale;
 
 			var yOff:int = gridSize;
+			var halfW:int = gridSize * 10;
 
 			// TODO: position components...
 			_stpChainLinkSize.x = gridSize;
@@ -101,9 +102,11 @@ package view
 
 			_cmbAlignH.x = gridSize;
 			_cmbAlignH.y = yOff;
+			_cmbAlignH.width = halfW;
 
-			_cmbAlignV.x = w - _cmbAlignV.width - gridSize;
+			_cmbAlignV.x = w - halfW - gridSize;
 			_cmbAlignV.y = yOff;
+			_cmbAlignV.width = halfW;
 
 			var panelH:int = yOff + _cmbAlignV.height + gridSize;
 
