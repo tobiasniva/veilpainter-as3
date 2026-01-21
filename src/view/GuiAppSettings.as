@@ -80,11 +80,11 @@ package view
 			_btnIconTEMP.icon = IconImages.iconTest();
 			_btnIconTEMP.iconPosition = IconPushButton.ICON_ONLY;
 
-			_sldTEMP = new LabeledHSlider(this, 0, 0, "Namn", 0.0, onTempSliderChanged);
-			// _sldTEMP.minimum = 0.05;
-			// _sldTEMP.maximum = 0.95;
-			// _sldTEMP.value = 0.45;
-			// _sldTEMP.tick = 0.05;
+			_sldTEMP = new LabeledHSlider(this, 0, 0, "Test", 0.0, onTempSliderChanged);
+			_sldTEMP.minimum = 0.05;
+			_sldTEMP.maximum = 0.95;
+			_sldTEMP.value = 0.45;
+
 
 			_panel = new GuiPanel();
 			addChildAt(_panel, 0);
@@ -130,7 +130,6 @@ package view
 			_sldTEMP.x = gridSize;
 			_sldTEMP.y = yOff;
 			_sldTEMP.width = gridSize * 10;
-			// _sldTEMP.setSize(gridSize * 10, _sldTEMP.height);
 
 			_btnIconTEMP.width = _btnIconTEMP.height;
 			_btnIconTEMP.x = w - _btnIconTEMP.width - gridSize;
@@ -148,7 +147,7 @@ package view
 		// TODO: Temp stuff - remove...
 		private function onTempSliderChanged(e:Event):void
 		{
-			trace("tmp sld: " +  _sldTEMP.value);
+			// trace("tmp sld: " +  _sldTEMP.value);
 		}
 
 		// -- App settings handlers...
