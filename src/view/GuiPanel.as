@@ -4,10 +4,9 @@ package view
 
     public class GuiPanel extends Sprite
     {
-        private var _bgColor:uint = 0x808080;
+        private var _bgColor:uint = 0x444444;
 
-        private var _debugLine:uint = 0xff00ff;
-        private var _debugFill:uint = 0xff00ff;
+        private var _debugColor:uint = 0xff00ff;
         private var _debugAlpha:Number = 0.0;
 
         public function GuiPanel()
@@ -18,7 +17,7 @@ package view
         }
 
         // --- Normal panel (background)
-        public function draw(w:int, h:int, alpha:Number = 0.5):void
+        public function draw(w:int, h:int, alpha:Number = 0.4):void
         {
             visible = true;
 
@@ -34,18 +33,20 @@ package view
             visible = true;
 
             graphics.clear();
-            graphics.lineStyle(0, _debugLine);
-            graphics.beginFill(_debugFill, _debugAlpha);
+            graphics.lineStyle(0, _debugColor);
+            graphics.beginFill(_debugColor, _debugAlpha);
             graphics.drawRect(0, 0, w, h);
             graphics.endFill();
         }
 
         // --- Convenience: draw debug bounds only if enabled, otherwise clear.
-        //     This keeps navbar code as simple as: _panel.renderDebugOnly(AppModel.instance.debugBounds, w, h);
+        // This keeps navbar code as simple as: _panel.renderDebugOnly(AppModel.instance.debugBounds, w, h);
         public function renderDebugOnly(enabled:Boolean, w:int, h:int):void
         {
-            if (enabled) drawDebug(w, h);
-            else clear();
+            if (enabled)
+                drawDebug(w, h);
+            else
+                clear();
         }
 
         // --- Clear / hide

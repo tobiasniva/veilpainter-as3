@@ -36,6 +36,8 @@ package view
 		private var _btnClear:PushButton;
 		private var _btnSaveImage:PushButton;
 
+		private var _panel:GuiPanel;
+
 		public function GuiBrushSettings()
 		{
 			super();
@@ -102,13 +104,13 @@ package view
 			_colorPicker = new ColorChooser(this, 0, 0, BrushModel.instance.brushColor, onColorChanged);
 			_colorPicker.usePopup = true;
 			_colorPicker.popupAlign = ColorChooser.BOTTOM_RIGHT;
+
+			_panel = new GuiPanel();
+			addChildAt(_panel, 0);
 		}
 
 		public function layout(w:int, h:int, gridSize:int):void
 		{
-			if(AppModel.instance.debugBounds)
-				BoundsFactory.drawBounds(this, w, h, 0x00ff00, 0.0); // green
-
 			var uiscale:int = AppModel.instance.uiScale;
 
 			var yOff:int = gridSize;
@@ -165,6 +167,13 @@ package view
 			_sldStrengthDegradation.x = gridSize;
 			_sldStrengthDegradation.y = yOff;
 			_sldStrengthDegradation.width = fullSldW;
+
+			var panelH:int = yOff + _sldStrengthDegradation.height + gridSize;
+
+			if (AppModel.instance.debugBounds)
+				_panel.drawDebug(w, panelH);
+			else
+				_panel.draw( w, panelH);
 		}
 
 

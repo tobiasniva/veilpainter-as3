@@ -18,7 +18,7 @@ package data
 		public static const UI_ALIGN_V_DEFAULT:int 			= AlignVertical.BOTTOM;
 
 		public static const UI_HIDE_ON_DRAW_DEFAULT:Boolean = true;
-		public static const UI_DEBUG_BOUNDS_DEFAULT:Boolean = true;
+		public static const UI_DEBUG_BOUNDS_DEFAULT:Boolean = false;
 		
 		public static const CANVAS_MULTIPLIER_DEFAULT:int   = 1; // regarding scale of bitmap vs screen size
 		public static const CANVAS_COLOR_DEFAULT:uint       = 0x222222;

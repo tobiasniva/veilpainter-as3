@@ -44,7 +44,6 @@ package view
 
 			_colorpickerChainLink = new ColorChooser(this, 0, 0, BrushModel.instance.brushLinkColor, onChainLinkColorChanged);
 			_colorpickerChainLink.usePopup = true;
-			_colorpickerChainLink.popupAlign = ColorChooser.BOTTOM_RIGHT;
 
 			_stpChainLinkSize = new NumericStepper(this);
 			_stpChainLinkSize.addEventListener(Event.CHANGE, onChainLinkSizeChanged);
@@ -77,9 +76,6 @@ package view
 
 		public function layout(w:int, h:int, gridSize:int):void
 		{
-			// if (AppModel.instance.debugBounds)
-			// BoundsFactory.drawBounds(this, w, h, 0x00ffff, 0.0); // cyan
-
 			var uiscale:int = AppModel.instance.uiScale;
 
 			var yOff:int = gridSize;
@@ -88,6 +84,8 @@ package view
 			_stpChainLinkSize.x = gridSize;
 			_stpChainLinkSize.y = gridSize;
 
+			var popupAlign:String = (AppModel.instance.uiAlignV == AlignVertical.TOP) ? ColorChooser.BOTTOM_RIGHT : ColorChooser.TOP_RIGHT;
+			_colorpickerChainLink.popupAlign = popupAlign;
 			_colorpickerChainLink.x = w - (_colorpickerChainLink.width + gridSize + (uiscale * 5)); // Hack to line colorbox up...
 			_colorpickerChainLink.y = yOff;
 

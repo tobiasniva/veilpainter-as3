@@ -5,13 +5,17 @@ package view
 	import flash.events.Event;
 	import core.AppModel;
 	import core.CanvasModel;
-	import com.bit101.components.Panel;
+	import data.AlignVertical;
+	import com.bit101.components.ComboBox;
+	import com.bit101.components.PushButton;
+	import data.Strings;
 
 	public class GuiCanvasSettings extends GuiBase implements ILayout
 	{
 		private var _stpSizeMultiplier:NumericStepper;
 		private var _colorPickerBG:ColorChooser;
-		private var _panel:Panel;
+		private var _btnClear:PushButton;
+		private var _panel:GuiPanel;
 
 		public function GuiCanvasSettings()
 		{
@@ -27,30 +31,41 @@ package view
 			_stpSizeMultiplier.maximum = 4;
 
 			_colorPickerBG = new ColorChooser(this, 0, 0, CanvasModel.instance.color, onCanvasColorChanged);
-			_colorPickerBG.popupAlign = ColorChooser.BOTTOM_RIGHT;
 			_colorPickerBG.usePopup = true;
 
-			// _panel = new Panel(this, 0, 0);
-			// _panel.alpha = 0.5;
-			// _panel.mouseEnabled = false;
-			// _panel.mouseChildren = false;
-			// addChildAt(_panel, 0);
+			//TODO: Somewhat temp - we always want a shortcut to clear canvas in the navbar?
+			_btnClear = new PushButton(this, 0, 0, Strings.LBL_CLEAR_CANVAS, onCanvasColorChanged);
+
+			_panel = new GuiPanel();
+			addChildAt(_panel, 0);
 		}
 
 		public function layout(w:int, h:int, gridSize:int):void
 		{
 			var uiscale:int = AppModel.instance.uiScale;
+			var yOff:int = gridSize;
 
 			//TODO: position components...
 			_stpSizeMultiplier.x = gridSize;
-			_stpSizeMultiplier.y = gridSize;
+			_stpSizeMultiplier.y = yOff;
 			_stpSizeMultiplier.enabled = false; // Disabled for now...
 
+			var popupAlign:String = (AppModel.instance.uiAlignV == AlignVertical.TOP) ? ColorChooser.BOTTOM_RIGHT : ColorChooser.TOP_RIGHT;
+			_colorPickerBG.popupAlign = popupAlign;
 			_colorPickerBG.x = w - (_colorPickerBG.width + gridSize + (uiscale * 5)); // Hack to line colorbox up...
-			_colorPickerBG.y = gridSize;
+			_colorPickerBG.y = yOff;
 
-			// _panel.setSize(w, _colorPickerBG.height + (gridSize * 2));
-			// this.scrollRect = new Rectangle(0, 0, w, _panel.height); //NOTE: Safeguard to give correct height to outside...
+			yOff += gridSize * uiscale; // incr yOff
+
+			_btnClear.x = gridSize;
+			_btnClear.y = yOff;
+
+			var panelH:int = yOff + _btnClear.height + gridSize;
+
+			if (AppModel.instance.debugBounds)
+				_panel.drawDebug(w, panelH);
+			else
+				_panel.draw( w, panelH);
 		}
 
 		//-- Canvas settings handlers...
