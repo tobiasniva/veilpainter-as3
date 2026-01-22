@@ -1,10 +1,11 @@
 package view
 {
     import flash.display.Sprite;
+    import data.Constants;
 
     public class GuiPanel extends Sprite
     {
-        private var _bgColor:uint = 0x444444;
+        private var _bgColor:uint = Constants.UI_PANEL_COLOR;
 
         private var _debugColor:uint = 0xff00ff;
         private var _debugAlpha:Number = 0.0;
@@ -17,7 +18,7 @@ package view
         }
 
         // --- Normal panel (background)
-        public function draw(w:int, h:int, alpha:Number = 0.4):void
+        public function draw(w:int, h:int, alpha:Number = Constants.UI_PANEL_ALPHA):void
         {
             visible = true;
 
