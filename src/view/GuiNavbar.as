@@ -1,23 +1,22 @@
 package view
 {
-	import com.bit101.components.PushButton;
 	import data.Constants;
-	import data.Strings;
 	import flash.events.Event;
 	import core.AppEventBus;
 	import core.CanvasModel;
 	import events.SaveEvent;
 	import core.AppModel;
-	import utils.BoundsFactory;
 	import data.SettingsViewActive;
+	import ui.components.IconPushButton;
+	import data.IconImages;
 
 	public class GuiNavbar extends GuiBase implements ILayout
 	{
-		private var _btnBrushSettings:PushButton;
-		private var _btnCanvasSettings:PushButton;
-		private var _btnAppSettings:PushButton;
-		private var _btnClear:PushButton;
-		private var _btnSaveImage:PushButton;
+		private var _btnBrushSettings:IconPushButton;
+		private var _btnCanvasSettings:IconPushButton;
+		private var _btnAppSettings:IconPushButton;
+		private var _btnClear:IconPushButton;
+		private var _btnSaveImage:IconPushButton;
 		private var _panel:GuiPanel;
 
 		// -- public for outside layout use...
@@ -37,11 +36,16 @@ package view
 			// -- We make navbar icon buttons slightly larger than normal ui elements...
 			_btnSize = (Constants.UI_MAGIC_SIZE_NUMBER * 1.5) * AppModel.instance.uiScale;
 
-			_btnBrushSettings = new PushButton(this, 0, 0, Strings.LBL_BRUSH, onBrushSettings);
-			_btnCanvasSettings = new PushButton(this, 0, 0, Strings.LBL_CANVAS, onCanvasSettings);
-			_btnAppSettings = new PushButton(this, 0, 0, Strings.LBL_SETTINGS, onAppSettings);
-			_btnClear = new PushButton(this, 0, 0, Strings.LBL_CLEAR, onClearCanvas);
-			_btnSaveImage = new PushButton(this, 0, 0, Strings.LBL_SAVE, onSaveImageToDesktop);
+			_btnBrushSettings = new IconPushButton(this, 0, 0, null, onBrushSettings);
+			_btnBrushSettings.icon = IconImages.iconBrush();
+			_btnCanvasSettings = new IconPushButton(this, 0, 0, null, onCanvasSettings);
+			_btnCanvasSettings.icon = IconImages.iconCanvas();
+			_btnAppSettings = new IconPushButton(this, 0, 0, null, onAppSettings);
+			_btnAppSettings.icon = IconImages.iconSettings();
+			_btnClear = new IconPushButton(this, 0, 0, null, onClearCanvas);
+			_btnClear.icon = IconImages.iconDelete();
+			_btnSaveImage = new IconPushButton(this, 0, 0, null, onSaveImageToDesktop);
+			_btnSaveImage.icon = IconImages.iconSave();
 
 			// -- support toggle state in buttons
 			_btnBrushSettings.toggle = true;

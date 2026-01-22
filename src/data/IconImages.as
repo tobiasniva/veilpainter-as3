@@ -4,7 +4,6 @@ package data
 
     public class IconImages
     {
-
         [Embed(source="/../assets/icons/icon_brush.png")]
         private static const Icon_Brush:Class;
 
