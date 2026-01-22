@@ -4,7 +4,6 @@ package core {
     import flash.geom.Point;
     import events.StageEvent;
     import events.UIEvent;
-    import data.SettingsViewActive;
 
     public class AppModel
     {

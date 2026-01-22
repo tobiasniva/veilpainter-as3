@@ -2,14 +2,11 @@ package data
 {
 	import flash.display.BlendMode;
 
-	/**
-	 *
-	 * @author: Tobi Wan Kenobi
-	 * Somewhat a model for now...holding various values, both initial and variable...
-	 * - Consider making PlayerPrefs-stuff later...
-	 */
+	//-- Various values, both initial and variable - Consider making PlayerPrefs-stuff later...
+
 	public class Constants
 	{
+		//-- UI
 		public static const UI_SCALE_DEFAULT:int     		= 3; 		// For phones and tablets for now
 		public static const UI_MAGIC_SIZE_NUMBER:int		= 20; 		// Height px of button, used here and there
 		public static const UI_SLIDER_LABEL_ALPHA:Number	= 0.90;		// Alpha for slider labels
@@ -24,9 +21,11 @@ package data
 		public static const UI_HIDE_ON_DRAW_DEFAULT:Boolean = true;
 		public static const UI_DEBUG_BOUNDS_DEFAULT:Boolean = false;
 		
+		//-- CANVAS
 		public static const CANVAS_MULTIPLIER_DEFAULT:int   = 1; // regarding scale of bitmap vs screen size
 		public static const CANVAS_COLOR_DEFAULT:uint       = 0x222222;
 		
+		//-- BRUSH
 		public static const BRUSH_COLOR_DEFAULT:uint        = 0x99aacc;
 		public static const BRUSH_OPACITY_DEFAULT:Number    = 0.5;
 
