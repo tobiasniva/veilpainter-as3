@@ -12,8 +12,6 @@ package view
 	import com.bit101.components.ComboBox;
 	import data.AlignHorizontal;
 	import data.AlignVertical;
-	import ui.components.IconPushButton;
-	import data.IconImages;
 	import ui.components.LabeledHSlider;
 
 	public class GuiAppSettings extends GuiBase implements ILayout
@@ -26,8 +24,6 @@ package view
 		private var _cmbAlignV:ComboBox;
 
 		private var _sldTEMP:LabeledHSlider;
-		private var _btnIconDbg:IconPushButton;
-		private var _btnPreset:IconPushButton;
 
 		private var _panel:GuiPanel;
 
@@ -82,13 +78,6 @@ package view
 			_sldTEMP.maximum = 0.95;
 			_sldTEMP.value = 0.45;
 			_sldTEMP.tick = 0.05;
-
-			_btnIconDbg = new IconPushButton(this);
-			_btnIconDbg.icon = IconImages.iconDelete_Small();
-
-			_btnPreset = new IconPushButton(this);
-			_btnPreset.icon = IconImages.iconPreset_Small();
-
 			//--
 
 			_panel = new GuiPanel();
@@ -135,14 +124,6 @@ package view
 			_sldTEMP.x = gridSize;
 			_sldTEMP.y = yOff;
 			_sldTEMP.width = gridSize * 10;
-
-			_btnIconDbg.width = _btnIconDbg.height;
-			_btnIconDbg.x = w - _btnIconDbg.width - gridSize;
-			_btnIconDbg.y = yOff;
-
-			_btnPreset.width = _btnPreset.height;
-			_btnPreset.x = _btnIconDbg.x - _btnIconDbg.width - gridSize;
-			_btnPreset.y = yOff;
 			//--
 
 			var panelH:int = yOff + _cmbAlignV.height + gridSize;

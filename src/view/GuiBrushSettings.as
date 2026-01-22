@@ -6,7 +6,6 @@ package view
 	import com.bit101.components.ComboBox;
 	import com.bit101.components.Label;
 	import com.bit101.components.NumericStepper;
-	import com.bit101.components.PushButton;
 	import core.BrushModel;
 	import data.AlphaImages;
 	import data.BlendModes;
@@ -15,6 +14,8 @@ package view
 	import flash.events.Event;
 	import core.AppModel;
 	import ui.components.LabeledHSlider;
+	import ui.components.IconPushButton;
+	import data.IconImages;
 
 	public class GuiBrushSettings extends GuiBase implements ILayout
 	{
@@ -32,8 +33,8 @@ package view
 		private var _lblAlphaImage:Label;
 		private var _lblNumLinks:Label;
 		private var _lblBlendModes:Label;
-		private var _btnClear:PushButton;
-		private var _btnSaveImage:PushButton;
+
+		private var _btnPreset:IconPushButton;
 
 		private var _panel:GuiPanel;
 
@@ -104,6 +105,9 @@ package view
 			_colorPicker.usePopup = true;
 			_colorPicker.popupAlign = ColorChooser.BOTTOM_RIGHT;
 
+			_btnPreset = new IconPushButton(this);
+			_btnPreset.icon = IconImages.iconPreset_Small();
+
 			_panel = new GuiPanel();
 			addChildAt(_panel, 0);
 		}
@@ -113,18 +117,31 @@ package view
 			var uiscale:int = AppModel.instance.uiScale;
 
 			var yOff:int = gridSize;
-			var halfX:int = gridSize * 12;
-			var halfW:int = gridSize * 13;
+			var halfX:int = gridSize * 13;
+			var halfW:int = gridSize * 10;
 			var fullSldW:int = gridSize * 22;
+
+			//-- pre row
+			_btnPreset.width = _btnPreset.height;
+			_btnPreset.x = gridSize;
+			_btnPreset.y = yOff;
+
+			_chkDebugDraw.x = _btnPreset.x + _btnPreset.width + gridSize;
+			_chkDebugDraw.y = yOff + (gridSize / 2)  * (uiscale / 4); // Hack to line up when ui-scaled...
+
+			_stpNumLinks.width = gridSize * 6.5;
+			_stpNumLinks.x = w - _stpNumLinks.width - gridSize;
+			_stpNumLinks.y = yOff;
+
+			yOff += gridSize * uiscale; // incr yOff
 
 			//-- 1st row
 			_cmbBlendMode.x = gridSize;
-			_cmbBlendMode.y = gridSize;
+			_cmbBlendMode.y = yOff;
 			_cmbBlendMode.width = halfW;
 
-			// _colorPicker.width = gridSize * 6;
 			_colorPicker.x = w - (_colorPicker.width + gridSize + (uiscale * 5)); // Hack to line colorbox up...
-			_colorPicker.y = gridSize;
+			_colorPicker.y = yOff;
 
 			yOff += gridSize * uiscale; // incr yOff
 
@@ -133,19 +150,9 @@ package view
 			_cmbAlphaImage.y = yOff;
 			_cmbAlphaImage.width = halfW;
 
-			_stpNumLinks.width = gridSize * 6.5;
-			_stpNumLinks.x = w - _stpNumLinks.width - gridSize;
-			_stpNumLinks.y = yOff;
-
-			yOff += gridSize * uiscale; // incr yOff
-
-			// 3rd row
-			_sldOpacity.x = gridSize;
+			_sldOpacity.x = halfX;
 			_sldOpacity.y = yOff;
 			_sldOpacity.width = halfW;
-
-			_chkDebugDraw.x = w - _chkDebugDraw.width - gridSize;
-			_chkDebugDraw.y = yOff + (gridSize / 2)  * (uiscale / 4); // Hack to line up when ui-scaled...
 
 			yOff += gridSize * uiscale; // incr yOff
 
@@ -166,7 +173,8 @@ package view
 			_sldStrengthDegradation.y = yOff;
 			_sldStrengthDegradation.width = fullSldW;
 
-			var panelH:int = yOff + _sldStrengthDegradation.height + gridSize;
+
+			var panelH:int = yOff + _btnPreset.height + gridSize;
 
 			if (AppModel.instance.debugBounds)
 				_panel.drawDebug(w, panelH);

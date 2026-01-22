@@ -6,9 +6,6 @@ package view
 	import core.AppModel;
 	import core.CanvasModel;
 	import data.AlignVertical;
-	import com.bit101.components.ComboBox;
-	import com.bit101.components.PushButton;
-	import data.Strings;
 	import ui.components.IconPushButton;
 	import data.IconImages;
 
