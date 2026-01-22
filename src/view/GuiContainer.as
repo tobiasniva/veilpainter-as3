@@ -98,8 +98,10 @@ package view
             var guiH:int = int(_activeGui.height);
 
             _activeGui.y = (AppModel.instance.uiAlignV == AlignVertical.TOP) ? 0 : (_h - guiH);
-            trace("GuiContainer height _h: " + _h);
-            trace("height of view to add: " + guiH);
+
+            //TODO: Remove traces...
+            // trace("GuiContainer height _h: " + _h);
+            // trace("height of view to add: " + guiH);
         }
     }
 }
