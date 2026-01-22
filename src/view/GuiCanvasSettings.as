@@ -9,12 +9,14 @@ package view
 	import com.bit101.components.ComboBox;
 	import com.bit101.components.PushButton;
 	import data.Strings;
+	import ui.components.IconPushButton;
+	import data.IconImages;
 
 	public class GuiCanvasSettings extends GuiBase implements ILayout
 	{
 		private var _stpSizeMultiplier:NumericStepper;
 		private var _colorPickerBG:ColorChooser;
-		private var _btnClear:PushButton;
+		private var _btnClear:IconPushButton;
 		private var _panel:GuiPanel;
 
 		public function GuiCanvasSettings()
@@ -34,7 +36,8 @@ package view
 			_colorPickerBG.usePopup = true;
 
 			//TODO: Somewhat temp - we always want a shortcut to clear canvas in the navbar?
-			_btnClear = new PushButton(this, 0, 0, Strings.LBL_CLEAR_CANVAS, onCanvasColorChanged);
+			_btnClear = new IconPushButton(this, 0, 0, null, onCanvasColorChanged);
+			_btnClear.icon = IconImages.iconDelete_Small();
 
 			_panel = new GuiPanel();
 			addChildAt(_panel, 0);
@@ -58,9 +61,9 @@ package view
 
 			yOff += gridSize * uiscale; // incr yOff
 
-			_btnClear.x = gridSize;
+			_btnClear.width = _btnClear.height;
+			_btnClear.x = w - _btnClear.width - gridSize;
 			_btnClear.y = yOff;
-			_btnClear.width = halfW;
 
 			var panelH:int = yOff + _btnClear.height + gridSize;
 
