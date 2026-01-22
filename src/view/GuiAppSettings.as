@@ -84,10 +84,10 @@ package view
 			_sldTEMP.tick = 0.05;
 
 			_btnIconDbg = new IconPushButton(this);
-			_btnIconDbg.icon = IconImages.iconDelete();
+			_btnIconDbg.icon = IconImages.iconDelete_Small();
 
 			_btnPreset = new IconPushButton(this);
-			_btnPreset.icon = IconImages.iconPreset();
+			_btnPreset.icon = IconImages.iconPreset_Small();
 
 			//--
 
